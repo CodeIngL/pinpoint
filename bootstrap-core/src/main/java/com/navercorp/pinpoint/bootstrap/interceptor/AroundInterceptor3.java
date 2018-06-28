@@ -15,6 +15,7 @@
 package com.navercorp.pinpoint.bootstrap.interceptor;
 
 /**
+ * 3个参数的拦截器
  * @author Jongho Moon
  *
  */

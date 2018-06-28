@@ -28,12 +28,15 @@ import java.util.List;
 
 
 /**
+ * 默认的插件类型注册表的服务
  * @author emeroad
  */
 public class DefaultServiceTypeRegistryService implements ServiceTypeRegistryService {
     private final CommonLogger logger;
 
+    //追踪元数据服务
     private final TraceMetadataLoaderService typeLoaderService;
+    //ServiceTypeRegistry注册表
     private final ServiceTypeRegistry registry;
 
     public DefaultServiceTypeRegistryService() {
@@ -41,6 +44,11 @@ public class DefaultServiceTypeRegistryService implements ServiceTypeRegistrySer
     }
 
 
+    /**
+     * 构建ServiceType注册服务
+     * @param typeLoaderService
+     * @param commonLoggerFactory
+     */
     public DefaultServiceTypeRegistryService(TraceMetadataLoaderService typeLoaderService, CommonLoggerFactory commonLoggerFactory) {
         if (typeLoaderService == null) {
             throw new NullPointerException("typeLoaderService must not be null");
@@ -50,9 +58,14 @@ public class DefaultServiceTypeRegistryService implements ServiceTypeRegistrySer
         }
         this.logger = commonLoggerFactory.getLogger(DefaultServiceTypeRegistryService.class.getName());
         this.typeLoaderService = typeLoaderService;
+        //初始化注册表
         this.registry = buildServiceTypeRegistry();
     }
 
+    /**
+     * 构建注册表
+     * @return
+     */
     private ServiceTypeRegistry buildServiceTypeRegistry() {
         ServiceTypeRegistry.Builder builder = new ServiceTypeRegistry.Builder();
 

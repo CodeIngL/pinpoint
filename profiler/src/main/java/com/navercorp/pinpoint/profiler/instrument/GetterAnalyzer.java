@@ -25,32 +25,42 @@ import com.navercorp.pinpoint.common.util.Assert;
 public class GetterAnalyzer {
     public GetterDetails analyze(Class<?> getterType) {
         Assert.requireNonNull(getterType, "getterType must not be null");
-        
+
+        //必须是接口
         if (!getterType.isInterface()) {
             throw new IllegalArgumentException("getterType " + getterType + "is not an interface");
         }
         
         Method[] methods = getterType.getDeclaredMethods();
-        
+
+        //方法只有一个
         if (methods.length != 1) {
             throw new IllegalArgumentException("Getter interface must have only one method: " + getterType.getName());
         }
         
         Method getter = methods[0];
-        
+
+        //方法必须无参
         if (getter.getParameterTypes().length != 0) {
             throw new IllegalArgumentException("Getter interface method must be no-args and non-void: " + getterType.getName());
         }
         
         Class<?> fieldType = getter.getReturnType();
-        
+
+        //返回值不是void
         if (fieldType == void.class || fieldType == Void.class) {
             throw new IllegalArgumentException("Getter interface method must be no-args and non-void: " + getterType.getName());
         }
-        
+
+        //
         return new GetterDetails(getter, fieldType);
     }
 
+    /**
+     * 方法细节，
+     * 方法
+     * 返回值
+     */
     public static final class GetterDetails {
         private final Method getter;
         private final Class<?> fieldType;

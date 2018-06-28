@@ -27,6 +27,8 @@ import java.util.concurrent.Callable;
 
 
 /**
+ * 代理类加载,
+ * 持有一个自定义的classLoader
  * @author emeroad
  */
 public class AgentClassLoader {
@@ -39,14 +41,21 @@ public class AgentClassLoader {
 
     private final ContextClassLoaderExecuteTemplate<Object> executeTemplate;
 
+    /**
+     * 构造
+     * @param urls
+     */
     public AgentClassLoader(URL[] urls) {
         if (urls == null) {
             throw new NullPointerException("urls");
         }
 
+        //获得本身这个类的类加载器
         ClassLoader bootStrapClassLoader = AgentClassLoader.class.getClassLoader();
+        //构建类加载器中的自身加载器
         this.classLoader = createClassLoader(urls, bootStrapClassLoader);
 
+        //构建模板
         this.executeTemplate = new ContextClassLoaderExecuteTemplate<Object>(classLoader);
     }
 
@@ -70,6 +79,8 @@ public class AgentClassLoader {
 
         final Class<?> bootStrapClazz = getBootStrapClass();
 
+        //默认com.navercorp.pinpoint.profiler.DefaultAgent，test：com.navercorp.pinpoint.test.PluginTestAgent
+        //构建实例，调用构造函数
         final Object agent = executeTemplate.execute(new Callable<Object>() {
             @Override
             public Object call() throws Exception {

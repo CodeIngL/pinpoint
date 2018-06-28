@@ -24,11 +24,17 @@ import java.lang.reflect.Method;
  * @author Woonduk Kang(emeroad)
  */
 public class DefaultInterceptorDefinition implements InterceptorDefinition {
+    //基本接口，Interceptor的子接口
     private final Class<? extends Interceptor> baseInterceptorClazz;
+    //实现类
     private final Class<? extends Interceptor> interceptorClazz;
+    //作用域
     private final InterceptorType interceptorType;
+    //捕获类型
     private final CaptureType captureType;
+    //before方法
     private final Method beforeMethod;
+    //after方法
     private final Method afterMethod;
 
     public DefaultInterceptorDefinition(Class<? extends Interceptor> baseInterceptorClazz, Class<? extends Interceptor> interceptorClazz, InterceptorType interceptorType, CaptureType captureType, Method beforeMethod, Method afterMethod) {

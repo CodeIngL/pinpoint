@@ -25,7 +25,7 @@ import com.navercorp.pinpoint.bootstrap.logging.PLoggerFactory;
 import com.navercorp.pinpoint.common.trace.ServiceType;
 
 /**
- * 
+ * 基本拦截器实现
  * @author netspider
  * @author emeroad
  */

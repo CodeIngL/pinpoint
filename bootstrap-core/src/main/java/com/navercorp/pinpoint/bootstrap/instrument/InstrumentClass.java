@@ -67,6 +67,12 @@ public interface InstrumentClass {
 
     void addField(String accessorTypeName) throws InstrumentException;
 
+    /**
+     * 为类增加一个字段的Getter方法
+     * @param getterTypeName
+     * @param fieldName 字段名
+     * @throws InstrumentException
+     */
     void addGetter(String getterTypeName, String fieldName) throws InstrumentException;
 
     void addSetter(String setterTypeName, String fieldName) throws InstrumentException;

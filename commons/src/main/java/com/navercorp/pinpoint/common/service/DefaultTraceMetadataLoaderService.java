@@ -28,10 +28,12 @@ import java.net.URL;
 import java.util.List;
 
 /**
+ * 默认的追踪元数据加载服务
  * @author emeroad
  */
 public class DefaultTraceMetadataLoaderService implements TraceMetadataLoaderService {
 
+    //追踪元数据加载器
     private final TraceMetadataLoader loader;
 
     public DefaultTraceMetadataLoaderService() {
@@ -47,6 +49,7 @@ public class DefaultTraceMetadataLoaderService implements TraceMetadataLoaderSer
             throw new NullPointerException("jarLists must not be null");
         }
         this.loader = new TraceMetadataLoader(commonLoggerFactory);
+        //spi加载类
         loader.load(jarLists);
 
     }

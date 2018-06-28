@@ -63,6 +63,16 @@ public class MatchableClassFileTransformerGuardDelegate implements MatchableClas
         return matcher;
     }
 
+    /**
+     * 核心方法，改写类的字节码。
+     * @param loader
+     * @param className
+     * @param classBeingRedefined
+     * @param protectionDomain
+     * @param classfileBuffer
+     * @return
+     * @throws IllegalClassFormatException
+     */
     @Override
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
         if (className == null) {

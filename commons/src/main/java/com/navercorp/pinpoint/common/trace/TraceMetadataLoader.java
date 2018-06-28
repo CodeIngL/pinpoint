@@ -58,6 +58,7 @@ public class TraceMetadataLoader {
             throw new NullPointerException("urls must not be null");
         }
 
+        //使用spi方式来加载所有的插件中的TraceMetadataProvider类
         List<TraceMetadataProvider> providers = PluginLoader.load(TraceMetadataProvider.class, urls);
         load(providers);
     }
@@ -70,7 +71,11 @@ public class TraceMetadataLoader {
         List<TraceMetadataProvider> providers = PluginLoader.load(TraceMetadataProvider.class, loader);
         load(providers);
     }
-    
+
+    /**
+     * 初始化provider，设置相关的TraceMetadataSetupContextImpl，
+     * @param providers
+     */
     public void load(List<TraceMetadataProvider> providers) {
         if (providers == null) {
             throw new NullPointerException("providers must not be null");
@@ -83,11 +88,15 @@ public class TraceMetadataLoader {
                 logger.info("Loading TraceMetadataProvider: " + provider.getClass().getName() + " name:" + provider.toString());
             }
 
+            //为具体的追踪元数据提供者构建上下文
             TraceMetadataSetupContextImpl context = new TraceMetadataSetupContextImpl(provider.getClass());
+            //这一步将插件的ServiceType和annotationKey添加进下面的Checker中
             provider.setup(context);
         }
 
+        //打印
         this.serviceTypeChecker.logResult();
+        //打印
         this.annotationKeyChecker.logResult();
     }
 
@@ -107,6 +116,10 @@ public class TraceMetadataLoader {
             this.provider = provider;
         }
 
+        /**
+         * @see #addServiceType(ServiceType, AnnotationKeyMatcher)
+         * @param serviceType
+         */
         @Override
         public void addServiceType(ServiceType serviceType) {
             if (serviceType == null) {
@@ -116,6 +129,11 @@ public class TraceMetadataLoader {
             addType0(type);
         }
 
+        /**
+         * 内部类能访问外部类的方法，所有的插件实现都会添加相应的ServiceType，和AnnotationKeyMatcher
+         * @param serviceType
+         * @param annotationKeyMatcher
+         */
         @Override
         public void addServiceType(ServiceType serviceType, AnnotationKeyMatcher annotationKeyMatcher) {
             if (serviceType == null) {
@@ -128,15 +146,25 @@ public class TraceMetadataLoader {
             addType0(type);
         }
 
+        /**
+         * 校验添加进serviceTypeChecker中实现
+         * @param type
+         */
         private void addType0(ServiceTypeInfo type) {
             if (type == null) {
                 throw new NullPointerException("type must not be null");
             }
             // local check
             serviceTypeChecker.check(type.getServiceType(), provider);
+            //加入
             serviceTypeInfos.add(type);
         }
 
+        /**
+         * 原理同addServiceType
+         * @see #addServiceType(ServiceType, AnnotationKeyMatcher)
+         * @param annotationKey
+         */
         @Override
         public void addAnnotationKey(AnnotationKey annotationKey) {
             if (annotationKey == null) {
@@ -171,23 +199,36 @@ public class TraceMetadataLoader {
         private final Map<String, Pair<ServiceType>> serviceTypeNameMap = new HashMap<String, Pair<ServiceType>>();
         private final Map<Short, Pair<ServiceType>> serviceTypeCodeMap = new HashMap<Short, Pair<ServiceType>>();
 
+        /**
+         * 检查
+         * @param type
+         * @param providerClass
+         */
         private void check(ServiceType type, Class<?> providerClass) {
+            //构建pair对，ServiceType和providerClass
             Pair<ServiceType> pair = new Pair<ServiceType>(type, providerClass);
+            //获得先前的pair,放置，名字和pair对应
             Pair<ServiceType> prev = serviceTypeNameMap.put(type.getName(), pair);
-    
+
+            //存在异常，不允许重复
             if (prev != null) {
                 // TODO change exception type
                 throw new RuntimeException("ServiceType name of " + serviceTypePairToString(pair) + " is duplicated with " + serviceTypePairToString(prev));
             }
-    
+
+            //放置，code和pair对应
             prev = serviceTypeCodeMap.put(type.getCode(), pair);
-    
+
+            //存在异常，不允许重复
             if (prev != null) {
                 // TODO change exception type
                 throw new RuntimeException("ServiceType code of " + serviceTypePairToString(pair) + " is duplicated with " + serviceTypePairToString(prev));
             }
         }
 
+        /**
+         * 答应加载的结果
+         */
         private void logResult() {
             logger.info("Finished loading ServiceType:");
 
@@ -222,6 +263,9 @@ public class TraceMetadataLoader {
             }
         }
 
+        /**
+         * 答应加载的结果
+         */
         private void logResult() {
             logger.info("Finished loading AnnotationKeys:");
 

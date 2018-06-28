@@ -69,19 +69,29 @@ public class ProfilerPluginLoader {
 
     }
 
+    /**
+     * 加载插件
+     * @param pluginJars
+     * @return
+     */
     public List<SetupResult> load(URL[] pluginJars) {
 
         List<SetupResult> pluginContexts = new ArrayList<SetupResult>(pluginJars.length);
 
         for (URL pluginJar : pluginJars) {
 
+            //加载jar
             final JarFile pluginJarFile = createJarFile(pluginJar);
+            //获得jar中的各类包名
             final List<String> pluginPackageList = getPluginPackage(pluginJarFile);
 
+            //创建过滤链
             final ClassNameFilter pluginFilterChain = createPluginFilterChain(pluginPackageList);
 
+            //spi加载插件**ProfilerPlugin**
             final List<ProfilerPlugin> original = PluginLoader.load(ProfilerPlugin.class, new URL[] { pluginJar });
 
+            //过滤掉被禁止的插件
             List<ProfilerPlugin> plugins = filterDisablePlugin(original);
 
             for (ProfilerPlugin plugin : plugins) {
@@ -91,9 +101,13 @@ public class ProfilerPluginLoader {
                 
                 logger.info("Loading plugin:{} pluginPackage:{}", plugin.getClass().getName(), plugin);
 
+                //构建插件的配置对象
                 PluginConfig pluginConfig = new PluginConfig(pluginJar, pluginFilterChain);
+                //构建PluginClassInjector
                 final ClassInjector classInjector = new JarProfilerPluginClassInjector(pluginConfig, instrumentEngine);
+                //设置插件获得结果
                 final SetupResult result = pluginSetup.setupPlugin(plugin, classInjector);
+                //插件上下文中添加相关result
                 pluginContexts.add(result);
             }
         }

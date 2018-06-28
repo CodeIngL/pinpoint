@@ -21,6 +21,8 @@ import java.lang.annotation.Target;
 
 /**
  * Specify the target constructor of the annotated interceptor.
+ *
+ * 指定注解拦截器的目标构造函数。
  * 
  * @author Jongho Moon
  *

@@ -20,6 +20,7 @@ package com.navercorp.pinpoint.bootstrap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * 加载状态转换
  * @author Woonduk Kang(emeroad)
  */
 public class LoadState {

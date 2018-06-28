@@ -17,6 +17,7 @@
 package com.navercorp.pinpoint.exception;
 
 /**
+ * pinpoint异常类
  * @author emeroad
  */
 @SuppressWarnings("serial")

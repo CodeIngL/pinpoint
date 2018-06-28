@@ -24,6 +24,8 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * 简单的缓存器
+ * 使用googel
  * @author emeroad
  */
 public class SimpleCache<T> {

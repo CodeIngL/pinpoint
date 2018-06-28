@@ -20,6 +20,7 @@ import com.navercorp.pinpoint.common.util.Assert;
 import java.security.ProtectionDomain;
 
 /**
+ * classLoader过滤器，忽略掉，目的用于忽略agent这个内部的类加载器
  * @author jaehong.kim
  */
 public class PinpointClassLoaderFilter implements ClassFileFilter {

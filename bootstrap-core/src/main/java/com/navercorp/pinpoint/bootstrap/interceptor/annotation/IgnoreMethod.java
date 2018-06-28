@@ -19,6 +19,7 @@ package com.navercorp.pinpoint.bootstrap.interceptor.annotation;
 import java.lang.annotation.*;
 
 /**
+ *  忽略拦截器的方法，ex，before or after
  *  @author Woonduk Kang(emeroad)
  */
 @Target(ElementType.METHOD)

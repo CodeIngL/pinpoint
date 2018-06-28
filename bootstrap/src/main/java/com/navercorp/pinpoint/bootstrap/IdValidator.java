@@ -23,6 +23,9 @@ import com.navercorp.pinpoint.common.util.IdValidateUtils;
 import java.util.Properties;
 
 /**
+ * 身份识别器，检验相关
+ * 维护并持有了系统属性，当然你可以指定你自己的属性文件，当你二次开发的时候
+ * @see System#getProperties()
  * @author Woonduk Kang(emeroad)
  */
 public class IdValidator {

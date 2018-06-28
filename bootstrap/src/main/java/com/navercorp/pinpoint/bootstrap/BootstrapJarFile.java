@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.jar.JarFile;
 
 /**
+ * 引导相关jar包集合，位于agent同级的boot目录下所有的jar
  * @author Woonduk Kang(emeroad)
  */
 public class BootstrapJarFile {

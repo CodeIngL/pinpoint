@@ -29,6 +29,7 @@ import com.navercorp.pinpoint.bootstrap.instrument.DynamicTransformTrigger;
 import com.navercorp.pinpoint.common.util.Assert;
 
 /**
+ * 动态的Transform服务
  * @author emeroad
  */
 public class DynamicTransformService implements DynamicTransformTrigger {
@@ -37,6 +38,7 @@ public class DynamicTransformService implements DynamicTransformTrigger {
 
     private final Instrumentation instrumentation;
 
+    //动态Transform服务监听器
     private DynamicTransformRequestListener dynamicTransformRequestListener;
 
     public DynamicTransformService(Instrumentation instrumentation, DynamicTransformRequestListener listener) {

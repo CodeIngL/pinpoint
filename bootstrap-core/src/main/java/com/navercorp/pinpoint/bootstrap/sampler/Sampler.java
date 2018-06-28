@@ -17,6 +17,7 @@
 package com.navercorp.pinpoint.bootstrap.sampler;
 
 /**
+ * 采样接口
  * @author emeroad
  */
 public interface Sampler {

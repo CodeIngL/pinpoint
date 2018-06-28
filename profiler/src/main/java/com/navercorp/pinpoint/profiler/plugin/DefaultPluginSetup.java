@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * 默认的插件设置器
  * @author Woonduk Kang(emeroad)
  */
 public class DefaultPluginSetup implements PluginSetup {
@@ -56,32 +57,53 @@ public class DefaultPluginSetup implements PluginSetup {
         this.dynamicTransformTrigger = dynamicTransformTrigger;
     }
 
+    /**
+     * 设置插件
+     * @param profilerPlugin
+     * @param classInjector
+     * @return
+     */
     @Override
     public SetupResult setupPlugin(ProfilerPlugin profilerPlugin, ClassInjector classInjector) {
 
+        //类转换加载器
         final ClassFileTransformerLoader transformerRegistry = new ClassFileTransformerLoader(profilerConfig, dynamicTransformTrigger);
+        //插件启动上下文
         final DefaultProfilerPluginSetupContext setupContext = new DefaultProfilerPluginSetupContext(profilerConfig);
+        //插件保护上下文
         final GuardProfilerPluginContext guardSetupContext = new GuardProfilerPluginContext(setupContext);
 
+        //检测上下文
         final InstrumentContext instrumentContext = new PluginInstrumentContext(profilerConfig, instrumentEngine, dynamicTransformTrigger, classInjector, transformerRegistry );
+        //检测保护上下文，plugin准备，设置TransformTemplate
         final GuardInstrumentContext guardInstrumentContext = preparePlugin(profilerPlugin, instrumentContext);
         try {
             // WARN external plugin api
             if (logger.isInfoEnabled()) {
                 logger.info("{} Plugin setup", profilerPlugin.getClass().getName());
             }
+            //为插件设置插件保护上下文，只能这里进行设置，守护检测上下文在这之后会失效，原因在于finally的释放
             profilerPlugin.setup(guardSetupContext);
         } finally {
             guardSetupContext.close();
             guardInstrumentContext.close();
         }
+        //返回设置结果
         SetupResult setupResult = new SetupResult(setupContext, transformerRegistry);
         return setupResult;
     }
 
+    /**
+     * 准备加载plugin
+     * @param plugin
+     * @param instrumentContext
+     * @return
+     */
     private GuardInstrumentContext preparePlugin(ProfilerPlugin plugin, InstrumentContext instrumentContext) {
 
+        //构建守护的检测上下文，
         final GuardInstrumentContext guardInstrumentContext = new GuardInstrumentContext(instrumentContext);
+        //为插件设置对应的TransformTemplate，所有的TransformTemplate都持有了守护的检测上下文。
         if (plugin instanceof TransformTemplateAware) {
             if (logger.isDebugEnabled()) {
                 logger.debug("{}.setTransformTemplate", plugin.getClass().getName());

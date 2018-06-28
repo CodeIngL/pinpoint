@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 静态字段寻找其
  * @author emeroad
  */
 public class StaticFieldLookUp<T> {
@@ -60,9 +61,16 @@ public class StaticFieldLookUp<T> {
         }
     }
 
+    //目标类
     private final Class<?> targetClazz;
+    //查找类
     private final Class<T> findClazz;
 
+    /**
+     * 静态字段寻找器
+     * @param targetClazz
+     * @param findClazz
+     */
     public StaticFieldLookUp(Class<?> targetClazz, Class<T> findClazz) {
         if (targetClazz == null) {
             throw new NullPointerException("targetClazz must not be null");
@@ -74,12 +82,18 @@ public class StaticFieldLookUp<T> {
         this.findClazz = findClazz;
     }
 
+    /**
+     *
+     * @param filter
+     * @return
+     */
     public List<T> lookup(Filter<T> filter) {
         if (filter == null) {
             throw new NullPointerException("filter must not be null");
         }
         final List<T> lookup = new ArrayList<T>();
 
+        //获得目标类的字段
         Field[] declaredFields = targetClazz.getDeclaredFields();
         for (Field field : declaredFields) {
             if (!Modifier.isStatic(field.getModifiers())) {
@@ -91,10 +105,12 @@ public class StaticFieldLookUp<T> {
             if (!field.getType().equals(findClazz)) {
                 continue;
             }
+            // 需要 public static 字段类型是findclass类型
             final Object filedObject = getObject(field);
 
             if (findClazz.isInstance(filedObject)) {
                 T type = findClazz.cast(filedObject);
+                //过滤这些类型
                 if (filter.filter(type) == Filter.FILTERED) {
                     continue;
                 }

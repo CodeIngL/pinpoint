@@ -21,6 +21,7 @@ import com.navercorp.pinpoint.bootstrap.interceptor.Interceptor;
 
 /**
  * for test
+ * test的目的，实际上没有使用
  * @author emeroad
  */
 public class GlobalInterceptorRegistry {

@@ -17,6 +17,7 @@
 package com.navercorp.pinpoint.bootstrap.interceptor;
 
 /**
+ * 静态拦截器，用于静态
  * @author emeroad
  */
 public interface StaticAroundInterceptor extends Interceptor {

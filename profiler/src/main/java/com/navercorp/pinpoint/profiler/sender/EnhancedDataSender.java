@@ -23,6 +23,7 @@ import com.navercorp.pinpoint.rpc.client.PinpointClientReconnectEventListener;
 import org.apache.thrift.TBase;
 
 /**
+ * 增强的增强型数据发送器
  * @author emeroad
  */
 public interface EnhancedDataSender extends DataSender {

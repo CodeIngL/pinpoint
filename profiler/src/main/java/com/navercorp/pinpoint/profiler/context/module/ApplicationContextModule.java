@@ -171,6 +171,7 @@ import java.util.List;
 
 
 /**
+ * guice工厂
  * @author Woonduk Kang(emeroad)
  */
 public class ApplicationContextModule extends AbstractModule {
@@ -179,6 +180,11 @@ public class ApplicationContextModule extends AbstractModule {
     private final AgentOption agentOption;
     private final InterceptorRegistryBinder interceptorRegistryBinder;
 
+    /**
+     * 上下文容器module
+     * @param agentOption
+     * @param interceptorRegistryBinder
+     */
     public ApplicationContextModule(AgentOption agentOption, InterceptorRegistryBinder interceptorRegistryBinder) {
         this.agentOption = Assert.requireNonNull(agentOption, "agentOption must not be null");
         this.profilerConfig = Assert.requireNonNull(agentOption.getProfilerConfig(), "agentOption.getProfilerConfig() must not be null");

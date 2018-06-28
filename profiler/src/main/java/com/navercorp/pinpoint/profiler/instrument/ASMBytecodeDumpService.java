@@ -85,6 +85,15 @@ public class ASMBytecodeDumpService implements BytecodeDumpService {
         return classInternalNameList;
     }
 
+
+    /**
+     * dump修改后的字节码，默认不启动，
+     * 可以使用bytecode.dump.classlist来添加需要dump的类
+     * @param dumpMessage
+     * @param classInternalName
+     * @param bytes
+     * @param classLoader
+     */
     @Override
     public void dumpBytecode(String dumpMessage, final String classInternalName, final byte[] bytes, ClassLoader classLoader) {
         if (classInternalName == null) {

@@ -3,6 +3,8 @@ package com.navercorp.pinpoint.bootstrap.interceptor.registry;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
+ *
+ * 默认锁实现，不可重入
  * @author emeroad
  */
 public class DefaultLocker implements Locker {

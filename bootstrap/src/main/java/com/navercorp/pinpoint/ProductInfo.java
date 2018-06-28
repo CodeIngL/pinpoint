@@ -17,8 +17,12 @@
 package com.navercorp.pinpoint;
 
 /**
+ * 常量说明
  * @author emeroad
  */
 public final class ProductInfo {
+    /**
+     * pinpoint常量
+     */
     public static final String NAME = "pinpoint";
 }

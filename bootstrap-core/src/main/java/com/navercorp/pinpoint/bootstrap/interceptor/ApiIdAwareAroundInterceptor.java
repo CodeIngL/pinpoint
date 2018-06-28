@@ -16,6 +16,7 @@
 package com.navercorp.pinpoint.bootstrap.interceptor;
 
 /**
+ * 特殊的拦截器，带有apiId
  * @author Jongho Moon
  *
  */

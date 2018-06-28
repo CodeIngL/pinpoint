@@ -15,6 +15,7 @@
 package com.navercorp.pinpoint.bootstrap.interceptor;
 
 /**
+ * 异常处理，2个拦截器，组合真正的拦截器
  * @author jaehong.kim
  */
 public class ExceptionHandleAroundInterceptor2 implements AroundInterceptor2 {

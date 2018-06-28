@@ -24,7 +24,8 @@ import com.navercorp.pinpoint.bootstrap.interceptor.scope.ExecutionPolicy;
 
 /**
  * Indicates that the annotated {@link Interceptor} participate in a {@link Scope}.
- * 
+ *
+ * 指示带@Scope注解的拦截器参与范围。
  * @author Jongho Moon
  *
  */

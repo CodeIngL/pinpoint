@@ -17,6 +17,7 @@
 package com.navercorp.pinpoint.bootstrap;
 
 /**
+ * 核心代理接口，不是指javaagent。而是充当代理的作用的接口
  * @author emeroad
  * @author hyungil.jeong
  */

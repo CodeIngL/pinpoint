@@ -19,9 +19,15 @@ package com.navercorp.pinpoint.profiler.metadata;
 import com.navercorp.pinpoint.bootstrap.context.MethodDescriptor;
 
 /**
+ * 默认的api元数据服务
  * @author Woonduk Kang(emeroad)
  */
 public interface ApiMetaDataService {
 
+    /**
+     * 缓存ap
+     * @param methodDescriptor
+     * @return
+     */
     int cacheApi(final MethodDescriptor methodDescriptor);
 }

@@ -20,6 +20,7 @@ import com.navercorp.pinpoint.bootstrap.interceptor.Interceptor;
 import com.navercorp.pinpoint.bootstrap.interceptor.LoggingInterceptor;
 
 /**
+ * 空的拦截器注册表
  * @author emeroad
  */
 public final class EmptyRegistryAdaptor implements InterceptorRegistryAdaptor {

@@ -251,6 +251,12 @@ public class ASMMethodNodeAdapter {
         }
     }
 
+    /**
+     * 添加before
+     * @param interceptorId
+     * @param interceptorDefinition
+     * @param apiId
+     */
     public void addBeforeInterceptor(final int interceptorId, final InterceptorDefinition interceptorDefinition, final int apiId) {
         initInterceptorLocalVariables(interceptorId, interceptorDefinition, apiId);
 
@@ -262,6 +268,12 @@ public class ASMMethodNodeAdapter {
         this.methodNode.instructions.insertBefore(this.methodVariables.getEnterInsnNode(), instructions);
     }
 
+    /**
+     * 添加after
+     * @param interceptorId
+     * @param interceptorDefinition
+     * @param apiId
+     */
     public void addAfterInterceptor(final int interceptorId, final InterceptorDefinition interceptorDefinition, final int apiId) {
         initInterceptorLocalVariables(interceptorId, interceptorDefinition, apiId);
 

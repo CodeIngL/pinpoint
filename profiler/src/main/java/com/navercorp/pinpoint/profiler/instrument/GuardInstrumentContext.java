@@ -25,6 +25,7 @@ import com.navercorp.pinpoint.bootstrap.interceptor.scope.InterceptorScope;
 import java.io.InputStream;
 
 /**
+ * @see  com.navercorp.pinpoint.profiler.plugin.GuardProfilerPluginContext
  * @author Woonduk Kang(emeroad)
  * @author jaehong.kim
  */

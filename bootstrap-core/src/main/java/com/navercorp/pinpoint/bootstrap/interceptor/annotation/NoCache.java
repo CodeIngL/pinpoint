@@ -29,6 +29,10 @@ import com.navercorp.pinpoint.bootstrap.instrument.InstrumentMethod;
  * You can also annotate {@link InstrumentMethod} with this annotation 
  * but it makes the {@link MethodDescriptor} returned by {@link InstrumentMethod#getDescriptor()} cached 
  * not {@link InstrumentMethod} itself.
+ *
+ * 表示目标必须被缓存。 目前，只有MethodDescriptor可以被缓存。
+ * 您也可以用此注解对InstrumentMethod进行注解，
+ * 但它会使InstrumentMethod.getDescriptor()返回的MethodDescriptor不是InstrumentMethod本身，而是缓存。
  * 
  * @author Jongho Moon
  *

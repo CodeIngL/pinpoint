@@ -19,6 +19,7 @@ package com.navercorp.pinpoint.bootstrap.interceptor.registry;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
 /**
+ * 包装的的AtomicReferenceArray数组
  * @author emeroad
  */
 public final class WeakAtomicReferenceArray<T> {

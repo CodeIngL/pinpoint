@@ -44,6 +44,13 @@ public class DefaultPluginContextLoadResult implements PluginContextLoadResult {
 
     private final List<SetupResult> setupResultList;
 
+    /**
+     * 默认的插件环境上下文加载
+     * @param profilerConfig
+     * @param dynamicTransformTrigger
+     * @param instrumentEngine
+     * @param pluginJars
+     */
     public DefaultPluginContextLoadResult(ProfilerConfig profilerConfig, DynamicTransformTrigger dynamicTransformTrigger, InstrumentEngine instrumentEngine,
                                           URL[] pluginJars) {
         if (profilerConfig == null) {

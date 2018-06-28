@@ -89,12 +89,16 @@ public class DefaultClassFileTransformerDispatcher implements ClassFileTransform
 
     @Override
     public byte[] transform(ClassLoader classLoader, String classInternalName, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classFileBuffer) throws IllegalClassFormatException {
+
+        //校验
         if (!classLoaderFilter.accept(classLoader, classInternalName, classBeingRedefined, protectionDomain, classFileBuffer)) {
             return null;
         }
 
+        //名字
         String internalName = classInternalName;
         if (internalName == null) {
+            //支持lambda表达式
             if (this.supportLambdaExpressions) {
                 // proxy-like class specific for lambda expressions.
                 // e.g. Example$$Lambda$1/1072591677
@@ -113,19 +117,23 @@ public class DefaultClassFileTransformerDispatcher implements ClassFileTransform
             }
         }
 
+        //为空返回
         if (internalName == null) {
             return null;
         }
 
+        //忽略com/navercorp/pinpoint/，但不忽略com/navercorp/pinpoint/web
         if (!pinpointClassFilter.accept(classLoader, internalName, classBeingRedefined, protectionDomain, classFileBuffer)) {
             return null;
         }
 
+        //动态
         final ClassFileTransformer dynamicTransformer = dynamicTransformerRegistry.getTransformer(classLoader, internalName);
         if (dynamicTransformer != null) {
             return baseClassFileTransformer.transform(classLoader, internalName, classBeingRedefined, protectionDomain, classFileBuffer, dynamicTransformer);
         }
 
+        //忽略java，javax开始的类
         if (!unmodifiableFilter.accept(classLoader, internalName, classBeingRedefined, protectionDomain, classFileBuffer)) {
             return null;
         }
@@ -134,6 +142,7 @@ public class DefaultClassFileTransformerDispatcher implements ClassFileTransform
         if (transformer == null) {
             // For debug
             // TODO What if a modifier is duplicated?
+            // 如果修改器是重复的，该怎么办？
             transformer = this.debugTransformerRegistry.findTransformer(classLoader, internalName, classFileBuffer);
             if (transformer == null) {
                 return null;

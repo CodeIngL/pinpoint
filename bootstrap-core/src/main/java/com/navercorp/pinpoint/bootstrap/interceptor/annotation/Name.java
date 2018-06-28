@@ -22,7 +22,9 @@ import java.lang.annotation.Target;
 /**
  * Provides name of auto binded parameter.
  * 
- * Some auto binded parameter types should be identified by name. 
+ * Some auto binded parameter types should be identified by name.
+ *
+ * 提供自动绑定参数的名称。 一些自动绑定的参数类型应该按名称标识。
  * 
  * @author Jongho Moon
  *

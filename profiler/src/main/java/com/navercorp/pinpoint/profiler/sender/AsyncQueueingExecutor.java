@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
 import com.navercorp.pinpoint.common.util.PinpointThreadFactory;
 
 /**
+ *
+ * 异步队列发送器，用于发送消息
  * @author emeroad
  */
 public class AsyncQueueingExecutor<T> implements Runnable {

@@ -42,6 +42,7 @@ public class BytecodeDumpTransformer implements ClassFileTransformer {
             success = true;
             return transformBytes;
         } finally {
+            //dump修改后的字节码，默认不启动
             this.bytecodeDumpService.dumpBytecode("original bytecode dump", className, classfileBuffer, loader);
 
             final boolean bytecodeChanged = isChanged(classfileBuffer, transformBytes);

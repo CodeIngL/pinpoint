@@ -19,6 +19,8 @@ package com.navercorp.pinpoint.profiler;
 import java.security.ProtectionDomain;
 
 /**
+ * 用于说明不可更改的类的忽略，以java以及javax开头的类
+ * 比如java.lang.等的
  * @author emeroad
  */
 public class UnmodifiableClassFilter implements ClassFileFilter {

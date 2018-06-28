@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.jar.JarFile;
 
 /**
+ * Instrument引擎，ASM是默认的选项
+ * @see JavassistEngine
  * @author jaehong.kim
  */
 public class ASMEngine implements InstrumentEngine {

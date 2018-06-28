@@ -26,13 +26,17 @@ import java.util.List;
 
 
 /**
+ * 默认的插件设置器的上下文，用于检测
  * @author jaehong.kim
  */
 public class DefaultProfilerPluginSetupContext implements ProfilerPluginSetupContext {
 
+    //全局配置
     private final ProfilerConfig profilerConfig;
 
+    //应用检测列表
     private final List<ApplicationTypeDetector> serverTypeDetectors = new ArrayList<ApplicationTypeDetector>();
+    //jdbc解析器
     private final List<JdbcUrlParserV2> jdbcUrlParserList = new ArrayList<JdbcUrlParserV2>();
 
     public DefaultProfilerPluginSetupContext(ProfilerConfig profilerConfig) {

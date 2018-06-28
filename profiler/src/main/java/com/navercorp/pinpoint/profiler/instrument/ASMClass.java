@@ -253,22 +253,35 @@ public class ASMClass implements InstrumentClass {
         }
     }
 
+
+    /**
+     *
+     * @param getterTypeName
+     * @param fieldName 字段名
+     * @throws InstrumentException
+     */
     @Override
     public void addGetter(final String getterTypeName, final String fieldName) throws InstrumentException {
         try {
+            //获得类型(必须是接口，并且只有一个方法）下面Getter会校验
             final Class<?> getterType = this.pluginContext.injectClass(this.classLoader, getterTypeName);
+            //
             final GetterAnalyzer.GetterDetails getterDetails = new GetterAnalyzer().analyze(getterType);
+            //字段的ASM结构
             final ASMFieldNodeAdapter fieldNode = this.classNode.getField(fieldName, null);
             if (fieldNode == null) {
                 throw new IllegalArgumentException("Not found field. name=" + fieldName);
             }
 
+            //返回方法的
             final String fieldTypeName = JavaAssistUtils.javaClassNameToObjectName(getterDetails.getFieldType().getName());
             if (!fieldNode.getClassName().equals(fieldTypeName)) {
                 throw new IllegalArgumentException("different return type. return=" + fieldTypeName + ", field=" + fieldNode.getClassName());
             }
 
+            //增加方法
             this.classNode.addGetterMethod(getterDetails.getGetter().getName(), fieldNode);
+            //增加接口
             this.classNode.addInterface(getterTypeName);
             setModified(true);
         } catch (Exception e) {
@@ -409,10 +422,21 @@ public class ASMClass implements InstrumentClass {
         return addInterceptor0(interceptorClassName, constructorArgs, scope, executionPolicy);
     }
 
+    /**
+     * 添加拦截器
+     * @param interceptorClassName 拦截器名字
+     * @param constructorArgs 构造参数
+     * @param scope 作用域
+     * @param executionPolicy 执行策略
+     * @return
+     * @throws InstrumentException
+     */
     private int addInterceptor0(String interceptorClassName, Object[] constructorArgs, InterceptorScope scope, ExecutionPolicy executionPolicy) throws InstrumentException {
         int interceptorId = -1;
+        //获取class类型
         final Class<?> interceptorType = this.pluginContext.injectClass(this.classLoader, interceptorClassName);
 
+        //尝试获得注解
         final TargetMethods targetMethods = interceptorType.getAnnotation(TargetMethods.class);
         if (targetMethods != null) {
             for (TargetMethod m : targetMethods.value()) {
@@ -420,11 +444,13 @@ public class ASMClass implements InstrumentClass {
             }
         }
 
+        //尝试获得注解
         final TargetMethod targetMethod = interceptorType.getAnnotation(TargetMethod.class);
         if (targetMethod != null) {
             interceptorId = addInterceptor0(targetMethod, interceptorClassName, constructorArgs, scope, executionPolicy);
         }
 
+        //尝试获得注解
         final TargetConstructors targetConstructors = interceptorType.getAnnotation(TargetConstructors.class);
         if (targetConstructors != null) {
             for (TargetConstructor c : targetConstructors.value()) {
@@ -432,11 +458,13 @@ public class ASMClass implements InstrumentClass {
             }
         }
 
+        //尝试获得注解
         final TargetConstructor targetConstructor = interceptorType.getAnnotation(TargetConstructor.class);
         if (targetConstructor != null) {
             interceptorId = addInterceptor0(targetConstructor, interceptorClassName, scope, executionPolicy, constructorArgs);
         }
 
+        //尝试获得注解
         final TargetFilter targetFilter = interceptorType.getAnnotation(TargetFilter.class);
         if (targetFilter != null) {
             interceptorId = addInterceptor0(targetFilter, interceptorClassName, scope, executionPolicy, constructorArgs);

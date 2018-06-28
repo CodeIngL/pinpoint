@@ -37,6 +37,16 @@ public class BaseClassFileTransformer {
         this.agentClassLoader = agentClassLoader;
     }
 
+    /**
+     * 核心的类重写
+     * @param classLoader
+     * @param classInternalName
+     * @param classBeingRedefined
+     * @param protectionDomain
+     * @param classFileBuffer
+     * @param transformer
+     * @return
+     */
     public byte[] transform(ClassLoader classLoader, String classInternalName, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classFileBuffer, ClassFileTransformer transformer) {
         final String className = JavaAssistUtils.jvmNameToJavaName(classInternalName);
 

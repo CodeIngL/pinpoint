@@ -35,8 +35,11 @@ public class ContextClassLoaderExecuteTemplate<V> {
 
     public V execute(Callable<V> callable) throws BootStrapException {
         try {
+            //当前线程
             final Thread currentThread = Thread.currentThread();
+            //当前线程的classloader
             final ClassLoader before = currentThread.getContextClassLoader();
+            //设置成加载这个类的classLoader
             currentThread.setContextClassLoader(ContextClassLoaderExecuteTemplate.this.classLoader);
             try {
                 return callable.call();
@@ -44,6 +47,7 @@ public class ContextClassLoaderExecuteTemplate<V> {
                 // even though  the "BEFORE" classloader  is null, rollback  is needed.
                 // if an exception occurs BEFORE callable.call(), the call flow can't reach here.
                 // so  rollback  here is right.
+                // 回设置
                 currentThread.setContextClassLoader(before);
             }
         } catch (BootStrapException ex){

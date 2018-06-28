@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.List;
 
 /**
+ * 路径解析，用于解析相关的类路径
  * @author Woonduk Kang(emeroad)
  */
 public interface ClassPathResolver {

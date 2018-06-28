@@ -34,6 +34,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * 路径解析器，维护了agent的各种依赖赖，以及插件包。
  * @author emeroad
  */
 public class AgentDirBaseClassPathResolver implements ClassPathResolver {
@@ -48,21 +49,33 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
     static final Pattern DEFAULT_ANNOTATIONS = compile("pinpoint-annotations" + VERSION_PATTERN + "\\.jar");
 
     private final Pattern agentPattern;
+    //pinpoint-commons.xxx.jar
     private final Pattern agentCommonsPattern;
+    //pinpoint-bootstrap-core.xxx.jar
     private final Pattern agentCorePattern;
+    //pinpoint-bootstrap-core-optional.xxx.jar
     private final Pattern agentCoreOptionalPattern;
+    //pinpoint-annotations.xxx.jar
     private final Pattern annotationsPattern;
 
     private String classPath;
 
+    //agent名字
     private String agentJarName;
+    //agent路径在classpath中呈现的路径
     private String agentJarFullPath;
+    //agent所在目录，绝对路径
     private String agentDirPath;
 
+    //配置文件后缀.
     private List<String> fileExtensionList;
+    //agent所在目录，绝对路径，boot子目录下
     private String pinpointCommonsJar;
+    //agent所在目录，绝对路径，boot子目录下
     private String bootStrapCoreJar;
+    //agent所在目录，绝对路径，boot子目录下
     private String bootStrapCoreOptionalJar;
+    //agent所在目录，绝对路径，boot子目录下
     private String annotationsJar;
 
     private BootstrapJarFile bootstrapJarFile;
@@ -71,18 +84,31 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
         return Pattern.compile(regex);
     }
 
+    /**
+     * 使用系统路径java.class.path的路径来构建类路径解析器
+     */
     public AgentDirBaseClassPathResolver() {
         this(getClassPathFromSystemProperty());
     }
 
 
+    /**
+     * @see AgentDirBaseClassPathResolver
+     * @param classPath 指定的路径
+     */
     public AgentDirBaseClassPathResolver(String classPath) {
         this.classPath = classPath;
+        //pinpoint-bootstrap.xxx.jar
         this.agentPattern = DEFAULT_AGENT_PATTERN;
+        //pinpoint-commons.xxx.jar
         this.agentCommonsPattern = DEFAULT_AGENT_COMMONS_PATTERN;
+        //pinpoint-bootstrap-core.xxx.jar
         this.agentCorePattern = DEFAULT_AGENT_CORE_PATTERN;
+        //pinpoint-bootstrap-core-optional.xxx.jar
         this.agentCoreOptionalPattern = DEFAULT_AGENT_CORE_OPTIONAL_PATTERN;
+        //pinpoint-annotations.xxx.jar
         this.annotationsPattern = DEFAULT_ANNOTATIONS;
+        //配置文件后缀.
         this.fileExtensionList = getDefaultFileExtensionList();
     }
 
@@ -110,6 +136,7 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
         final BootstrapJarFile bootstrapJarFile = new BootstrapJarFile();
 
         // 1st find boot-strap.jar
+        // 第一步定位pinpoint-bootstrap是否存在,该类是javaagent指点使用的类
         final boolean agentJarNotFound = this.findAgentJar();
         if (!agentJarNotFound) {
             logger.warn("pinpoint-bootstrap-x.x.x(-SNAPSHOT).jar not found.");
@@ -117,6 +144,7 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
         }
 
         // 2nd find pinpoint-commons.jar
+        // 第二步找到pinpoint-commons.jar位于agent同级目录boot下
         final String pinpointCommonsJar = getPinpointCommonsJar();
         if (pinpointCommonsJar == null) {
             logger.warn("pinpoint-commons-x.x.x(-SNAPSHOT).jar not found");
@@ -130,6 +158,7 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
         bootstrapJarFile.append(pinpointCommonsJarFile);
 
         // 3rd find bootstrap-core.jar
+        // 第三步找到pinpoint-core.jar位于agent同级目录boot下
         final String bootStrapCoreJar = getBootStrapCoreJar();
         if (bootStrapCoreJar == null) {
             logger.warn("pinpoint-bootstrap-core-x.x.x(-SNAPSHOT).jar not found");
@@ -143,6 +172,7 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
         bootstrapJarFile.append(bootStrapCoreJarFile);
 
         // 4th find bootstrap-core-optional.jar
+        // 第四步找到pinpoint-core-optional.jar位于agent同级目录boot下
         final String bootStrapCoreOptionalJar = getBootStrapCoreOptionalJar();
         if (bootStrapCoreOptionalJar == null) {
             logger.info("pinpoint-bootstrap-core-optional-x.x.x(-SNAPSHOT).jar not found");
@@ -156,6 +186,7 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
         }
 
         // 5th find annotations.jar : optional dependency
+        // 第五步找到pinpoint-annotations.jar位于agent同级目录boot下
         final String annotationsJar = getAnnotationsJar();
         if (annotationsJar == null) {
             logger.info("pinpoint-annotations-x.x.x(-SNAPSHOT).jar not found");
@@ -359,9 +390,14 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
 
         return jarURLList;
     }
-    
+
+    /**
+     * 解析插件，并返回相应的url
+     * @return
+     */
     @Override
     public URL[] resolvePlugins() {
+        //插件位于agent同级下lib目录，也就是这个File的含义
         final File file = new File(getAgentPluginPath());
         
         if (!file.exists()) {
@@ -374,7 +410,7 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
             return new URL[0];
         }
         
-        
+        //筛选出相应的jar包
         final File[] jars = file.listFiles(new FilenameFilter() {
             
             @Override

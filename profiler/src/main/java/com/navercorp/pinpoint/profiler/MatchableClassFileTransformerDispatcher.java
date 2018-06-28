@@ -44,8 +44,10 @@ public class MatchableClassFileTransformerDispatcher implements ClassFileTransfo
 
     private final ClassLoader agentClassLoader = this.getClass().getClassLoader();
 
+    //基本类的转换器
     private final BaseClassFileTransformer baseClassFileTransformer;
     private final TransformerRegistry transformerRegistry;
+    //动态的转换类注册表
     private final DynamicTransformerRegistry dynamicTransformerRegistry;
     private final TransformerRegistry debugTransformerRegistry;
 
@@ -55,6 +57,14 @@ public class MatchableClassFileTransformerDispatcher implements ClassFileTransfo
 
     private final boolean supportLambdaExpressions;
 
+    /**
+     * 默认情况下的Class分发器
+     * @param profilerConfig
+     * @param pluginContextLoadResult
+     * @param instrumentEngine
+     * @param dynamicTransformTrigger
+     * @param dynamicTransformerRegistry
+     */
     public MatchableClassFileTransformerDispatcher(ProfilerConfig profilerConfig, PluginContextLoadResult pluginContextLoadResult, InstrumentEngine instrumentEngine,
                                                    DynamicTransformTrigger dynamicTransformTrigger, DynamicTransformerRegistry dynamicTransformerRegistry) {
         Assert.requireNonNull(profilerConfig, "profilerConfig must not be null");

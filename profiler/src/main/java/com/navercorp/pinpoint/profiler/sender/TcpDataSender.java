@@ -110,6 +110,12 @@ public class TcpDataSender extends AbstractDataSender implements EnhancedDataSen
         this(name, ClientFactoryUtils.newPinpointClientProvider(host, port, clientFactory), serializer);
     }
 
+    /**
+     * TCP核心构造函数
+     * @param name
+     * @param clientProvider
+     * @param serializer
+     */
     private TcpDataSender(String name, ClientFactoryUtils.PinpointClientProvider clientProvider, HeaderTBaseSerializer serializer) {
         String executorName = "Pinpoint-TcpDataSender-Executor";
         if (name != null) {
@@ -119,6 +125,7 @@ public class TcpDataSender extends AbstractDataSender implements EnhancedDataSen
             logger = LoggerFactory.getLogger(this.getClass());
         }
         Assert.requireNonNull(clientProvider, "clientProvider must not be null");
+        //获得客户端
         this.client = clientProvider.get();
         this.serializer = Assert.requireNonNull(serializer, "serializer must not be null");
         this.timer = createTimer(name);

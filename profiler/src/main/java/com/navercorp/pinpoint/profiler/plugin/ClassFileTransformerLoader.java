@@ -60,6 +60,7 @@ public class ClassFileTransformerLoader {
     }
 
     public void addClassFileTransformer(InstrumentContext instrumentContext, ClassLoader classLoader, String targetClassName, final TransformCallback transformCallback) {
+        //参数非空校验
         if (targetClassName == null) {
             throw new NullPointerException("targetClassName must not be null");
         }

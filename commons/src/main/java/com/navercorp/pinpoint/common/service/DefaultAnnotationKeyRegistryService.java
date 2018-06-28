@@ -33,6 +33,7 @@ public class DefaultAnnotationKeyRegistryService implements AnnotationKeyRegistr
     private final CommonLogger logger;
 
     private final TraceMetadataLoaderService typeLoaderService;
+    //AnnotationKeyRegistry注册表
     private final AnnotationKeyRegistry registry;
 
     public DefaultAnnotationKeyRegistryService() {
@@ -40,6 +41,11 @@ public class DefaultAnnotationKeyRegistryService implements AnnotationKeyRegistr
     }
 
 
+    /**
+     * 构建AnnotationKey注册服务
+     * @param typeLoaderService
+     * @param commonLogger
+     */
     public DefaultAnnotationKeyRegistryService(TraceMetadataLoaderService typeLoaderService, CommonLoggerFactory commonLogger) {
         if (typeLoaderService == null) {
             throw new NullPointerException("typeLoaderService must not be null");
@@ -49,6 +55,7 @@ public class DefaultAnnotationKeyRegistryService implements AnnotationKeyRegistr
         }
         this.logger = commonLogger.getLogger(DefaultAnnotationKeyRegistryService.class.getName());
         this.typeLoaderService = typeLoaderService;
+        //初始化注册表
         this.registry = buildAnnotationKeyRegistry();
     }
 

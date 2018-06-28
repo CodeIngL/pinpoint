@@ -21,6 +21,9 @@ import java.lang.annotation.Target;
 
 /**
  * Specify the target method of the annotated interceptor.
+ *
+ * 指定注解拦截器的目标方法。
+ *
  * @author Jongho Moon
  *
  */

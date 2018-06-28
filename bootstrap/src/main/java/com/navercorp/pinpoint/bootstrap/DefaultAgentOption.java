@@ -42,6 +42,17 @@ public class DefaultAgentOption implements AgentOption {
     private final ServiceTypeRegistryService serviceTypeRegistryService;
     private final AnnotationKeyRegistryService annotationKeyRegistryService;
 
+    /**
+     *
+     * @param instrumentation
+     * @param agentId
+     * @param applicationName
+     * @param profilerConfig
+     * @param pluginJars
+     * @param bootstrapJarPaths
+     * @param serviceTypeRegistryService
+     * @param annotationKeyRegistryService
+     */
     public DefaultAgentOption(final Instrumentation instrumentation, String agentId, String applicationName, final ProfilerConfig profilerConfig, final URL[] pluginJars, final List<String> bootstrapJarPaths, final ServiceTypeRegistryService serviceTypeRegistryService, final AnnotationKeyRegistryService annotationKeyRegistryService) {
         if (instrumentation == null) {
             throw new NullPointerException("instrumentation must not be null");

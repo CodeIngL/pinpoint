@@ -75,6 +75,7 @@ public class DefaultProfilerConfig implements ProfilerConfig {
 
     public static ProfilerConfig load(String pinpointConfigFileName) throws IOException {
         try {
+            //获得pinpoint.config配置文件中的配置
             Properties properties = PropertyUtils.loadProperty(pinpointConfigFileName);
             return new DefaultProfilerConfig(properties);
         } catch (FileNotFoundException fe) {
@@ -176,6 +177,10 @@ public class DefaultProfilerConfig implements ProfilerConfig {
         this.properties = new Properties();
     }
 
+    /**
+     * 配置文件配置类
+     * @param properties 一般情况下是pinpoint.config的配置文件
+     */
     public DefaultProfilerConfig(Properties properties) {
         if (properties == null) {
             throw new NullPointerException("properties must not be null");
@@ -470,6 +475,7 @@ public class DefaultProfilerConfig implements ProfilerConfig {
     }
 
     // for test
+    // 为了测试使用
     void readPropertyValues() {
         // TODO : use Properties' default value instead of using a temp variable.
         final ValueResolver placeHolderResolver = new PlaceHolderResolver();

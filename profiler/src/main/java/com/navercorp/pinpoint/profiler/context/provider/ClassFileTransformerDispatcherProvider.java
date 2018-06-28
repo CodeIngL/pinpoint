@@ -63,6 +63,11 @@ public class ClassFileTransformerDispatcherProvider implements Provider<ClassFil
         this.dynamicTransformerRegistry = dynamicTransformerRegistry;
     }
 
+    /**
+     * 获得class转换分发器，默认是true可以设置
+     * profiler.instrument.matcher.enable进行覆盖
+     * @return
+     */
     @Override
     public ClassFileTransformerDispatcher get() {
         if(this.profilerConfig.isInstrumentMatcherEnable()) {

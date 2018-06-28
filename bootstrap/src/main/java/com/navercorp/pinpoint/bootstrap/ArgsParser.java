@@ -23,10 +23,19 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
+ * 参数解析器
  * @author Woonduk Kang(emeroad)
  */
 public class ArgsParser {
 
+    /**
+     * 字符串解析成Map
+     *
+     * ex:123=456,123321=456654==>{"123":"456","123321":"456654"}
+     * ex:123=,123321=456654==>{"123":"s","123321":"456654"}
+     * @param args
+     * @return
+     */
     public Map<String, String> parse(String args) {
         if (isEmpty(args)) {
             return Collections.emptyMap();

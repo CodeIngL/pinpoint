@@ -222,6 +222,15 @@ public class ASMMethod implements InstrumentMethod {
         return addInterceptor0(interceptorClassName, constructorArgs, scope, executionPolicy);
     }
 
+    /**
+     * 增加拦截器
+     * @param interceptorClassName 拦截器类名
+     * @param constructorArgs 构造函数
+     * @param scope 作用域
+     * @param executionPolicy 执行策略
+     * @return
+     * @throws InstrumentException
+     */
     private int addInterceptor0(String interceptorClassName, Object[] constructorArgs, InterceptorScope scope, ExecutionPolicy executionPolicy) throws InstrumentException {
         final ClassLoader classLoader = this.declaringClass.getClassLoader();
         final ScopeInfo scopeInfo = scopeFactory.newScopeInfo(classLoader, pluginContext, interceptorClassName, scope, executionPolicy);
@@ -240,30 +249,42 @@ public class ASMMethod implements InstrumentMethod {
         return interceptor;
     }
 
+    /**
+     * 核心添加拦截器方法
+     * @param interceptor 拦截器
+     * @param interceptorId 拦截器标识ID
+     */
     private void addInterceptor0(Interceptor interceptor, int interceptorId) {
         if (interceptor == null) {
             throw new NullPointerException("interceptor must not be null");
         }
 
+        //拦截器定义
         final InterceptorDefinition interceptorDefinition = this.interceptorDefinitionFactory.createInterceptorDefinition(interceptor.getClass());
+        //拦截器类
         final Class<?> interceptorClass = interceptorDefinition.getInterceptorClass();
+        //捕获类型
         final CaptureType captureType = interceptorDefinition.getCaptureType();
+        //已经有了则忽略，这意味着不能重复嵌套
         if (this.methodNode.hasInterceptor()) {
             logger.warn("Skip adding interceptor. 'already intercepted method' class={}, interceptor={}", this.declaringClass.getName(), interceptorClass.getName());
             return;
         }
 
+        //抽象类，或本地方法不能使用
         if (this.methodNode.isAbstract() || this.methodNode.isNative()) {
             logger.warn("Skip adding interceptor. 'abstract or native method' class={}, interceptor={}", this.declaringClass.getName(), interceptorClass.getName());
             return;
         }
 
+        //对于是 InterceptorType.API_ID_AWARE使用缓存
         int apiId = -1;
         if (interceptorDefinition.getInterceptorType() == InterceptorType.API_ID_AWARE) {
             apiId = this.apiMetaDataService.cacheApi(this.descriptor);
         }
 
         // add before interceptor.
+        // 添加 before 拦截器
         if (isBeforeInterceptor(captureType) && interceptorDefinition.getBeforeMethod() != null) {
             this.methodNode.addBeforeInterceptor(interceptorId, interceptorDefinition, apiId);
             this.declaringClass.setModified(true);
@@ -274,6 +295,7 @@ public class ASMMethod implements InstrumentMethod {
         }
 
         // add after interface.
+        // 添加 after 拦截器
         if (isAfterInterceptor(captureType) && interceptorDefinition.getAfterMethod() != null) {
             this.methodNode.addAfterInterceptor(interceptorId, interceptorDefinition, apiId);
             this.declaringClass.setModified(true);

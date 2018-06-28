@@ -23,7 +23,8 @@ import com.navercorp.pinpoint.bootstrap.instrument.MethodFilter;
 
 /**
  * Specify the {@link MethodFilter} which will be used to filter the annotated interceptor's target methods.
- * 
+ *
+ * 指定将用于过滤注解的拦截器的目标方法的MethodFilter。
  * @author Jongho Moon
  *
  */

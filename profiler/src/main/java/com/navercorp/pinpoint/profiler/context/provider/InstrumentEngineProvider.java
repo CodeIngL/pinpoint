@@ -76,6 +76,10 @@ public class InstrumentEngineProvider implements Provider<InstrumentEngine> {
         this.apiMetaDataServiceProvider = apiMetaDataServiceProvider;
     }
 
+    /**
+     * 默认返回的是ASM实现，可以通过配置文件进行配置JAVASSIST来进行转换
+     * @return
+     */
     public InstrumentEngine get() {
         final String instrumentEngine = profilerConfig.getProfileInstrumentEngine().toUpperCase();
         if (DefaultProfilerConfig.INSTRUMENT_ENGINE_ASM.equals(instrumentEngine)) {

@@ -22,6 +22,7 @@ import com.navercorp.pinpoint.common.util.logger.StdoutCommonLoggerFactory;
 import java.util.Arrays;
 
 /**
+ * 日志拦截器，简单的记入
  * @author emeroad
  */
 public class LoggingInterceptor implements StaticAroundInterceptor, AroundInterceptor, AroundInterceptor0, AroundInterceptor1, AroundInterceptor2, AroundInterceptor3, AroundInterceptor4, AroundInterceptor5, ApiIdAwareAroundInterceptor {

@@ -52,6 +52,7 @@ public class DefaultAgent implements Agent {
 
     private final ProfilerConfig profilerConfig;
 
+    //对象容器
     private final ApplicationContext applicationContext;
 
 
@@ -67,11 +68,22 @@ public class DefaultAgent implements Agent {
         ClassPreLoader.preload();
     }
 
+    /**
+     * 构造函数
+     * @param agentOption
+     */
     public DefaultAgent(AgentOption agentOption) {
         this(agentOption, createInterceptorRegistry(agentOption));
     }
 
+
+    /**
+     * 获得默认的拦截器注册表
+     * @param agentOption
+     * @return
+     */
     public static InterceptorRegistryBinder createInterceptorRegistry(AgentOption agentOption) {
+        //获得拦截器注册大小
         final int interceptorSize = getInterceptorSize(agentOption);
         return new DefaultInterceptorRegistryBinder(interceptorSize);
     }
@@ -84,6 +96,11 @@ public class DefaultAgent implements Agent {
         return profilerConfig.getInterceptorRegistrySize();
     }
 
+    /**
+     *
+     * @param agentOption
+     * @param interceptorRegistryBinder
+     */
     public DefaultAgent(AgentOption agentOption, final InterceptorRegistryBinder interceptorRegistryBinder) {
         if (agentOption == null) {
             throw new NullPointerException("agentOption must not be null");
@@ -103,30 +120,46 @@ public class DefaultAgent implements Agent {
         }
         logger.info("AgentOption:{}", agentOption);
 
+        //日志绑定
         this.binder = new Slf4jLoggerBinder();
         bindPLoggerFactory(this.binder);
 
+        //拦截器注册表绑定
         this.interceptorRegistryBinder = interceptorRegistryBinder;
+        //绑定注册表到静态变量中
         interceptorRegistryBinder.bind();
+        //绑定serviceTypeRegistryService
         this.serviceTypeRegistryService = agentOption.getServiceTypeRegistryService();
 
+        //打印
         dumpSystemProperties();
+        //打印
         dumpConfig(agentOption.getProfilerConfig());
 
+        //设置状体
         changeStatus(AgentStatus.INITIALIZING);
 
+        //绑定配置
         this.profilerConfig = agentOption.getProfilerConfig();
 
+        //新建上下文（谷歌IOC容器）
         this.applicationContext = newApplicationContext(agentOption, interceptorRegistryBinder);
 
         
         InterceptorInvokerHelper.setPropagateException(profilerConfig.isPropagateInterceptorException());
     }
 
+    /**
+     * 构建容器上下文
+     * @param agentOption
+     * @param interceptorRegistryBinder
+     * @return
+     */
     protected ApplicationContext newApplicationContext(AgentOption agentOption, InterceptorRegistryBinder interceptorRegistryBinder) {
         Assert.requireNonNull(agentOption, "agentOption must not be null");
         ProfilerConfig profilerConfig = Assert.requireNonNull(agentOption.getProfilerConfig(), "profilerConfig must not be null");
 
+        //构建DefaultModuleFactory的provide， provide 用于get实例
         DefaultModuleFactoryProvider moduleFactoryProvider = new DefaultModuleFactoryProvider(profilerConfig.getInjectionModuleFactoryClazzName());
         return new DefaultApplicationContext(agentOption, interceptorRegistryBinder, moduleFactoryProvider);
     }
@@ -167,7 +200,11 @@ public class DefaultAgent implements Agent {
     public ServiceTypeRegistryService getServiceTypeRegistryService() {
         return serviceTypeRegistryService;
     }
-    
+
+    /**
+     * 委托给容器进行开始
+     * 运行状态设置成RUNNING
+     */
     @Override
     public void start() {
         synchronized (agentStatusLock) {

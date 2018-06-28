@@ -22,6 +22,7 @@ import com.navercorp.pinpoint.bootstrap.plugin.ProfilerPluginSetupContext;
 import com.navercorp.pinpoint.bootstrap.plugin.jdbc.JdbcUrlParserV2;
 
 /**
+ * Guard的意思是守卫，其保护了委托的上下文的状体
  * @author emeroad
  */
 public class GuardProfilerPluginContext implements ProfilerPluginSetupContext {

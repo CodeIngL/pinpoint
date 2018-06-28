@@ -50,10 +50,13 @@ public class ActiveMQClientPlugin implements ProfilerPlugin, TransformTemplateAw
             this.addTransportEditor();
             this.addConnectionEditor();
 //            this.addMessageDispatchChannelEditor();
+            //获得filter，用于排除某些设置
             Filter<String> excludeDestinationFilter = config.getExcludeDestinationFilter();
+            //mq生产者
             if (config.isTraceActiveMQClientProducer()) {
                 this.addProducerEditor(excludeDestinationFilter);
             }
+            //mq消费者
             if (config.isTraceActiveMQClientConsumer()) {
                 boolean traceActiveMQTextMessage = config.isTraceActiveMQTextMessage();
                 this.addConsumerEditor(traceActiveMQTextMessage, excludeDestinationFilter);

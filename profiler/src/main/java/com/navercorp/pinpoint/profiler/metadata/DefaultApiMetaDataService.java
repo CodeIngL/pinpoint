@@ -43,13 +43,22 @@ public class DefaultApiMetaDataService implements ApiMetaDataService {
         this.enhancedDataSender = enhancedDataSender;
     }
 
+    /**
+     * 缓存api信息
+     * @param methodDescriptor
+     * @return
+     */
     @Override
     public int cacheApi(final MethodDescriptor methodDescriptor) {
+        //获得键，方法名
         final String fullName = methodDescriptor.getFullName();
+        //获得存储结果，无则新建
         final Result result = this.apiCache.put(fullName);
 
+        //设置apiID
         methodDescriptor.setApiId(result.getId());
 
+        //新生成的
         if (result.isNewValue()) {
             final TApiMetaData apiMetadata = new TApiMetaData();
             apiMetadata.setAgentId(agentId);
@@ -60,6 +69,7 @@ public class DefaultApiMetaDataService implements ApiMetaDataService {
             apiMetadata.setLine(methodDescriptor.getLineNumber());
             apiMetadata.setType(methodDescriptor.getType());
 
+            //使用TCP使用thrif进行调用发送
             this.enhancedDataSender.request(apiMetadata);
         }
 

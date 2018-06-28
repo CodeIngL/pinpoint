@@ -20,6 +20,7 @@ import com.navercorp.pinpoint.bootstrap.interceptor.Interceptor;
 
 
 /**
+ * 拦截器注册表
  * @author emeroad
  */
 public final class InterceptorRegistry {

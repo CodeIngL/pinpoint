@@ -15,6 +15,7 @@
 package com.navercorp.pinpoint.bootstrap.interceptor;
 
 /**
+ * 异常处理，特殊的拦截器，带有apiId，组合真正的拦截器
  * @author jaehong.kim
  */
 public class ExceptionHandleApiIdAwareAroundInterceptor implements ApiIdAwareAroundInterceptor {

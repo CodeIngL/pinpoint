@@ -25,6 +25,9 @@ import com.navercorp.pinpoint.common.service.AnnotationKeyRegistryService;
 import com.navercorp.pinpoint.common.service.ServiceTypeRegistryService;
 
 /**
+ * agent可选项，用于提供agent相关可选项包括配置
+ * 默认实现是
+ * @see DefaultAgentOption
  * @author emeroad
  */
 public interface AgentOption {

@@ -17,6 +17,7 @@
 package com.navercorp.pinpoint.bootstrap.interceptor;
 
 /**
+ * around拦截器。args是参数数组
  * @author emeroad
  */
 public interface AroundInterceptor extends Interceptor {

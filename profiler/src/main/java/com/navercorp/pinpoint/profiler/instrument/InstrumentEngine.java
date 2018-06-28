@@ -23,6 +23,8 @@ import com.navercorp.pinpoint.bootstrap.instrument.NotFoundInstrumentException;
 import java.util.jar.JarFile;
 
 /**
+ * 检测引擎,
+ * 默认是ASM实现
  * @author Jongho Moon
  *
  */

@@ -42,11 +42,17 @@ public class DefaultModuleFactoryProvider implements ModuleFactoryProvider {
         this.moduleFactoryClazzName = profilerConfig.getInjectionModuleFactoryClazzName();
     }
 
+    /**
+     * 获得模块工厂
+     * @return
+     */
     @Override
     public ModuleFactory get() {
+        //通常情况下返回ApplicationContextModuleFactory
         if (StringUtils.isEmpty(moduleFactoryClazzName) || ApplicationContextModuleFactory.class.getName().equals(moduleFactoryClazzName)) {
             return new ApplicationContextModuleFactory();
         } else {
+            //自定义情况下返回ModuleFactory子类，需要默认构造函数，即空的构造函数
             ClassLoader classLoader = getClassLoader(DefaultModuleFactoryProvider.class.getClassLoader());
             try {
                 final Class<? extends ModuleFactory> moduleFactoryClass =

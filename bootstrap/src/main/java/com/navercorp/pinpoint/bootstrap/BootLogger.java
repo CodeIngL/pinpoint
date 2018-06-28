@@ -23,6 +23,7 @@ import java.io.StringWriter;
 import java.text.MessageFormat;
 
 /**
+ * 简单的日志记录器
  * @author Woonduk Kang(emeroad)
  */
 public final class BootLogger {

@@ -54,9 +54,13 @@ class PinpointStarter {
 
     private SimpleProperty systemProperty = SystemProperty.INSTANCE;
 
+    //命令行参数
     private final Map<String, String> agentArgs;
+    //boot目录下的jar
     private final BootstrapJarFile bootstrapJarFile;
+    //解析
     private final ClassPathResolver classPathResolver;
+    //Instrumentation
     private final Instrumentation instrumentation;
 
 
@@ -80,50 +84,79 @@ class PinpointStarter {
 
     }
 
+    /**
+     * 开始函数，premian核心函数
+     * @return
+     */
     boolean start() {
         final IdValidator idValidator = new IdValidator();
+        //agentID
+        //命令行参数-Dpinpoint.agentId=xxx必填
         final String agentId = idValidator.getAgentId();
         if (agentId == null) {
             return false;
         }
+        //agentName
+        //命令行参数-Dpinpoint.applicationName=xxx必填
         final String applicationName = idValidator.getApplicationName();
         if (applicationName == null) {
             return false;
         }
 
+        //加载插件URL在agent下的子目录plugin下
         URL[] pluginJars = classPathResolver.resolvePlugins();
 
         // TODO using PLogger instead of CommonLogger
+        //日志，一般请忽略
         CommonLoggerFactory loggerFactory = StdoutCommonLoggerFactory.INSTANCE;
+        //加载插件中的TraceMetadataProvider实现
+        //追踪元数据的服务载体
         TraceMetadataLoaderService typeLoaderService = new DefaultTraceMetadataLoaderService(pluginJars, loggerFactory);
+        //服务类型（插件类型）注册表服务的载体
         ServiceTypeRegistryService serviceTypeRegistryService = new DefaultServiceTypeRegistryService(typeLoaderService, loggerFactory);
+        //注解键（插件类型）注册表服务的载体
         AnnotationKeyRegistryService annotationKeyRegistryService = new DefaultAnnotationKeyRegistryService(typeLoaderService, loggerFactory);
 
+        //获得配置文件的路径，必须存在配置文件
         String configPath = getConfigPath(classPathResolver);
         if (configPath == null) {
             return false;
         }
 
         // set the path of log file as a system property
+        // 设置日志路径到系统属性中，这里是一个目录
         saveLogFilePath(classPathResolver);
 
+        //设置pinpoint的版本信息到系统属性中去
         savePinpointVersion();
 
         try {
             // Is it right to load the configuration in the bootstrap?
+            // 在引导中加载配置是否正确？
+            //默认的Profile实现，根据配置文件生成一些属性
             ProfilerConfig profilerConfig = DefaultProfilerConfig.load(configPath);
 
             // this is the library list that must be loaded
+            // 加载lib文件，这些库是依赖项，必备的
             List<URL> libUrlList = resolveLib(classPathResolver);
+            //构建agentClassLoader，这些lib中的jar准备由他加载
             AgentClassLoader agentClassLoader = new AgentClassLoader(libUrlList.toArray(new URL[libUrlList.size()]));
+            //获得引导类
+            //默认com.navercorp.pinpoint.profiler.DefaultAgent，test：com.navercorp.pinpoint.test.PluginTestAgent
             final String bootClass = getBootClass();
+            //设置引导类
             agentClassLoader.setBootClass(bootClass);
             logger.info("pinpoint agent [" + bootClass + "] starting...");
 
 
+            //创建可选项
             AgentOption option = createAgentOption(agentId, applicationName, profilerConfig, instrumentation, pluginJars, bootstrapJarFile, serviceTypeRegistryService, annotationKeyRegistryService);
+
+            //引导，将可选项设置进引导类中“bootclass”对应的引导类中
             Agent pinpointAgent = agentClassLoader.boot(option);
+            //agent开始
             pinpointAgent.start();
+            //注册钩子
             registerShutdownHook(pinpointAgent);
             logger.info("pinpoint agent started normally.");
         } catch (Exception e) {
@@ -151,12 +184,25 @@ class PinpointStarter {
 
     }
 
+    /***
+     *
+     * @param agentId
+     * @param applicationName
+     * @param profilerConfig
+     * @param instrumentation
+     * @param pluginJars
+     * @param bootstrapJarFile
+     * @param serviceTypeRegistryService
+     * @param annotationKeyRegistryService
+     * @return
+     */
     private AgentOption createAgentOption(String agentId, String applicationName, ProfilerConfig profilerConfig,
                                           Instrumentation instrumentation,
                                           URL[] pluginJars,
                                           BootstrapJarFile bootstrapJarFile,
                                           ServiceTypeRegistryService serviceTypeRegistryService,
                                           AnnotationKeyRegistryService annotationKeyRegistryService) {
+        //获得jarFile的名字
         List<String> bootstrapJarPaths = bootstrapJarFile.getJarNameList();
         return new DefaultAgentOption(instrumentation, agentId, applicationName, profilerConfig, pluginJars, bootstrapJarPaths, serviceTypeRegistryService, annotationKeyRegistryService);
     }
@@ -191,6 +237,13 @@ class PinpointStarter {
         systemProperty.setProperty(ProductInfo.NAME + ".version", Version.VERSION);
     }
 
+    /**
+     * 获得配置文件的路径
+     * step 1: 从系统配置中获得配置文件的路径
+     * step 2: 从agent的同级目录下的配置文件pinpoint.config
+     * @param classPathResolver
+     * @return
+     */
     private String getConfigPath(ClassPathResolver classPathResolver) {
         final String configName = ProductInfo.NAME + ".config";
         String pinpointConfigFormSystemProperty = systemProperty.getProperty(configName);

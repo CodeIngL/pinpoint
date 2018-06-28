@@ -49,6 +49,7 @@ public class TomcatPlugin implements ProfilerPlugin, TransformTemplateAware {
     @Override
     public void setup(ProfilerPluginSetupContext context) {
 
+        //获得tomcat的配置
         final TomcatConfig config = new TomcatConfig(context.getConfig());
         if (logger.isInfoEnabled()) {
             logger.info("TomcatPlugin config:{}", config);
@@ -58,7 +59,9 @@ public class TomcatPlugin implements ProfilerPlugin, TransformTemplateAware {
             return;
         }
 
+        //获得tomcat的检测类
         TomcatDetector tomcatDetector = new TomcatDetector(config.getTomcatBootstrapMains());
+        //添加tomcat检测类
         context.addApplicationTypeDetector(tomcatDetector);
 
         if (shouldAddTransformers(config)) {

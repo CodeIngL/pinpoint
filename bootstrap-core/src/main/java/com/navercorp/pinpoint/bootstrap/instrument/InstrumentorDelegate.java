@@ -44,6 +44,13 @@ public class InstrumentorDelegate implements Instrumentor {
         return profilerConfig;
     }
 
+    /**
+     * 检测类，
+     * @param classLoader 类加载器
+     * @param className 名字
+     * @param classfileBuffer class字节码
+     * @return
+     */
     @Override
     public InstrumentClass getInstrumentClass(ClassLoader classLoader, String className, byte[] classfileBuffer) {
         return instrumentContext.getInstrumentClass(classLoader, className, classfileBuffer);

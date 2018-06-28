@@ -22,6 +22,10 @@ public final class DefaultInterceptorRegistryAdaptor implements InterceptorRegis
         this(DEFAULT_MAX);
     }
 
+    /**
+     * 构造函数，构造默认的拦截器注册表适配器
+     * @param maxRegistrySize
+     */
     public DefaultInterceptorRegistryAdaptor(int maxRegistrySize) {
         if (maxRegistrySize < 0) {
             throw new IllegalArgumentException("negative maxRegistrySize:" + maxRegistrySize);

@@ -223,13 +223,23 @@ public class ASMClassNodeAdapter {
         return false;
     }
 
+    /**
+     * 获得字段的ASM描述
+     * @param fieldName
+     * @param fieldDesc
+     * @return
+     */
     public ASMFieldNodeAdapter getField(final String fieldName, final String fieldDesc) {
+        //参数校验
         if (fieldName == null || this.classNode.fields == null) {
             return null;
         }
 
+        //获得类的字段，由ASM结构获得
         final List<FieldNode> fields = this.classNode.fields;
+        //遍历
         for (FieldNode fieldNode : fields) {
+            //fieldDesc描述不在时，切字段都存在，
             if ((fieldNode.name != null && fieldNode.name.equals(fieldName)) && (fieldDesc == null || (fieldNode.desc != null && fieldNode.desc.equals(fieldDesc)))) {
                 return new ASMFieldNodeAdapter(fieldNode);
             }
@@ -302,6 +312,11 @@ public class ASMClassNodeAdapter {
         return methodNode;
     }
 
+    /**
+     *
+     * @param methodName 方法名
+     * @param fieldNode 字段
+     */
     public void addGetterMethod(final String methodName, final ASMFieldNodeAdapter fieldNode) {
         if (methodName == null || fieldNode == null) {
             throw new IllegalArgumentException("method name or fieldNode annotation must not be null.");
@@ -315,16 +330,20 @@ public class ASMClassNodeAdapter {
         }
         final InsnList instructions = methodNode.instructions;
         // load this.
+        // 加载this
         instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
         // get fieldNode.
+        // 获得fieldNode
         instructions.add(new FieldInsnNode(Opcodes.GETFIELD, classNode.name, fieldNode.getName(), fieldNode.getDesc()));
         // return of type.
+        // 返回类型
         final Type type = Type.getType(fieldNode.getDesc());
         instructions.add(new InsnNode(type.getOpcode(Opcodes.IRETURN)));
 
         if (this.classNode.methods == null) {
             this.classNode.methods = new ArrayList<MethodNode>();
         }
+        //增加方法
         this.classNode.methods.add(methodNode);
     }
 

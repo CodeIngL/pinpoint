@@ -21,7 +21,9 @@ import java.lang.annotation.Target;
 
 /**
  * Specify multiple targets of the annotated interceptor.
- * 
+ *
+ * 指定注解拦截器的多个目标。
+ *
  * @author Jongho Moon
  *
  */

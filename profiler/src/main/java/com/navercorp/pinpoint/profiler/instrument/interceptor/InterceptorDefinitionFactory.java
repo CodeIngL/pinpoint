@@ -27,22 +27,30 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * 拦截器定义工厂
  * @author Woonduk Kang(emeroad)
  */
 public class InterceptorDefinitionFactory {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    //类型检测
     private final List<TypeHandler> detectHandlers;
 
     public InterceptorDefinitionFactory() {
         this.detectHandlers = register();
     }
 
+    /**
+     * 生成拦截器定义
+     * @param interceptorClazz 拦截器类
+     * @return
+     */
     public InterceptorDefinition createInterceptorDefinition(Class<?> interceptorClazz) {
         if (interceptorClazz == null) {
             throw new NullPointerException("targetInterceptorClazz must not be null");
         }
 
+        //解析拦截器从哪个拦截器派生
         for (TypeHandler typeHandler : detectHandlers) {
             final InterceptorDefinition interceptorDefinition = typeHandler.resolveType(interceptorClazz);
             if (interceptorDefinition != null) {
@@ -53,6 +61,10 @@ public class InterceptorDefinitionFactory {
     }
 
 
+    /**
+     * 注册各类拦截器方法
+     * @return
+     */
     private List<TypeHandler> register() {
         final List<TypeHandler> typeHandlerList = new ArrayList<TypeHandler>();
 
@@ -78,6 +90,12 @@ public class InterceptorDefinitionFactory {
         typeHandlerList.add(typeHandler);
     }
 
+    /**
+     * 构建TypeHandler
+     * @param interceptorClazz 拦截器类
+     * @param interceptorType 拦截器所属类型
+     * @return
+     */
     private TypeHandler createInterceptorTypeHandler(Class<? extends Interceptor> interceptorClazz, InterceptorType interceptorType) {
         if (interceptorClazz == null) {
             throw new NullPointerException("targetInterceptorClazz must not be null");
@@ -86,18 +104,24 @@ public class InterceptorDefinitionFactory {
             throw new NullPointerException("interceptorType must not be null");
         }
 
+        //获取方法
         final Method[] declaredMethods = interceptorClazz.getDeclaredMethods();
+        //长度是2
         if (declaredMethods.length != 2) {
             throw new RuntimeException("invalid Type");
         }
         final String before = "before";
+        //找到before方法
         final Method beforeMethod = findMethodByName(declaredMethods, before);
+        //找到方法参数
         final Class<?>[] beforeParamList = beforeMethod.getParameterTypes();
 
         final String after = "after";
+        //找到after方法
         final Method afterMethod = findMethodByName(declaredMethods, after);
+        //找到方法参数
         final Class<?>[] afterParamList = afterMethod.getParameterTypes();
-
+        //返回
         return new TypeHandler(interceptorClazz, interceptorType, before, beforeParamList, after, afterParamList);
     }
 
@@ -166,6 +190,11 @@ public class InterceptorDefinitionFactory {
             return createInterceptorDefinition(casting);
         }
 
+        /**
+         * 创建拦截器定义
+         * @param targetInterceptorClazz
+         * @return
+         */
         private InterceptorDefinition createInterceptorDefinition(Class<? extends Interceptor> targetInterceptorClazz) {
 
             final Method beforeMethod = searchMethod(targetInterceptorClazz, before, beforeParamList);

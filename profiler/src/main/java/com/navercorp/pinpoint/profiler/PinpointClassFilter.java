@@ -19,6 +19,7 @@ package com.navercorp.pinpoint.profiler;
 import java.security.ProtectionDomain;
 
 /**
+ * Pinpoint类过滤器，用于过滤掉某些包下面的类
  * @author emeroad
  */
 public class PinpointClassFilter implements ClassFileFilter {
@@ -33,6 +34,7 @@ public class PinpointClassFilter implements ClassFileFilter {
         }
 
         // Skip pinpoint packages too.
+        // 忽略com.navercorp.pinpoint下的类除非是web子包下就不忽略
         if (className.startsWith("com/navercorp/pinpoint/")) {
             if (className.startsWith("com/navercorp/pinpoint/web/")) {
                 return CONTINUE;

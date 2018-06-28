@@ -34,6 +34,8 @@ import com.navercorp.pinpoint.profiler.sender.EnhancedDataSender;
 import com.navercorp.pinpoint.thrift.dto.TAgentInfo;
 
 /**
+ *
+ * 代理发送器
  * @author emeroad
  * @author koo.taejin
  * @author HyunGil Jeong
@@ -48,13 +50,23 @@ public class AgentInfoSender {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    //委托的发送器
     private final EnhancedDataSender dataSender;
+    //信息工厂
     private final AgentInfoFactory agentInfoFactory;
+    //刷新毫秒数
     private final long refreshIntervalMs;
+    //发送毫秒数
     private final long sendIntervalMs;
+    //最大尝试次数
     private final int maxTryPerAttempt;
+    //调度器
     private final Scheduler scheduler;
 
+    /**
+     * 构造函数
+     * @param builder
+     */
     private AgentInfoSender(Builder builder) {
         this.dataSender = builder.dataSender;
         this.agentInfoFactory = builder.agentInfoFactory;
@@ -64,6 +76,9 @@ public class AgentInfoSender {
         this.scheduler = new Scheduler();
     }
 
+    /**
+     * 调度开始
+     */
     public void start() {
         scheduler.start();
     }
@@ -133,6 +148,9 @@ public class AgentInfoSender {
         }
     }
 
+    /**
+     * 任务发送器
+     */
     private class AgentInfoSendTask extends TimerTask {
 
         private final SuccessListener taskHandler;
@@ -154,7 +172,9 @@ public class AgentInfoSender {
 
         @Override
         public void run() {
+            //没发送一次++
             int runCount = counter.incrementAndGet();
+            //大于重试次数取消
             if (runCount > retryCount) {
                 this.cancel();
                 return;
@@ -169,6 +189,7 @@ public class AgentInfoSender {
 
         private boolean sendAgentInfo() {
             try {
+                //构建消息对象
                 TAgentInfo agentInfo = agentInfoFactory.createAgentInfo();
                 final DefaultFuture<ResponseMessage> future = new DefaultFuture<ResponseMessage>();
 
@@ -215,6 +236,9 @@ public class AgentInfoSender {
         }
     }
 
+    /**
+     * Builder构造
+     */
     public static class Builder {
         private final EnhancedDataSender dataSender;
         private final AgentInfoFactory agentInfoFactory;
