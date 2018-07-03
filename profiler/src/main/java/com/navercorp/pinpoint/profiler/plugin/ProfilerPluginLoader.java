@@ -116,6 +116,11 @@ public class ProfilerPluginLoader {
         return pluginContexts;
     }
 
+    /**
+     * 进行过滤，过滤掉相关的被禁止的插件
+     * @param plugins
+     * @return
+     */
     private List<ProfilerPlugin> filterDisablePlugin(List<ProfilerPlugin> plugins) {
 
         List<String> disabled = profilerConfig.getDisabledPlugins();

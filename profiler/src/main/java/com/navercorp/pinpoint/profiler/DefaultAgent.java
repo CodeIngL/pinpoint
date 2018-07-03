@@ -40,6 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * 通过使用反射来获得与classloader进行绑定的机会
  * @author emeroad
  * @author koo.taejin
  * @author hyungil.jeong

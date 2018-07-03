@@ -162,6 +162,7 @@ public class DefaultProfilerConfig implements ProfilerConfig {
 
     private String applicationServerType;
     private List<String> applicationTypeDetectOrder = Collections.emptyList();
+    //profiler.plugin.disable禁止某些插件
     private List<String> disabledPlugins = Collections.emptyList();
 
     private boolean propagateInterceptorException = false;

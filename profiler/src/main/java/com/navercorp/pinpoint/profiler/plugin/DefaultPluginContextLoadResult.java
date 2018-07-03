@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 默认的插件加载
  * @author Woonduk Kang(emeroad)
  */
 public class DefaultPluginContextLoadResult implements PluginContextLoadResult {
@@ -74,8 +75,10 @@ public class DefaultPluginContextLoadResult implements PluginContextLoadResult {
     }
 
 
-
-
+    /**
+     * 开始加载
+     * @return
+     */
     private List<SetupResult> load() {
         logger.info("load plugin");
         PluginSetup pluginSetup = new DefaultPluginSetup(profilerConfig, instrumentEngine, dynamicTransformTrigger);

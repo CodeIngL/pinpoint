@@ -43,6 +43,11 @@ public class ProfilerLibClass implements LibClass {
             "com.nhncorp.nelo2"
     };
 
+    /**
+     * 选择需要自定义类加载器加载的类
+     * @param clazzName
+     * @return
+     */
     @Override
     public boolean onLoadClass(String clazzName) {
         final int length = PINPOINT_PROFILER_CLASS.length;

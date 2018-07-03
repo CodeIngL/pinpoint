@@ -52,27 +52,40 @@ class ParallelCapablePinpointURLClassLoader extends URLClassLoader {
         this.libClass = libClass;
     }
 
+    /**
+     * 加载类
+     * @param name
+     * @param resolve
+     * @return
+     * @throws ClassNotFoundException
+     */
     @Override
     protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
         synchronized (getClassLoadingLock(name)) {
             // First, check if the class has already been loaded
+            // 首先，检查类是否已经加载过
             Class clazz = findLoadedClass(name);
             if (clazz == null) {
+                //符合自己的
                 if (onLoadClass(name)) {
                     // load a class used for Pinpoint itself by this PinpointURLClassLoader
+                    //使用自身的类加载器加载
                     clazz = findClass(name);
                 } else {
                     try {
                         // load a class by parent ClassLoader
+                        // 通过parent进行加载
                         clazz = parent.loadClass(name);
                     } catch (ClassNotFoundException ignore) {
                     }
                     if (clazz == null) {
                         // if not found, try to load a class by this PinpointURLClassLoader
+                        // 如果不存在使用自身这个累加载器进行加载
                         clazz = findClass(name);
                     }
                 }
             }
+            //进行链接
             if (resolve) {
                 resolveClass(clazz);
             }
