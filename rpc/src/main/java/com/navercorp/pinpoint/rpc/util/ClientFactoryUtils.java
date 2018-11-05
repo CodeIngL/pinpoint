@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import java.net.InetSocketAddress;
 
 /**
+ * 客户端工具类
  * @author Taejin Koo
  */
 public final class ClientFactoryUtils {
@@ -37,10 +38,20 @@ public final class ClientFactoryUtils {
         PinpointClient get();
     }
 
+    /**
+     * 新建一个客户端
+     * @param host
+     * @param port
+     * @param clientFactory
+     * @return
+     */
     public static PinpointClientProvider newPinpointClientProvider(String host, int port, PinpointClientFactory clientFactory) {
         return new DnsPinpointClientProvider(host, port, clientFactory);
     }
 
+    /**
+     * 客户端提供者
+     */
     private static class DnsPinpointClientProvider implements PinpointClientProvider {
         private final PinpointClientFactory clientFactory;
         private final String host;
@@ -58,11 +69,19 @@ public final class ClientFactoryUtils {
         }
     }
 
+    /**
+     * 创建真正的网络客户端
+     * @param host
+     * @param port
+     * @param clientFactory
+     * @return
+     */
     public static PinpointClient createPinpointClient(String host, int port, PinpointClientFactory clientFactory) {
 
         PinpointClient pinpointClient = null;
         for (int i = 0; i < 3; i++) {
             try {
+                //连接远程端口
                 pinpointClient = clientFactory.connect(host, port);
                 LOGGER.info("tcp connect success. remote:{}/{}", host, port);
                 return pinpointClient;
@@ -71,6 +90,7 @@ public final class ClientFactoryUtils {
             }
         }
         LOGGER.warn("change background tcp connect mode remote:{}/{} ", host, port);
+        //调度进行连接
         pinpointClient = clientFactory.scheduledConnect(host, port);
 
         return pinpointClient;

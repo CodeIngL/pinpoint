@@ -20,7 +20,7 @@ import com.navercorp.pinpoint.bootstrap.plugin.ProfilerPlugin;
 import com.navercorp.pinpoint.profiler.instrument.classloading.ClassInjector;
 
 /**
- * 插件设置其
+ * 设置插件
  * @author Woonduk Kang(emeroad)
  */
 public interface PluginSetup {

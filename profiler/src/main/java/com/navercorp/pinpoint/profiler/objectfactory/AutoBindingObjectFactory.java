@@ -68,8 +68,16 @@ public class AutoBindingObjectFactory {
         return commonProviders;
     }
 
+    /**
+     * 创建一个拦截器
+     * @param objectFactory
+     * @param providers
+     * @return
+     */
     public Object createInstance(ObjectFactory objectFactory, ArgumentProvider... providers) {
         final Class<?> type = pluginContext.injectClass(classLoader, objectFactory.getClassName());
+
+        //参数解析
         final ArgumentsResolver argumentsResolver = getArgumentResolver(objectFactory, providers);
         
         if (objectFactory instanceof ByConstructor) {
@@ -82,8 +90,11 @@ public class AutoBindingObjectFactory {
     }
     
     private Object byConstructor(Class<?> type, ByConstructor byConstructor, ArgumentsResolver argumentsResolver) {
+
+        //构造器解析器
         final ConstructorResolver resolver = new ConstructorResolver(type, argumentsResolver);
-        
+
+        //构造器解析
         if (!resolver.resolve()) {
             throw new PinpointException("Cannot find suitable constructor for " + type.getName());
         }

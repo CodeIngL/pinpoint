@@ -21,14 +21,18 @@ import com.navercorp.pinpoint.profiler.sender.EnhancedDataSender;
 import com.navercorp.pinpoint.thrift.dto.TApiMetaData;
 
 /**
+ * 默认的api的调用元数据服务
  * @author Woonduk Kang(emeroad)
  */
 public class DefaultApiMetaDataService implements ApiMetaDataService {
 
     private final SimpleCache<String> apiCache = new SimpleCache<String>();
 
+    //agent的id
     private final String agentId;
+    //agent开始时间
     private final long agentStartTime;
+    //增强型的数据发送器
     private final EnhancedDataSender enhancedDataSender;
 
     public DefaultApiMetaDataService(String agentId, long agentStartTime, EnhancedDataSender enhancedDataSender) {

@@ -43,6 +43,13 @@ public class DefaultRecorderFactory implements RecorderFactory {
         this.sqlMetaDataService = Assert.requireNonNull(sqlMetaDataService, "sqlMetaDataService must not be null");
     }
 
+    /**
+     * 新建一个SpanRecorder记录器，用于记录
+     * @param span
+     * @param isRoot
+     * @param sampling
+     * @return
+     */
     @Override
     public SpanRecorder newSpanRecorder(Span span, boolean isRoot, boolean sampling) {
         return new DefaultSpanRecorder(span, isRoot, sampling, stringMetaDataService, sqlMetaDataService);

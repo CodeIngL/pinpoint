@@ -21,6 +21,7 @@ import com.navercorp.pinpoint.bootstrap.AgentOption;
 import com.navercorp.pinpoint.profiler.interceptor.registry.InterceptorRegistryBinder;
 
 /**
+ * 默认的容器工厂
  * @author Woonduk Kang(emeroad)
  */
 public class ApplicationContextModuleFactory implements ModuleFactory {

@@ -29,7 +29,8 @@ import java.util.concurrent.Callable;
 /**
  * 代理类加载,
  * 持有一个自定义的classLoader
- * @author emeroad
+ * 加载lib中的相关jar
+ * * @author emeroad
  */
 public class AgentClassLoader {
 
@@ -55,7 +56,7 @@ public class AgentClassLoader {
         //构建类加载器中的自身加载器
         this.classLoader = createClassLoader(urls, bootStrapClassLoader);
 
-        //构建模板
+        //构建模板,里面有asm等等包，用于应用asm时执行的模板
         this.executeTemplate = new ContextClassLoaderExecuteTemplate<Object>(classLoader);
     }
 

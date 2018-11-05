@@ -23,6 +23,7 @@ import com.navercorp.pinpoint.bootstrap.sampler.Sampler;
 import com.navercorp.pinpoint.profiler.sampler.SamplerFactory;
 
 /**
+ * 采用提供器
  * @author Woonduk Kang(emeroad)
  */
 public class SamplerProvider implements Provider<Sampler> {
@@ -36,10 +37,12 @@ public class SamplerProvider implements Provider<Sampler> {
 
     @Override
     public Sampler get() {
+        //是否采样
         boolean samplingEnable = profilerConfig.isSamplingEnable();
+        //采样速率
         int samplingRate = profilerConfig.getSamplingRate();
-
         SamplerFactory samplerFactory = new SamplerFactory();
+        //获得采样策略
         return samplerFactory.createSampler(samplingEnable, samplingRate);
     }
 }

@@ -24,6 +24,7 @@ import com.navercorp.pinpoint.profiler.context.module.AgentId;
 import com.navercorp.pinpoint.profiler.context.module.AgentStartTime;
 
 /**
+ * 默认的traceId的工厂
  * @author Woonduk Kang(emeroad)
  */
 public class DefaultTraceIdFactory implements TraceIdFactory {

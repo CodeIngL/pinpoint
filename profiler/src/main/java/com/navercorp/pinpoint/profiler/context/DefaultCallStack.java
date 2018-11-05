@@ -22,12 +22,18 @@ import com.navercorp.pinpoint.profiler.context.id.TraceRoot;
 import java.util.Arrays;
 
 /**
+ *
+ * 默认的调用栈实现
+ *
  * @author netspider
  * @author Woonduk Kang(emeroad)
  * @author jaehong.kim
  */
 public class DefaultCallStack implements CallStack {
+
+    //栈大小为8
     protected static final int STACK_SIZE = 8;
+    //默认的序号
     protected static final int DEFAULT_INDEX = 0;
 
     protected SpanEvent[] stack = new SpanEvent[STACK_SIZE];

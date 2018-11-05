@@ -68,8 +68,8 @@ public class StaticFieldLookUp<T> {
 
     /**
      * 静态字段寻找器
-     * @param targetClazz
-     * @param findClazz
+     * @param targetClazz 目标类
+     * @param findClazz 查找类
      */
     public StaticFieldLookUp(Class<?> targetClazz, Class<T> findClazz) {
         if (targetClazz == null) {
@@ -96,18 +96,22 @@ public class StaticFieldLookUp<T> {
         //获得目标类的字段
         Field[] declaredFields = targetClazz.getDeclaredFields();
         for (Field field : declaredFields) {
+            //忽略非静态
             if (!Modifier.isStatic(field.getModifiers())) {
                 continue;
             }
+            //狐狸公开的
             if (!Modifier.isPublic(field.getModifiers())) {
                 continue;
             }
+            //忽略类型不是查找类型的
             if (!field.getType().equals(findClazz)) {
                 continue;
             }
             // 需要 public static 字段类型是findclass类型
             final Object filedObject = getObject(field);
 
+            //两者能转换，进行强转
             if (findClazz.isInstance(filedObject)) {
                 T type = findClazz.cast(filedObject);
                 //过滤这些类型

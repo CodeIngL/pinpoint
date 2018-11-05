@@ -19,11 +19,18 @@ package com.navercorp.pinpoint.profiler.context.id;
 import com.navercorp.pinpoint.profiler.context.AsyncId;
 
 /**
+ * 异步的id生成器
  * @author Woonduk Kang(emeroad)
  */
 public interface AsyncIdGenerator {
 
+    /**
+     * @return
+     */
     int nextAsyncId();
 
+    /**
+     * @return
+     */
     AsyncId newAsyncId();
 }

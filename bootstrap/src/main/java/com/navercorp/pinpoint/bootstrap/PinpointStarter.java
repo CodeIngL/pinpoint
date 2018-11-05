@@ -109,6 +109,7 @@ class PinpointStarter {
         // TODO using PLogger instead of CommonLogger
         //日志，一般请忽略
         CommonLoggerFactory loggerFactory = StdoutCommonLoggerFactory.INSTANCE;
+
         //加载插件中的TraceMetadataProvider实现
         //追踪元数据的服务载体
         TraceMetadataLoaderService typeLoaderService = new DefaultTraceMetadataLoaderService(pluginJars, loggerFactory);
@@ -116,6 +117,7 @@ class PinpointStarter {
         ServiceTypeRegistryService serviceTypeRegistryService = new DefaultServiceTypeRegistryService(typeLoaderService, loggerFactory);
         //注解键（插件类型）注册表服务的载体
         AnnotationKeyRegistryService annotationKeyRegistryService = new DefaultAnnotationKeyRegistryService(typeLoaderService, loggerFactory);
+
 
         //获得配置文件的路径，必须存在配置文件
         String configPath = getConfigPath(classPathResolver);
@@ -149,10 +151,10 @@ class PinpointStarter {
             logger.info("pinpoint agent [" + bootClass + "] starting...");
 
 
-            //创建可选项
+            //创建agent选项
             AgentOption option = createAgentOption(agentId, applicationName, profilerConfig, instrumentation, pluginJars, bootstrapJarFile, serviceTypeRegistryService, annotationKeyRegistryService);
 
-            //引导，将可选项设置进引导类中“bootclass”对应的引导类中
+            //引导，将agent选项设置进引导类中“bootclass”对应的引导类中
             Agent pinpointAgent = agentClassLoader.boot(option);
             //agent开始
             pinpointAgent.start();

@@ -37,6 +37,13 @@ public class PluginContextLoadResultProvider implements Provider<PluginContextLo
     private final URL[] pluginJars;
     private final DynamicTransformTrigger dynamicTransformTrigger;
 
+    /**
+     *
+     * @param profilerConfig 检查项配置
+     * @param dynamicTransformTrigger 动态的转换触发器
+     * @param instrumentEngine 引擎
+     * @param pluginJars 插件url
+     */
     @Inject
     public PluginContextLoadResultProvider(ProfilerConfig profilerConfig, DynamicTransformTrigger dynamicTransformTrigger, InstrumentEngine instrumentEngine,
                                            @PluginJars URL[] pluginJars) {

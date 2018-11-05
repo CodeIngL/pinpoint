@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
+ * 数据源监控注册服务
  * @author Taejin Koo
  */
 public class DefaultDataSourceMonitorRegistryService implements DataSourceMonitorRegistryService {

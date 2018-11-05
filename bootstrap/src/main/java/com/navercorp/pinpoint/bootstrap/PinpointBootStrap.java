@@ -70,14 +70,16 @@ public class PinpointBootStrap {
             return;
         }
 
+        //boot目录下jar集合
         BootstrapJarFile bootstrapJarFile = classPathResolver.getBootstrapJarFile();
-        //添加进bootstrap
+        //添加进bootstrap类引导类加载器的检测路径中
         appendToBootstrapClassLoader(instrumentation, bootstrapJarFile);
 
 
         //委托给starter起来
         //all 参数 非空
         PinpointStarter bootStrap = new PinpointStarter(agentArgsMap, bootstrapJarFile, classPathResolver, instrumentation);
+        //启动
         if (!bootStrap.start()) {
             logPinpointAgentLoadFail();
         }
@@ -108,6 +110,7 @@ public class PinpointBootStrap {
         List<JarFile> jarFileList = agentJarFile.getJarFileList();
         for (JarFile jarFile : jarFileList) {
             logger.info("appendToBootstrapClassLoader:" + jarFile.getName());
+            //添加进bootstrapclassloader的类加载器中
             instrumentation.appendToBootstrapClassLoaderSearch(jarFile);
         }
     }

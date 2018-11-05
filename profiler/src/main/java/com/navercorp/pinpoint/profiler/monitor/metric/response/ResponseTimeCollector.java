@@ -20,6 +20,7 @@ package com.navercorp.pinpoint.profiler.monitor.metric.response;
  * @author Woonduk Kang(emeroad)
  */
 public interface ResponseTimeCollector {
+
     void add(long value);
 
     ResponseTimeValue resetAndGetValue();

@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Span数据发送器提供者
  * @author Taejin Koo
  */
 public class SpanDataSenderProvider  implements Provider<DataSender> {
@@ -46,6 +47,13 @@ public class SpanDataSenderProvider  implements Provider<DataSender> {
     private final String ioType;
     private final String transportType;
 
+
+    /**
+     * 通过profiler的配置项，配置相关数据通过PinpointClient进行发送数据
+     * 向collector组件发送span的相关信息
+     * @param profilerConfig
+     * @param clientFactoryProvider
+     */
     @Inject
     public SpanDataSenderProvider(ProfilerConfig profilerConfig, @SpanStatClientFactory Provider<PinpointClientFactory> clientFactoryProvider) {
         if (profilerConfig == null) {
@@ -57,12 +65,19 @@ public class SpanDataSenderProvider  implements Provider<DataSender> {
 
         this.clientFactoryProvider = clientFactoryProvider;
 
+        //collector组件的ip
         this.ip = profilerConfig.getCollectorSpanServerIp();
+        //collector组件的port
         this.port = profilerConfig.getCollectorSpanServerPort();
+        //写队列的大小
         this.writeQueueSize = profilerConfig.getSpanDataSenderWriteQueueSize();
+        //socket超时事件
         this.timeout = profilerConfig.getSpanDataSenderSocketTimeout();
+        //socket缓存区大小
         this.sendBufferSize = profilerConfig.getSpanDataSenderSocketSendBufferSize();
+        //socket类型BIO or NIO
         this.ioType = profilerConfig.getSpanDataSenderSocketType();
+        //传输类型 TCP or UDP
         this.transportType = profilerConfig.getSpanDataSenderTransportType();
     }
 
@@ -72,7 +87,6 @@ public class SpanDataSenderProvider  implements Provider<DataSender> {
             if ("OIO".equalsIgnoreCase(ioType)) {
                 logger.warn("TCP transport not support OIO type.(only support NIO)");
             }
-
             PinpointClientFactory pinpointClientFactory = clientFactoryProvider.get();
             return new TcpDataSender("SpanDataSender", ip, port, pinpointClientFactory);
         } else {

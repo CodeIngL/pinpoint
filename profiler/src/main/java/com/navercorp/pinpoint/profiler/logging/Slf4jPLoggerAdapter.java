@@ -194,6 +194,11 @@ public class Slf4jPLoggerAdapter implements PLogger {
         }
     }
 
+    /**
+     * 参数正常化
+     * @param arg
+     * @return
+     */
     private static String normalizedParameter(Object arg) {
         // Do not call toString() because it could cause some side effects.
         if (arg == null) {

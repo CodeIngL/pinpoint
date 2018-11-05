@@ -19,16 +19,27 @@ package com.navercorp.pinpoint.profiler.sampler;
 import com.navercorp.pinpoint.bootstrap.sampler.Sampler;
 
 /**
+ * 采样工厂
  * @author emeroad
  */
 public class SamplerFactory {
+
+    /**
+     * 构建采样
+     * @param sampling
+     * @param samplingRate
+     * @return
+     */
     public Sampler createSampler(boolean sampling, int samplingRate) {
+        //不开器或者速率为0等价于不开启
         if (!sampling || samplingRate <= 0) {
             return new FalseSampler();
         }
+        //速率为1，一直采样
         if (samplingRate == 1) {
             return new TrueSampler();
         }
+        //按比率采样
         return new SamplingRateSampler(samplingRate);
     }
 }

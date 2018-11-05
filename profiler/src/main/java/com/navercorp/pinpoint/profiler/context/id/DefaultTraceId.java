@@ -21,11 +21,14 @@ import com.navercorp.pinpoint.bootstrap.context.TraceId;
 import com.navercorp.pinpoint.common.util.TransactionIdUtils;
 
 /**
+ * 默认的traceId
  * @author emeroad
  */
 public class DefaultTraceId implements TraceId {
 
+    //agentId
     private final String agentId;
+    //agent启动事件
     private final long agentStartTime;
     private final long transactionSequence;
 
@@ -33,6 +36,11 @@ public class DefaultTraceId implements TraceId {
     private final long spanId;
     private final short flags;
 
+    /**
+     * @param agentId jvm应用标识
+     * @param agentStartTime jvm应用启动时间
+     * @param transactionId 一次事务的id标识后面的序列
+     */
     public DefaultTraceId(String agentId, long agentStartTime, long transactionId) {
         this(agentId, agentStartTime, transactionId, SpanId.NULL, SpanId.newSpanId(), (short) 0);
     }
@@ -41,6 +49,16 @@ public class DefaultTraceId implements TraceId {
         return new DefaultTraceId(this.agentId, this.agentStartTime, transactionSequence, spanId, SpanId.nextSpanID(spanId, parentSpanId), flags);
     }
 
+    /**
+     *
+     *
+     * @param agentId
+     * @param agentStartTime
+     * @param transactionId
+     * @param parentSpanId
+     * @param spanId
+     * @param flags
+     */
     public DefaultTraceId(String agentId, long agentStartTime, long transactionId, long parentSpanId, long spanId, short flags) {
         if (agentId == null) {
             throw new NullPointerException("agentId must not be null");

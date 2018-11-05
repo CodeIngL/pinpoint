@@ -25,7 +25,7 @@ import com.navercorp.pinpoint.bootstrap.context.MethodDescriptor;
 public interface ApiMetaDataService {
 
     /**
-     * 缓存ap
+     * 缓存api
      * @param methodDescriptor
      * @return
      */

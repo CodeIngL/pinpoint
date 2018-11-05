@@ -35,12 +35,18 @@ public final class DefaultInterceptorRegistryAdaptor implements InterceptorRegis
     }
 
 
+    /**
+     * 添加拦截器
+     * @param interceptor 拦截器
+     * @return
+     */
     @Override
     public int addInterceptor(Interceptor interceptor) {
         if (interceptor == null) {
             return -1;
         }
-        
+
+        //获得一个递增的id，用于标识拦截器
         final int newId = nextId();
         if (newId >= registrySize) {
             throw new IndexOutOfBoundsException("size=" + index.length() + " id=" + id);
@@ -53,6 +59,15 @@ public final class DefaultInterceptorRegistryAdaptor implements InterceptorRegis
         return id.getAndIncrement();
     }
 
+    /**
+     * 根据拦截器Id
+     * 获得拦截器
+     *
+     * 不存在则返回日志拦截器
+     *
+     * @param key
+     * @return
+     */
     public Interceptor getInterceptor(int key) {
         final Interceptor interceptor = this.index.get(key);
         if (interceptor == null) {

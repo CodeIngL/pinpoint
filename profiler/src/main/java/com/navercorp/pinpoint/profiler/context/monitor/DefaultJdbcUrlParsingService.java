@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ *
+ * 默认的JDBC解析服务，用于生成一个数据源信息
  * @author Taejin Koo
  */
 public class DefaultJdbcUrlParsingService implements JdbcUrlParsingService {

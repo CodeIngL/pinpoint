@@ -31,6 +31,8 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.TimeUnit;
 
 /**
+ *
+ * 默认的连接工厂
  * @author Woonduk Kang(emeroad)
  */
 public class ConnectionFactory {

@@ -44,6 +44,11 @@ public class DefaultTraceMetadataLoaderService implements TraceMetadataLoaderSer
         this(ClassLoaderUtils.getDefaultClassLoader(), commonLoggerFactory);
     }
 
+    /**
+     * 根据插件的url来加载插件描述数据，通过java的spi方式
+     * @param jarLists
+     * @param commonLoggerFactory
+     */
     public DefaultTraceMetadataLoaderService(URL[] jarLists, CommonLoggerFactory commonLoggerFactory) {
         if (jarLists == null) {
             throw new NullPointerException("jarLists must not be null");

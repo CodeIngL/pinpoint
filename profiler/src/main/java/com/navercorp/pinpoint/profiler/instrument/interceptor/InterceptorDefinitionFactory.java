@@ -33,7 +33,7 @@ import java.util.List;
 public class InterceptorDefinitionFactory {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    //类型检测
+    //拦截器类型检测处理器
     private final List<TypeHandler> detectHandlers;
 
     public InterceptorDefinitionFactory() {
@@ -50,26 +50,29 @@ public class InterceptorDefinitionFactory {
             throw new NullPointerException("targetInterceptorClazz must not be null");
         }
 
-        //解析拦截器从哪个拦截器派生
+        //解析拦截器从哪个拦截器派生，使用相应的handler去解析
         for (TypeHandler typeHandler : detectHandlers) {
             final InterceptorDefinition interceptorDefinition = typeHandler.resolveType(interceptorClazz);
             if (interceptorDefinition != null) {
                 return interceptorDefinition;
             }
         }
+        //不支持，则返回
         throw new RuntimeException("unsupported Interceptor Type. " + interceptorClazz.getName());
     }
 
 
     /**
-     * 注册各类拦截器方法
+     * 注册各类拦截器类型处理器方法
      * @return
      */
     private List<TypeHandler> register() {
         final List<TypeHandler> typeHandlerList = new ArrayList<TypeHandler>();
 
+        //拦截器类型其处理器数组
         addTypeHandler(typeHandlerList, AroundInterceptor.class, InterceptorType.ARRAY_ARGS);
 
+        //基本拦截器处理器
         addTypeHandler(typeHandlerList, AroundInterceptor0.class, InterceptorType.BASIC);
         addTypeHandler(typeHandlerList, AroundInterceptor1.class, InterceptorType.BASIC);
         addTypeHandler(typeHandlerList, AroundInterceptor2.class, InterceptorType.BASIC);
@@ -78,8 +81,10 @@ public class InterceptorDefinitionFactory {
         addTypeHandler(typeHandlerList, AroundInterceptor5.class, InterceptorType.BASIC);
 
 
+        //特殊static拦截器
         addTypeHandler(typeHandlerList, StaticAroundInterceptor.class, InterceptorType.STATIC);
 
+        //带有appid的拦截处理器
         addTypeHandler(typeHandlerList, ApiIdAwareAroundInterceptor.class, InterceptorType.API_ID_AWARE);
 
         return typeHandlerList;
@@ -126,6 +131,13 @@ public class InterceptorDefinitionFactory {
     }
 
 
+    /**
+     * 寻找匹配的方法
+     * 报错如果匹配不上
+     * @param declaredMethods 声明的方法
+     * @param methodName 方法名
+     * @return 匹配的方法
+     */
     private Method findMethodByName(Method[] declaredMethods, String methodName) {
         Method findMethod = null;
         int count = 0;
@@ -146,11 +158,17 @@ public class InterceptorDefinitionFactory {
 
 
     private class TypeHandler {
+        //拦截器的接口类型
         private final Class<? extends Interceptor> interceptorClazz;
+        //拦截器类型
         private final InterceptorType interceptorType;
+        //before方法
         private final String before;
+        //before参数
         private final Class<?>[] beforeParamList;
+        //after方法
         private final String after;
+        //after参数
         private final Class<?>[] afterParamList;
 
         public TypeHandler(Class<? extends Interceptor> interceptorClazz, InterceptorType interceptorType, String before, final Class<?>[] beforeParamList, final String after, final Class<?>[] afterParamList) {
@@ -181,10 +199,17 @@ public class InterceptorDefinitionFactory {
         }
 
 
+        /**
+         * 解析目标类获得拦截器的定义
+         * @param targetClazz
+         * @return
+         */
         public InterceptorDefinition resolveType(Class<?> targetClazz) {
+            //目标类必须实现拦截器接口
             if(!this.interceptorClazz.isAssignableFrom(targetClazz)) {
                 return null;
             }
+            //转换
             @SuppressWarnings("unchecked")
             final Class<? extends Interceptor> casting = (Class<? extends Interceptor>) targetClazz;
             return createInterceptorDefinition(casting);
@@ -197,6 +222,7 @@ public class InterceptorDefinitionFactory {
          */
         private InterceptorDefinition createInterceptorDefinition(Class<? extends Interceptor> targetInterceptorClazz) {
 
+            //获得before方法
             final Method beforeMethod = searchMethod(targetInterceptorClazz, before, beforeParamList);
             if (beforeMethod == null) {
                 throw new RuntimeException(before + " method not found. " + Arrays.toString(beforeParamList));
@@ -204,6 +230,7 @@ public class InterceptorDefinitionFactory {
             final boolean beforeIgnoreMethod = beforeMethod.isAnnotationPresent(IgnoreMethod.class);
 
 
+            //获得after方法
             final Method afterMethod = searchMethod(targetInterceptorClazz, after, afterParamList);
             if (afterMethod == null) {
                 throw new RuntimeException(after + " method not found. " + Arrays.toString(afterParamList));

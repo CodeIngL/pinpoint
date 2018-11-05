@@ -101,6 +101,7 @@ public final class DefaultTrace implements Trace, TraceRootSupport {
             return wrappedSpanEventRecorder(this.wrappedSpanEventRecorder, dummy);
         }
         // Set properties for the case when stackFrame is not used as part of Span.
+        // 当stackFrame未用作Span的一部分时，设置情景的属性
         final SpanEvent spanEvent = newSpanEvent(stackId);
         this.callStack.push(spanEvent);
         return wrappedSpanEventRecorder(this.wrappedSpanEventRecorder, spanEvent);

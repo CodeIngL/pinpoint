@@ -21,6 +21,8 @@ import java.net.URLClassLoader;
 import java.net.URLStreamHandlerFactory;
 
 /**
+ *
+ * 插件类加载，用于加载相关的插件
  * @author emeroad
  */
 public class PluginLoaderClassLoader extends URLClassLoader {

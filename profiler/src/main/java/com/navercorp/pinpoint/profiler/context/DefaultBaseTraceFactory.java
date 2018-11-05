@@ -104,13 +104,16 @@ public class DefaultBaseTraceFactory implements BaseTraceFactory {
     }
 
 
-
-
+    /**
+     * 新建一个Trace
+     * @return
+     */
     @Override
     public Trace newTraceObject() {
         // TODO need to modify how to inject a datasender
-        final boolean sampling = sampler.isSampling();
+        final boolean sampling = sampler.isSampling();//当前是否可以采样
         if (sampling) {
+            //新建一个调用根
             final TraceRoot traceRoot = traceRootFactory.newTraceRoot();
             final Span span = spanFactory.newSpan(traceRoot);
 

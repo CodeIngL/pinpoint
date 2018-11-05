@@ -59,6 +59,7 @@ public class DubboPlugin implements ProfilerPlugin, TransformTemplateAware {
 
     /**
      * Pinpoint profiler agent uses this detector to find out the service type of current application.
+     * Pinpoint Profiler代理使用此检测器来查找当前应用程序的服务类型。
      */
     private void addApplicationTypeDetector(ProfilerPluginSetupContext context, DubboConfiguration config) {
         context.addApplicationTypeDetector(new DubboProviderDetector(config.getDubboBootstrapMains()));

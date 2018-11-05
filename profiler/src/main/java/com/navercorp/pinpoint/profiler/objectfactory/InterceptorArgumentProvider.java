@@ -28,6 +28,9 @@ import com.navercorp.pinpoint.profiler.util.TypeUtils;
 import java.lang.annotation.Annotation;
 
 /**
+ *
+ * 拦截器参数提供者
+ *
  * @author Jongho Moon
  *
  */

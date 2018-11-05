@@ -25,10 +25,24 @@ import java.util.List;
  */
 public interface DataSourceMonitorRegistryService {
 
+    /*
+    * 注册一个数据源监控*
+     * @param dataSourceMonitor
+     * @return
+     */
     boolean register(DataSourceMonitor dataSourceMonitor);
 
+    /**
+     * 注销一个数据源监控
+     * @param dataSourceMonitor
+     * @return
+     */
     boolean unregister(DataSourceMonitor dataSourceMonitor);
 
+    /**
+     * 获得监控的数据源列表
+     * @return
+     */
     List<DataSourceMonitorWrapper> getPluginMonitorWrapperList();
 
     int getRemainingIdNumber();

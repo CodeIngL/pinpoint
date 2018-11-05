@@ -89,6 +89,11 @@ public class DefaultAgent implements Agent {
         return new DefaultInterceptorRegistryBinder(interceptorSize);
     }
 
+    /**
+     * 根据Agent的选项配置获得拦截器的数量大小
+     * @param agentOption
+     * @return
+     */
     private static int getInterceptorSize(AgentOption agentOption) {
         if (agentOption == null) {
             return DefaultInterceptorRegistryBinder.DEFAULT_MAX;

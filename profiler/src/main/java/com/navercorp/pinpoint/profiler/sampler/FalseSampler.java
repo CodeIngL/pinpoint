@@ -19,6 +19,7 @@ package com.navercorp.pinpoint.profiler.sampler;
 import com.navercorp.pinpoint.bootstrap.sampler.Sampler;
 
 /**
+ * 不采样
  * @author emeroad
  */
 public class FalseSampler implements Sampler {

@@ -25,6 +25,7 @@ import com.navercorp.pinpoint.profiler.sender.TcpDataSender;
 import com.navercorp.pinpoint.rpc.client.PinpointClientFactory;
 
 /**
+ * TCP发送器提供者
  * @author Woonduk Kang(emeroad)
  */
 public class TcpDataSenderProvider implements Provider<EnhancedDataSender> {
@@ -45,11 +46,19 @@ public class TcpDataSenderProvider implements Provider<EnhancedDataSender> {
 
     }
 
+    /**
+     * 获得一个数据发送器
+     * @return
+     */
     @Override
     public EnhancedDataSender get() {
+        //获得客户端实例
         PinpointClientFactory clientFactory = clientFactoryProvider.get();
+        //获得collector组件Tcp服务端ip
         String collectorTcpServerIp = profilerConfig.getCollectorTcpServerIp();
+        //获得collector组件Tcp服务端port
         int collectorTcpServerPort = profilerConfig.getCollectorTcpServerPort();
+        //新建TCP数据发送器
         return new TcpDataSender("Default", collectorTcpServerIp, collectorTcpServerPort, clientFactory);
     }
 }

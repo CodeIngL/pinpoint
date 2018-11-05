@@ -20,10 +20,24 @@ package com.navercorp.pinpoint.profiler.context;
  * @author Woonduk Kang(emeroad)
  */
 public interface CallStack {
+
+    /**
+     * 获得当前的的序号
+     * @return
+     */
     int getIndex();
 
+    /**
+     * 将一个span事件推入调用栈中
+     * @param spanEvent
+     * @return
+     */
     int push(SpanEvent spanEvent);
 
+    /**
+     * 栈中弹出一个事件
+     * @return
+     */
     SpanEvent pop();
 
     SpanEvent peek();
@@ -32,5 +46,9 @@ public interface CallStack {
 
     SpanEvent[] copyStackFrame();
 
+    /**
+     * 获得最大栈深度
+     * @return
+     */
     int getMaxDepth();
 }

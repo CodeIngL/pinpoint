@@ -51,6 +51,10 @@ public class DefaultSpanFactory implements SpanFactory {
 
     }
 
+    /**
+     * @param traceRoot
+     * @return
+     */
     @Override
     public Span newSpan(TraceRoot traceRoot) {
         Assert.requireNonNull(traceRoot, "traceRoot must not be null");

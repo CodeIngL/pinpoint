@@ -38,6 +38,8 @@ import org.slf4j.LoggerFactory;
 
 
 /**
+ *
+ * 默认的追踪上下文
  * @author emeroad
  * @author HyunGil Jeong
  * @author Taejin Koo

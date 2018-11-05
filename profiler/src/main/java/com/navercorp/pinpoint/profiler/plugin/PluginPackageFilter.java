@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 插件包过滤器，类名过滤器
  * @author Woonduk Kang(emeroad)
  */
 public class PluginPackageFilter implements ClassNameFilter {

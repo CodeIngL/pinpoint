@@ -198,37 +198,46 @@ public class ApplicationContextModule extends AbstractModule {
         binder().requireAtInjectOnConstructors();
         binder().disableCircularProxies();
 
+        //注入以产生的的相关实例
         bind(ProfilerConfig.class).toInstance(profilerConfig);
         bind(ServiceTypeRegistryService.class).toInstance(serviceTypeRegistryService);
         bind(AgentOption.class).toInstance(agentOption);
         bind(Instrumentation.class).toInstance(agentOption.getInstrumentation());
         bind(InterceptorRegistryBinder.class).toInstance(interceptorRegistryBinder);
 
+        //带有PluginJars的方法传递插件的url数组
         bind(URL[].class).annotatedWith(PluginJars.class).toInstance(agentOption.getPluginJars());
 
+        //带有BootstrapJarPaths传递boot目录下的jar字符串地址
         TypeLiteral<List<String>> listString = new TypeLiteral<List<String>>() {};
         bind(listString).annotatedWith(BootstrapJarPaths.class).toInstance(agentOption.getBootstrapJarPaths());
 
+        //构建agent的信息
         bindAgentInformation(agentOption.getAgentId(), agentOption.getApplicationName());
 
+        //构建数据传送组件
         bindDataTransferComponent();
 
         bind(ServerMetaDataRegistryService.class).toProvider(ServerMetaDataRegistryServiceProvider.class).in(Scopes.SINGLETON);
         bind(ServerMetaDataHolder.class).toProvider(ServerMetaDataHolderProvider.class).in(Scopes.SINGLETON);
-        bind(StorageFactory.class).toProvider(StorageFactoryProvider.class).in(Scopes.SINGLETON);
+        bind(StorageFactory.class).toProvider(StorageFactoryProvider.class).in(Scopes.SINGLETON);        //存储工厂
 
+        //构建服务组件
         bindServiceComponent();
 
         bind(DataSourceMonitorRegistryService.class).toProvider(DataSourceMonitorRegistryServiceProvider.class).in(Scopes.SINGLETON);
 
+        //构建生成器
         bind(IdGenerator.class).to(AtomicIdGenerator.class).in(Scopes.SINGLETON);
         bind(AsyncIdGenerator.class).to(DefaultAsyncIdGenerator.class).in(Scopes.SINGLETON);
         bind(TransactionCounter.class).to(DefaultTransactionCounter.class).in(Scopes.SINGLETON);
         bind(TransactionIdEncoder.class).to(DefaultTransactionIdEncoder.class).in(Scopes.SINGLETON);
 
+        //构建采样器
         bind(Sampler.class).toProvider(SamplerProvider.class).in(Scopes.SINGLETON);
 
 
+        //构建TraceContext的上下文
         final TypeLiteral<Binder<Trace>> binder = new TypeLiteral<Binder<Trace>>() {};
         final TypeLiteral<ThreadLocalBinder<Trace>> threadLocalBinder = new TypeLiteral<ThreadLocalBinder<Trace>>() {};
         bind(binder).to(threadLocalBinder).in(Scopes.SINGLETON);
@@ -236,18 +245,24 @@ public class ApplicationContextModule extends AbstractModule {
         bind(AsyncTraceContext.class).toProvider(AsyncTraceContextProvider.class).in(Scopes.SINGLETON);
         bind(AsyncContextFactory.class).toProvider(AsyncContextFactoryProvider.class).in(Scopes.SINGLETON);
 
+        //构建死锁线程表
         bind(DeadlockThreadRegistry.class).toProvider(DeadlockThreadRegistryProvider.class).in(Scopes.SINGLETON);
 
+        //构建追踪组件
         bindTraceComponent();
 
+        //构建收集齐
         bind(ResponseTimeCollector.class).to(ReuseResponseTimeCollector.class).in(Scopes.SINGLETON);
         bind(ActiveTraceRepository.class).toProvider(ActiveTraceRepositoryProvider.class).in(Scopes.SINGLETON);
 
+        //插件加载器
         bind(PluginContextLoadResult.class).toProvider(PluginContextLoadResultProvider.class).in(Scopes.SINGLETON);
 
+        //jdbc上下文
         bind(JdbcContext.class).to(DefaultJdbcContext.class).in(Scopes.SINGLETON);
         bind(JdbcUrlParsingService.class).toProvider(JdbcUrlParsingServiceProvider.class).in(Scopes.SINGLETON);
 
+        //构建信息
         bind(AgentInformation.class).toProvider(AgentInformationProvider.class).in(Scopes.SINGLETON);
 
         bind(InstrumentEngine.class).toProvider(InstrumentEngineProvider.class).in(Scopes.SINGLETON);
@@ -266,6 +281,9 @@ public class ApplicationContextModule extends AbstractModule {
         bind(AgentStatMonitor.class).to(DefaultAgentStatMonitor.class).in(Scopes.SINGLETON);
     }
 
+    /**
+     * 构建追踪组件系统
+     */
     private void bindTraceComponent() {
         bind(TraceRootFactory.class).to(DefaultTraceRootFactory.class).in(Scopes.SINGLETON);
         bind(TraceIdFactory.class).to(DefaultTraceIdFactory.class).in(Scopes.SINGLETON);
@@ -281,6 +299,9 @@ public class ApplicationContextModule extends AbstractModule {
         bind(TraceFactory.class).toProvider(TraceFactoryProvider.class).in(Scopes.SINGLETON);
     }
 
+    /**
+     * 构建数据传输组件
+     */
     private void bindDataTransferComponent() {
         // create tcp channel
 
@@ -298,6 +319,9 @@ public class ApplicationContextModule extends AbstractModule {
                 .toProvider(StatDataSenderProvider.class).in(Scopes.SINGLETON);
     }
 
+    /**
+     * 构建服务组件系统
+     */
     private void bindServiceComponent() {
 
         bind(StringMetaDataService.class).to(DefaultStringMetaDataService.class).in(Scopes.SINGLETON);
@@ -306,6 +330,11 @@ public class ApplicationContextModule extends AbstractModule {
         bind(PredefinedMethodDescriptorRegistry.class).to(DefaultPredefinedMethodDescriptorRegistry.class).in(Scopes.SINGLETON);
     }
 
+    /**
+     * 构建agent信息
+     * @param agentId
+     * @param applicationName
+     */
     private void bindAgentInformation(String agentId, String applicationName) {
 
         bind(String.class).annotatedWith(AgentId.class).toInstance(agentId);
@@ -314,6 +343,9 @@ public class ApplicationContextModule extends AbstractModule {
         bind(ServiceType.class).annotatedWith(ApplicationServerType.class).toProvider(ApplicationServerTypeProvider.class).in(Scopes.SINGLETON);
     }
 
+    /**
+     * 构建状态组件信息
+     */
     private void bindAgentStatComponent() {
         bind(MemoryMetric.class).toProvider(MemoryMetricProvider.class).in(Scopes.SINGLETON);
         bind(DetailedMemoryMetric.class).toProvider(DetailedMemoryMetricProvider.class).in(Scopes.SINGLETON);

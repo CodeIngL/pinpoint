@@ -20,10 +20,13 @@ import com.navercorp.pinpoint.bootstrap.interceptor.scope.ExecutionPolicy;
 import com.navercorp.pinpoint.bootstrap.interceptor.scope.InterceptorScope;
 
 /**
+ *  作用域信息
  * @author Woonduk Kang(emeroad)
  */
 public class ScopeInfo {
+    //拦截器作用域
     private final InterceptorScope interceptorScope;
+    //执行策略
     private final ExecutionPolicy executionPolicy;
 
     public ScopeInfo(InterceptorScope interceptorScope, ExecutionPolicy executionPolicy) {

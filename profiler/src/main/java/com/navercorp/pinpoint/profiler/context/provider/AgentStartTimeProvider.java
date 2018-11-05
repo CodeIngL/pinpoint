@@ -21,6 +21,8 @@ import com.google.inject.Provider;
 import com.navercorp.pinpoint.profiler.util.RuntimeMXBeanUtils;
 
 /**
+ * agent的开始时间
+ * 通过获得虚拟机的开始时间
  * @author Woonduk Kang(emeroad)
  */
 public class AgentStartTimeProvider implements Provider<Long> {
@@ -28,6 +30,7 @@ public class AgentStartTimeProvider implements Provider<Long> {
     @Inject
     public AgentStartTimeProvider() {
     }
+
 
     @Override
     public Long get() {

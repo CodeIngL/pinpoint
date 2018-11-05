@@ -34,7 +34,7 @@ public class DefaultProfilerPluginSetupContext implements ProfilerPluginSetupCon
     //全局配置
     private final ProfilerConfig profilerConfig;
 
-    //应用检测列表
+    //应用检测列表，检测当前的服务的所属的应用类型，比如dubbo，http等等
     private final List<ApplicationTypeDetector> serverTypeDetectors = new ArrayList<ApplicationTypeDetector>();
     //jdbc解析器
     private final List<JdbcUrlParserV2> jdbcUrlParserList = new ArrayList<JdbcUrlParserV2>();

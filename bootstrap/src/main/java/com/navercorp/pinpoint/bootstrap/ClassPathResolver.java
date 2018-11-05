@@ -26,6 +26,11 @@ import java.util.List;
  */
 public interface ClassPathResolver {
 
+    /**
+     * 做agent目录中相关的依赖验证,agent是一个目录，会去寻找这个目录完成整个agent的额读取
+     *
+     * @return false agent 不对，整个agent不生效，true，继续下一步
+     */
     boolean verify();
 
     BootstrapJarFile getBootstrapJarFile();
@@ -46,6 +51,10 @@ public interface ClassPathResolver {
 
     String getAgentPluginPath();
 
+    /**
+     * 获得lib目录其中的jar的url
+     * @return
+     */
     List<URL> resolveLib();
 
     URL[] resolvePlugins();

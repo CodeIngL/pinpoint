@@ -19,6 +19,7 @@ package com.navercorp.pinpoint.rpc;
 import org.jboss.netty.channel.ChannelPipeline;
 
 /**
+ * 默认的pipeline工厂
  * @author Taejin Koo
  */
 public interface PipelineFactory {

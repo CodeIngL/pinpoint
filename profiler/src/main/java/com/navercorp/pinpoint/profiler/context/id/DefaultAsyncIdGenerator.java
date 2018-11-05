@@ -23,6 +23,7 @@ import com.navercorp.pinpoint.profiler.context.DefaultAsyncId;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * 默认的异步id生成器实现
  * @author Woonduk Kang(emeroad)
  */
 public class DefaultAsyncIdGenerator implements AsyncIdGenerator {

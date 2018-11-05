@@ -497,6 +497,18 @@ public class ASMClass implements InstrumentClass {
         return ((ASMMethod) method).addInterceptorInternal(interceptorClassName, constructorArgs, scope, executionPolicy);
     }
 
+
+    /**
+     *
+     * 核心的增加拦截器的方法
+     * @param annotation
+     * @param interceptorClassName
+     * @param scope
+     * @param executionPolicy
+     * @param constructorArgs
+     * @return
+     * @throws InstrumentException
+     */
     private int addInterceptor0(TargetFilter annotation, String interceptorClassName, InterceptorScope scope, ExecutionPolicy executionPolicy, Object[] constructorArgs) throws InstrumentException {
         final String filterTypeName = annotation.type();
         Assert.requireNonNull(filterTypeName, "type of @TargetFilter must not be null");

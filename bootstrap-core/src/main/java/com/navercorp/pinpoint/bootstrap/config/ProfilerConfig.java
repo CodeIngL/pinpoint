@@ -24,20 +24,54 @@ import java.util.Map;
  */
 public interface ProfilerConfig {
 
+    /**
+     * 拦截器注册表大小
+     * @return
+     */
     int getInterceptorRegistrySize();
 
+    /**
+     * 接收span的collector组件ip
+     * @return
+     */
     String getCollectorSpanServerIp();
 
+    /**
+     * 接收span的collector的端口port
+     * @return
+     */
     int getCollectorSpanServerPort();
 
+    /**
+     * 接收stat的collector组件ip
+     * @return
+     */
     String getCollectorStatServerIp();
 
+    /**
+     * 接收stat的collector的端口port
+     * @return
+     */
     int getCollectorStatServerPort();
 
+
+    /**
+     * collector的tcp的ip
+     * @return
+     */
     String getCollectorTcpServerIp();
 
+    /**
+     * collector的tcp的port
+     * @return
+     */
     int getCollectorTcpServerPort();
 
+
+    /**
+     * stat发送的写入队列大小
+     * @return
+     */
     int getStatDataSenderWriteQueueSize();
 
     int getStatDataSenderSocketSendBufferSize();

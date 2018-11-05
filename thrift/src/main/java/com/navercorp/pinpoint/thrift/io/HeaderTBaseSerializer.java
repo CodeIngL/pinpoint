@@ -28,6 +28,7 @@ import org.apache.thrift.transport.TIOStreamTransport;
 /**
  * Generic utility for easily serializing objects into a byte array or Java
  * String.
+ * 用于将对象轻松序列化为字节数组或Java String的通用实用程序
  * copy->HeaderTBaseSerializer
  */
 public class HeaderTBaseSerializer {

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * pinpoint的自己本身的过滤，过滤掉本身的插件
  * @author Woonduk Kang(emeroad)
  */
 public class PinpointProfilerPackageSkipFilter implements ClassNameFilter {

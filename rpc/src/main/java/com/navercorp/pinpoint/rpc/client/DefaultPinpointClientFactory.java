@@ -46,6 +46,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * 默认的客户端实现
  * @author Woonduk Kang(emeroad)
  */
 public class DefaultPinpointClientFactory implements PinpointClientFactory {
@@ -77,6 +78,10 @@ public class DefaultPinpointClientFactory implements PinpointClientFactory {
         LoggerFactorySetup.setupSlf4jLoggerFactory();
     }
 
+
+    /**
+     * 默认的网络客户端工厂
+     */
     public DefaultPinpointClientFactory() {
         this(1, 1);
     }
@@ -89,6 +94,12 @@ public class DefaultPinpointClientFactory implements PinpointClientFactory {
         this(bossCount, workerCount, new DefaultConnectionFactoryProvider(new ClientCodecPipelineFactory()));
     }
 
+    /**
+     *
+     * @param bossCount boss线程数量
+     * @param workerCount 工作线程数量
+     * @param connectionFactoryProvider 连接工厂提供者
+     */
     public DefaultPinpointClientFactory(int bossCount, int workerCount, ConnectionFactoryProvider connectionFactoryProvider) {
         if (bossCount < 1) {
             throw new IllegalArgumentException("bossCount is negative: " + bossCount);

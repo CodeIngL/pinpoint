@@ -25,8 +25,16 @@ import com.navercorp.pinpoint.common.annotations.InterfaceAudience;
  */
 public interface TraceFactory {
 
+    /**
+     * 获得一个当前的Trace，有逻辑处理
+     * @return
+     */
     Trace currentTraceObject();
 
+    /**
+     * 获得一个当前的原始的的Trace
+     * @return
+     */
     Trace currentRawTraceObject();
 
     Trace removeTraceObject();

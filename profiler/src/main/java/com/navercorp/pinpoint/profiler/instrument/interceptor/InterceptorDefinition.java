@@ -21,9 +21,12 @@ import com.navercorp.pinpoint.bootstrap.interceptor.Interceptor;
 import java.lang.reflect.Method;
 
 /**
+ *
+ * 拦截器定义
  * @author Woonduk Kang(emeroad)
  */
 public interface InterceptorDefinition {
+
     Class<? extends Interceptor> getInterceptorBaseClass();
 
     Class<? extends Interceptor> getInterceptorClass();

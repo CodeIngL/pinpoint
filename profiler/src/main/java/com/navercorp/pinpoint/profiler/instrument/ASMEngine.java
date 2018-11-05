@@ -80,6 +80,7 @@ public class ASMEngine implements InstrumentEngine {
                 if (classNode == null) {
                     return null;
                 }
+                //获得Api调用的源数据服务
                 ApiMetaDataService apiMetaDataService = this.apiMetaDataService.get();
                 return new ASMClass(objectBinderFactory, instrumentContext, interceptorRegistryBinder, apiMetaDataService, classLoader, classNode);
             }

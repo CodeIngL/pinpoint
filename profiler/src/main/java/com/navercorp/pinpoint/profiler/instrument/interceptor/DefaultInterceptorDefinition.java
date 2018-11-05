@@ -37,6 +37,15 @@ public class DefaultInterceptorDefinition implements InterceptorDefinition {
     //after方法
     private final Method afterMethod;
 
+    /**
+     * 构建默认的拦截器定义类
+     * @param baseInterceptorClazz
+     * @param interceptorClazz
+     * @param interceptorType
+     * @param captureType
+     * @param beforeMethod
+     * @param afterMethod
+     */
     public DefaultInterceptorDefinition(Class<? extends Interceptor> baseInterceptorClazz, Class<? extends Interceptor> interceptorClazz, InterceptorType interceptorType, CaptureType captureType, Method beforeMethod, Method afterMethod) {
         if (baseInterceptorClazz == null) {
             throw new NullPointerException("baseInterceptorClazz must not be null");

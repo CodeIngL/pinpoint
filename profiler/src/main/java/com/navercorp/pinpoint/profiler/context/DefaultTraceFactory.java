@@ -43,6 +43,8 @@ public class DefaultTraceFactory implements TraceFactory {
     }
 
     /**
+     *
+     * 返回跟踪对象验证是否可以对其进行采样。
      * Return Trace object AFTER validating whether it can be sampled or not.
      *
      * @return Trace
@@ -77,6 +79,7 @@ public class DefaultTraceFactory implements TraceFactory {
     }
 
     // continue to trace the request that has been determined to be sampled on previous nodes
+    // 继续跟踪已确定在先前节点上采样的请求
     @Override
     public Trace continueTraceObject(final TraceId traceId) {
         final Reference<Trace> reference = checkAndGet();

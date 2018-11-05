@@ -61,12 +61,9 @@ public class ProfilerPluginLoader {
         if (instrumentEngine == null) {
             throw new NullPointerException("instrumentEngine must not be null");
         }
-
-
         this.profilerConfig = profilerConfig;
         this.pluginSetup = pluginSetup;
         this.instrumentEngine = instrumentEngine;
-
     }
 
     /**
@@ -136,14 +133,22 @@ public class ProfilerPluginLoader {
         return result;
     }
 
+    /**
+     * 构建类名过滤器
+     * @param packageList
+     * @return
+     */
     private ClassNameFilter createPluginFilterChain(List<String> packageList) {
 
+        //包中本身的过滤器
         final ClassNameFilter pluginPackageFilter = new PluginPackageFilter(packageList);
 
+        //pinpoint内置的过滤
         final List<ClassNameFilter> chain = Arrays.asList(profilerPackageFilter, pluginPackageFilter);
 
         final ClassNameFilter filterChain = new ClassNameFilterChain(chain);
 
+        //返回组合
         return filterChain;
     }
 

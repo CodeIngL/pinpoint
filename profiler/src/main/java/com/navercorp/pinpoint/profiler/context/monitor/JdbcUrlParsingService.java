@@ -25,6 +25,11 @@ import com.navercorp.pinpoint.common.trace.ServiceType;
  */
 public interface JdbcUrlParsingService {
 
+    /**
+     * 从jdbcURL中获得DatabaseInfo信息
+     * @param jdbcUrl
+     * @return
+     */
     DatabaseInfo getDatabaseInfo(String jdbcUrl);
 
     DatabaseInfo getDatabaseInfo(ServiceType serviceType, String jdbcUrl);

@@ -42,11 +42,24 @@ import java.util.ServiceLoader;
 public class PluginLoader {
     private static final SecurityManager SECURITY_MANAGER = System.getSecurityManager();
 
+    /**
+     * 加载插件，插件应该独立与应用程序，因此这个为这些插件使用了单独的的类加载器
+     * @param serviceType
+     * @param urls
+     * @param <T>
+     * @return
+     */
     public static <T> List<T> load(Class<T> serviceType, URL[] urls) {
         URLClassLoader classLoader = createPluginClassLoader(urls, ClassLoader.getSystemClassLoader());
         return load(serviceType, classLoader);
     }
 
+    /**
+     * 为插件创建单独的类加载器，用于加载插件
+     * @param urls 插件的URL
+     * @param parent 父加载器
+     * @return 插件类加载器
+     */
     private static PluginLoaderClassLoader createPluginClassLoader(final URL[] urls, final ClassLoader parent) {
         if (SECURITY_MANAGER != null) {
             return AccessController.doPrivileged(new PrivilegedAction<PluginLoaderClassLoader>() {
@@ -58,7 +71,14 @@ public class PluginLoader {
             return new PluginLoaderClassLoader(urls, parent);
         }
     }
-    
+
+    /**
+     * 加载插件等jar的相关类，这里使用java的SPI方式进行加载
+     * @param serviceType
+     * @param classLoader
+     * @param <T>
+     * @return
+     */
     public static <T> List<T> load(Class<T> serviceType, ClassLoader classLoader) {
         ServiceLoader<T> serviceLoader = ServiceLoader.load(serviceType, classLoader);
         

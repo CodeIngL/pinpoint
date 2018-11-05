@@ -111,7 +111,7 @@ public class TcpDataSender extends AbstractDataSender implements EnhancedDataSen
     }
 
     /**
-     * TCP核心构造函数
+     * TCP数据发送器核心构造函数
      * @param name
      * @param clientProvider
      * @param serializer

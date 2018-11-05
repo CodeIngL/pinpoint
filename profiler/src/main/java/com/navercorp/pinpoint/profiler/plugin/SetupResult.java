@@ -23,6 +23,7 @@ import java.lang.instrument.ClassFileTransformer;
 import java.util.List;
 
 /**
+ * 启动结果
  * @author Woonduk Kang(emeroad)
  */
 public class SetupResult {

@@ -103,6 +103,16 @@ public class AnnotatedInterceptorFactory implements InterceptorFactory {
         this.exceptionHandle = exceptionHandle;
     }
 
+    /**
+     * 得到一个拦截器
+     * @param classLoader 类加载器
+     * @param interceptorClassName 拦截器类名
+     * @param providedArguments 构造函数入参
+     * @param scopeInfo 作用域信息
+     * @param target 目标
+     * @param targetMethod 目标方法
+     * @return
+     */
     @Override
     public Interceptor getInterceptor(ClassLoader classLoader, String interceptorClassName, Object[] providedArguments, ScopeInfo scopeInfo, InstrumentClass target, InstrumentMethod targetMethod) {
 

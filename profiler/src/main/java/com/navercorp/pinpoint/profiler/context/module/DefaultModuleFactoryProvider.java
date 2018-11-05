@@ -48,7 +48,7 @@ public class DefaultModuleFactoryProvider implements ModuleFactoryProvider {
      */
     @Override
     public ModuleFactory get() {
-        //通常情况下返回ApplicationContextModuleFactory
+        //通常情况下返回ApplicationContextModuleFactory，可以通过配置文件来指定你要的实例模块工厂
         if (StringUtils.isEmpty(moduleFactoryClazzName) || ApplicationContextModuleFactory.class.getName().equals(moduleFactoryClazzName)) {
             return new ApplicationContextModuleFactory();
         } else {

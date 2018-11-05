@@ -24,6 +24,7 @@ import java.util.concurrent.Callable;
  * @author emeroad
  */
 public class ContextClassLoaderExecuteTemplate<V> {
+    //加载lib下的相关jar的类加载器
     private final ClassLoader classLoader;
 
     public ContextClassLoaderExecuteTemplate(ClassLoader classLoader) {

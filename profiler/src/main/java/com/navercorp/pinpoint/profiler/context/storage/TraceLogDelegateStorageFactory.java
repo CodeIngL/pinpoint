@@ -35,7 +35,6 @@ public class TraceLogDelegateStorageFactory implements StorageFactory {
 
     @Override
     public Storage createStorage(TraceRoot traceRoot) {
-        delegate.createStorage(traceRoot);
         Storage storage = delegate.createStorage(traceRoot);
         return new TraceLogDelegateStorage(storage);
     }

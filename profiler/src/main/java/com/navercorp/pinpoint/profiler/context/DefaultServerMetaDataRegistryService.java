@@ -30,6 +30,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
+ *
+ * 服务元信息服务
+ *
  * @author HyunGil Jeong
  */
 public class DefaultServerMetaDataRegistryService implements ServerMetaDataRegistryService {

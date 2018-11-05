@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 过滤器链类名过滤，组合了pinpoint本身和插件写点。
  * @author Woonduk Kang(emeroad)
  */
 public class ClassNameFilterChain implements ClassNameFilter {

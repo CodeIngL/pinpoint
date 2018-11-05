@@ -15,12 +15,16 @@
 package com.navercorp.pinpoint.bootstrap.plugin;
 
 /**
+ *
+ *
  * @author Jongho Moon
  *
  */
-
 public abstract class ObjectFactory {
+
+    //类名
     private final String className;
+    //构造参数
     private final Object[] arguments;
     
     private ObjectFactory(String className, Object[] arguments) {
@@ -36,11 +40,24 @@ public abstract class ObjectFactory {
         return arguments;
     }
 
-    
+
+    /**
+     * 通过过构造函数构造
+     * @param className
+     * @param args
+     * @return
+     */
     public static ObjectFactory byConstructor(String className, Object... args) {
         return new ByConstructor(className, args);
     }
-    
+
+    /**
+     * 通过stacit的工厂方法类进行构造
+     * @param className
+     * @param factoryMethodName
+     * @param args
+     * @return
+     */
     public static ObjectFactory byStaticFactory(String className, String factoryMethodName, Object... args) {
         return new ByStaticFactoryMethod(className, factoryMethodName, args);
     }

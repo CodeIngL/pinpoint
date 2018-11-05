@@ -16,6 +16,8 @@ package com.navercorp.pinpoint.common.trace;
 
 
 /**
+ *
+ * plugin插件的追踪元信息的提供器，每一个插件都要实现
  * @author Jongho Moon <jongho.moon@navercorp.com>
  *
  */

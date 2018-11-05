@@ -28,6 +28,7 @@ import com.navercorp.pinpoint.thrift.dto.TSpan;
 
 /**
  * Span represent RPC
+ * Span 代表了一次RPC的基本结构，包含追踪信息的结构
  *
  * @author netspider
  * @author emeroad
@@ -38,6 +39,10 @@ public class Span extends TSpan implements FrameAttachment {
 
     private final TraceRoot traceRoot;
 
+    /**
+     * 根据一个TraceRoot构造一个Span
+     * @param traceRoot
+     */
     public Span(final TraceRoot traceRoot) {
         if (traceRoot == null) {
             throw new NullPointerException("traceRoot must not be null");

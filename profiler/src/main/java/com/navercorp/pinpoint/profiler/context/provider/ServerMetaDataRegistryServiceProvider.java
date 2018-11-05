@@ -25,6 +25,8 @@ import com.navercorp.pinpoint.profiler.util.RuntimeMXBeanUtils;
 import java.util.List;
 
 /**
+ *
+ * 服务元信息提供者
  * @author HyunGil Jeong
  */
 public class ServerMetaDataRegistryServiceProvider implements Provider<ServerMetaDataRegistryService> {

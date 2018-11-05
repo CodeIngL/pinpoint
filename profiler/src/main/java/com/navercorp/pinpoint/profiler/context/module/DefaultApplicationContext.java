@@ -85,6 +85,12 @@ public class DefaultApplicationContext implements ApplicationContext {
 
     private final Injector injector;
 
+    /**
+     * 构建依赖容器
+     * @param agentOption
+     * @param interceptorRegistryBinder
+     * @param moduleFactoryProvider
+     */
     public DefaultApplicationContext(AgentOption agentOption, final InterceptorRegistryBinder interceptorRegistryBinder, ModuleFactoryProvider moduleFactoryProvider) {
         this(agentOption, interceptorRegistryBinder, moduleFactoryProvider.get());
     }

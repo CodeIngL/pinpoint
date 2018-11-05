@@ -40,7 +40,9 @@ public class SamplingRateSampler implements Sampler {
 
     @Override
     public boolean isSampling() {
+        //采样计数
         int samplingCount = MathUtils.fastAbs(counter.getAndIncrement());
+        //是否采样
         int isSampling = samplingCount % samplingRate;
         return isSampling == 0;
     }

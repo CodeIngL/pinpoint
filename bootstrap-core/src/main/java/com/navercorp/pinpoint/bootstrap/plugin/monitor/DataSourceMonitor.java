@@ -19,18 +19,39 @@ package com.navercorp.pinpoint.bootstrap.plugin.monitor;
 import com.navercorp.pinpoint.common.trace.ServiceType;
 
 /**
+ * 数据源监控
  * @author Taejin Koo
  */
 public interface DataSourceMonitor {
 
+    /**
+     * 获得服务类型
+     * @return
+     */
     ServiceType getServiceType();
 
+    /**
+     * 获得url
+     * @return
+     */
     String getUrl();
 
+    /**
+     * 获得活跃的连接数
+     * @return
+     */
     int getActiveConnectionSize();
 
+    /**
+     * 获得最大的连接数
+     * @return
+     */
     int getMaxConnectionSize();
 
+    /**
+     * 是否开启
+     * @return
+     */
     boolean isDisabled();
 
 

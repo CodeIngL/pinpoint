@@ -41,6 +41,12 @@ public class StorageFactoryProvider implements Provider<StorageFactory> {
     private final SpanPostProcessor spanPostProcessor;
     private final SpanChunkFactory spanChunkFactory;
 
+    /**
+     * @param profilerConfig
+     * @param spanDataSender
+     * @param spanPostProcessor
+     * @param spanChunkFactory
+     */
     @Inject
     public StorageFactoryProvider(ProfilerConfig profilerConfig, @SpanDataSender DataSender spanDataSender, SpanPostProcessor spanPostProcessor, SpanChunkFactory spanChunkFactory) {
         if (profilerConfig == null) {

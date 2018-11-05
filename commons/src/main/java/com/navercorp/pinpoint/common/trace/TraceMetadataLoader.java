@@ -88,9 +88,11 @@ public class TraceMetadataLoader {
                 logger.info("Loading TraceMetadataProvider: " + provider.getClass().getName() + " name:" + provider.toString());
             }
 
-            //为具体的追踪元数据提供者构建上下文
+            //为具体的追踪元数据提供者构建上下文，每一个插件都有自己的的插件上下文信息
             TraceMetadataSetupContextImpl context = new TraceMetadataSetupContextImpl(provider.getClass());
             //这一步将插件的ServiceType和annotationKey添加进下面的Checker中
+            //使用插件进行上下文的初始化，回调每个TraceMetadataProvider的实现
+            //为每一个上下文设定插件的描述信息，就是serveiceType和annotationKey
             provider.setup(context);
         }
 

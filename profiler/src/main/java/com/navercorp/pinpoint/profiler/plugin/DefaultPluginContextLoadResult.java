@@ -71,18 +71,22 @@ public class DefaultPluginContextLoadResult implements PluginContextLoadResult {
 
         this.pluginJars = pluginJars;
         this.instrumentEngine = instrumentEngine;
+        //加载结果列表
         this.setupResultList = load();
     }
 
 
     /**
-     * 开始加载
+     * 开始加载 插件
      * @return
      */
     private List<SetupResult> load() {
         logger.info("load plugin");
+        //构建插件启动器
         PluginSetup pluginSetup = new DefaultPluginSetup(profilerConfig, instrumentEngine, dynamicTransformTrigger);
+        //构建插件加载器
         final ProfilerPluginLoader loader = new ProfilerPluginLoader(profilerConfig, pluginSetup, instrumentEngine);
+        //使用加载器加载相应url下的插件，返回插件设置结果
         List<SetupResult> load = loader.load(pluginJars);
         return load;
     }

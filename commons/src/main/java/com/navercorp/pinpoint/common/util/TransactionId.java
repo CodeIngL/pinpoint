@@ -17,6 +17,7 @@
 package com.navercorp.pinpoint.common.util;
 
 /**
+ * 代表了分布式的一次事务，由事务发起端端决定，agentid+程序开始时间+尾缀
  * @author emeroad
  */
 public class TransactionId {

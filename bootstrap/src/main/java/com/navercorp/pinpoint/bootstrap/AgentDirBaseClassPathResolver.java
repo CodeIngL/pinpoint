@@ -48,19 +48,21 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
     static final Pattern DEFAULT_AGENT_CORE_OPTIONAL_PATTERN = compile("pinpoint-bootstrap-core-optional" + VERSION_PATTERN + "\\.jar");
     static final Pattern DEFAULT_ANNOTATIONS = compile("pinpoint-annotations" + VERSION_PATTERN + "\\.jar");
 
+    //pinpoint-bootstrap-xxx.jar
     private final Pattern agentPattern;
-    //pinpoint-commons.xxx.jar
+    //pinpoint-commons-xxx.jar
     private final Pattern agentCommonsPattern;
-    //pinpoint-bootstrap-core.xxx.jar
+    //pinpoint-bootstrap-core-xxx.jar
     private final Pattern agentCorePattern;
-    //pinpoint-bootstrap-core-optional.xxx.jar
+    //pinpoint-bootstrap-core-optional-xxx.jar
     private final Pattern agentCoreOptionalPattern;
-    //pinpoint-annotations.xxx.jar
+    //pinpoint-annotations-xxx.jar
     private final Pattern annotationsPattern;
 
+    //java.class.path的值
     private String classPath;
 
-    //agent名字
+    //agent名字-->--javaagent:xx.jar的xx.jar
     private String agentJarName;
     //agent路径在classpath中呈现的路径
     private String agentJarFullPath;
@@ -112,6 +114,10 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
         this.fileExtensionList = getDefaultFileExtensionList();
     }
 
+    /**
+     * 默认的支持文件后缀，jar，xml，properties
+     * @return
+     */
     public List<String> getDefaultFileExtensionList() {
         List<String> extensionList = new ArrayList<String>();
         extensionList.add("jar");
@@ -212,6 +218,10 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
         return System.getProperty("java.class.path");
     }
 
+    /**
+     * 找到真正有-javaagent:xxx.jar对应的xxx.jar
+     * @return
+     */
     boolean findAgentJar() {
         Matcher matcher = agentPattern.matcher(classPath);
         if (!matcher.find()) {

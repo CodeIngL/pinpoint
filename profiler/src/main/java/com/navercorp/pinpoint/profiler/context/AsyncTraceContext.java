@@ -22,6 +22,7 @@ import com.navercorp.pinpoint.profiler.context.id.TraceRoot;
 
 
 /**
+ * 异步的追踪上下文
  * @author Woonduk Kang(emeroad)
  */
 public interface AsyncTraceContext {
@@ -30,6 +31,14 @@ public interface AsyncTraceContext {
 
     Reference<Trace> continueAsyncTraceObject(TraceRoot traceRoot, int asyncId, short asyncSequence);
 
+    /**
+     * 新创建一个异步的追踪上下文
+     *
+     * @param traceRoot
+     * @param asyncId
+     * @param asyncSequence
+     * @return
+     */
     Trace newAsyncTraceObject(TraceRoot traceRoot, int asyncId, short asyncSequence);
 
     Reference<Trace> continueAsyncTraceObject(AsyncTraceId asyncTraceId, int asyncId, long startTime);

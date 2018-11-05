@@ -56,6 +56,7 @@ public class ApplicationServerTypeProvider implements Provider<ServiceType> {
 
     @Override
     public ServiceType get() {
+        //默认的应用服务类型
         final ServiceType applicationServiceType = getApplicationServiceType();
         logger.info("default ApplicationServerType={}", applicationServiceType);
 
@@ -64,9 +65,14 @@ public class ApplicationServerTypeProvider implements Provider<ServiceType> {
         ApplicationServerTypeResolver applicationServerTypeResolver = new ApplicationServerTypeResolver(applicationTypeDetectorList, applicationServiceType, profilerConfig.getApplicationTypeDetectOrder());
         ServiceType resolve = applicationServerTypeResolver.resolve();
         logger.info("resolved ApplicationServerType={}", resolve);
+        //获得解析后的应用服务类型
         return resolve;
     }
 
+    /**
+     * 获得应用类型
+     * @return
+     */
     private ServiceType getApplicationServiceType() {
         String applicationServerTypeString = profilerConfig.getApplicationServerType();
         return this.serviceTypeRegistryService.findServiceTypeByName(applicationServerTypeString);

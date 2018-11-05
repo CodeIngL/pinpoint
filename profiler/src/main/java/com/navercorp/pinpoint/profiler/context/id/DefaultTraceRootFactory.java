@@ -25,8 +25,11 @@ import com.navercorp.pinpoint.profiler.context.module.AgentId;
  */
 public class DefaultTraceRootFactory implements TraceRootFactory {
 
+    //agentid
     private final String agentId;
+    //traceId工厂
     private final TraceIdFactory traceIdFactory;
+    //id生成器
     private final IdGenerator idGenerator;
 
     @Inject
@@ -45,11 +48,19 @@ public class DefaultTraceRootFactory implements TraceRootFactory {
         this.idGenerator = idGenerator;
     }
 
+    /**
+     * 构建新的追踪根
+     * @return
+     */
     @Override
     public TraceRoot newTraceRoot() {
+        //构建新事务的id
         final long localTransactionId = idGenerator.nextTransactionId();
+        //构建新的TraceId
         final TraceId traceId = traceIdFactory.newTraceId(localTransactionId);
+        //获得新建的时间
         final long startTime = traceStartTime();
+        //构建新的根
         return new DefaultTraceRoot(traceId, this.agentId, startTime, localTransactionId);
     }
 

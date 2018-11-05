@@ -39,6 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * ASM方法
  * @author jaehong.kim
  */
 public class ASMMethod implements InstrumentMethod {
@@ -202,6 +203,11 @@ public class ASMMethod implements InstrumentMethod {
         return addInterceptor0(interceptorClassName, constructorArgs, scope, executionPolicy);
     }
 
+    /**
+     * 添加以个拦截器
+     * @param interceptorId
+     * @throws InstrumentException
+     */
     @Override
     public void addInterceptor(int interceptorId) throws InstrumentException {
         final Interceptor interceptor = InterceptorRegistry.getInterceptor(interceptorId);
@@ -241,6 +247,14 @@ public class ASMMethod implements InstrumentMethod {
         return interceptorId;
     }
 
+    /**
+     * 创建一个拦截器
+     * @param classLoader 类加载器
+     * @param interceptorClassName 类的全类名
+     * @param scopeInfo 作用域范围
+     * @param constructorArgs 构造函数的入参
+     * @return
+     */
     private Interceptor createInterceptor(ClassLoader classLoader, String interceptorClassName, ScopeInfo scopeInfo, Object[] constructorArgs) {
         // exception handling.
         final AnnotatedInterceptorFactory factory = objectBinderFactory.newAnnotatedInterceptorFactory(this.pluginContext, true);

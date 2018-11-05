@@ -22,9 +22,12 @@ import com.navercorp.pinpoint.common.trace.ServiceTypeInfo;
 import java.util.List;
 
 /**
+ * 追踪元数据加载服务接口
+ * 用于加载相关的plugin插件信息
  * @author emeroad
  */
 public interface TraceMetadataLoaderService {
+
     List<ServiceTypeInfo> getServiceTypeInfos();
 
     List<AnnotationKey> getAnnotationKeys();
