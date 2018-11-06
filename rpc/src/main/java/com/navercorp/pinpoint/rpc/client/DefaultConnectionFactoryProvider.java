@@ -23,6 +23,7 @@ import org.jboss.netty.util.Timer;
 
 /**
  * 默认热的连接工厂提供者
+ * 客户端使用
  * @author Taejin Koo
  */
 public class DefaultConnectionFactoryProvider implements ConnectionFactoryProvider {

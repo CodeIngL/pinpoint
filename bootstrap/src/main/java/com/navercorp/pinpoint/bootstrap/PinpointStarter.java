@@ -90,14 +90,12 @@ class PinpointStarter {
      */
     boolean start() {
         final IdValidator idValidator = new IdValidator();
-        //agentID
-        //命令行参数-Dpinpoint.agentId=xxx必填
+        //agentID命令行参数-Dpinpoint.agentId=xxx必填
         final String agentId = idValidator.getAgentId();
         if (agentId == null) {
             return false;
         }
-        //agentName
-        //命令行参数-Dpinpoint.applicationName=xxx必填
+        //agentName命令行参数-Dpinpoint.applicationName=xxx必填
         final String applicationName = idValidator.getApplicationName();
         if (applicationName == null) {
             return false;
@@ -248,12 +246,16 @@ class PinpointStarter {
      */
     private String getConfigPath(ClassPathResolver classPathResolver) {
         final String configName = ProductInfo.NAME + ".config";
+
+        //配置文件优先从系统属性中获得
         String pinpointConfigFormSystemProperty = systemProperty.getProperty(configName);
         if (pinpointConfigFormSystemProperty != null) {
             logger.info(configName + " systemProperty found. " + pinpointConfigFormSystemProperty);
             return pinpointConfigFormSystemProperty;
         }
 
+
+        //获得配置文件的路劲
         String classPathAgentConfigPath = classPathResolver.getAgentConfigPath();
         if (classPathAgentConfigPath != null) {
             logger.info("classpath " + configName + " found. " + classPathAgentConfigPath);

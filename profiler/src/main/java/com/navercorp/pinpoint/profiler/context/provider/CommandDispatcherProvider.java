@@ -27,11 +27,14 @@ import com.navercorp.pinpoint.profiler.receiver.service.ActiveThreadService;
 import com.navercorp.pinpoint.profiler.receiver.service.EchoService;
 
 /**
+ * 命令分发器
  * @author Woonduk Kang(emeroad)
  */
 public class CommandDispatcherProvider implements Provider<CommandDispatcher> {
 
+    //检查选项
     private final ProfilerConfig profilerConfig;
+    //活跃的追踪数据
     private final ActiveTraceRepository activeTraceRepository;
 
     @Inject

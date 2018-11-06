@@ -23,6 +23,7 @@ import java.util.jar.JarFile;
 
 /**
  * 引导相关jar包集合，位于agent同级的boot目录下所有的jar，包含必备项，和可选项（optional）
+ * 代表了boot相关的jar的集合
  * @author Woonduk Kang(emeroad)
  */
 public class BootstrapJarFile {

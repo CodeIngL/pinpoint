@@ -19,10 +19,15 @@ package com.navercorp.pinpoint.profiler.receiver;
 import java.util.List;
 
 /**
+ * 服务组
  * @author Taejin Koo
  */
 public interface ProfilerCommandServiceGroup {
 
+    /**
+     * 获得组下的服务
+     * @return
+     */
     List<ProfilerCommandService> getCommandServiceList();
 
 }

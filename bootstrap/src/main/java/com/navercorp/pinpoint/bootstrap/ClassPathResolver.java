@@ -57,6 +57,10 @@ public interface ClassPathResolver {
      */
     List<URL> resolveLib();
 
+    /**
+     * 解析插件包下获得插件jar的url
+     * @return
+     */
     URL[] resolvePlugins();
 
     String getAgentDirPath();

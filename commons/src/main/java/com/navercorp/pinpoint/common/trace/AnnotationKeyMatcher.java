@@ -20,5 +20,10 @@ package com.navercorp.pinpoint.common.trace;
  */
 public interface AnnotationKeyMatcher {
 
+    /**
+     * 返回指定的code是否匹配该key
+     * @param code 指定的code
+     * @return true 匹配，false 不匹配
+     */
     boolean matches(int code);
 }

@@ -105,7 +105,7 @@ public class DefaultBaseTraceFactory implements BaseTraceFactory {
 
 
     /**
-     * 新建一个Trace
+     * 新建一个Trace，仅仅发生在一次事务追踪的头部
      * @return
      */
     @Override
@@ -115,16 +115,24 @@ public class DefaultBaseTraceFactory implements BaseTraceFactory {
         if (sampling) {
             //新建一个调用根
             final TraceRoot traceRoot = traceRootFactory.newTraceRoot();
+            //根据一个追踪树构建一个span
             final Span span = spanFactory.newSpan(traceRoot);
 
+            //根据一个追踪树构建一个存储
             final Storage storage = storageFactory.createStorage(traceRoot);
+            //根据一个追踪树构建一个调用栈
             final CallStack callStack = callStackFactory.newCallStack(traceRoot);
 
+            //获得调用树的Trace
             final TraceId traceId = traceRoot.getTraceId();
+            //新建一个Span记录器
             final SpanRecorder spanRecorder = recorderFactory.newSpanRecorder(span, traceId.isRoot(), sampling);
+            //获得一个包装了的Span事件记录器
             final WrappedSpanEventRecorder wrappedSpanEventRecorder = recorderFactory.newWrappedSpanEventRecorder();
 
+            //获得一个Trace处理器
             final ActiveTraceHandle handle = registerActiveTrace(traceRoot);
+            //构建一个默认的trace
             final DefaultTrace trace = new DefaultTrace(span, callStack, storage, asyncContextFactory, sampling, spanRecorder, wrappedSpanEventRecorder, handle);
 
             return trace;

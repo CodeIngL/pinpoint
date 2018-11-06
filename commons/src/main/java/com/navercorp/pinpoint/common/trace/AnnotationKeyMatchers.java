@@ -18,11 +18,15 @@ package com.navercorp.pinpoint.common.trace;
 import com.navercorp.pinpoint.common.util.AnnotationKeyUtils;
 
 /**
+ * AnnotationKey匹配器
  * @author Jongho Moon
  *
  */
 public final class AnnotationKeyMatchers {
-    
+
+    /**
+     * 精确匹配器
+     */
     private static class ExactMatcher implements AnnotationKeyMatcher {
         private final int code;
         
@@ -41,6 +45,9 @@ public final class AnnotationKeyMatchers {
         }
     }
 
+    /**
+     * 不匹配
+     */
     public static final AnnotationKeyMatcher NOTHING_MATCHER = new AnnotationKeyMatcher() {
         @Override
         public boolean matches(int code) {
@@ -52,6 +59,9 @@ public final class AnnotationKeyMatchers {
             return "NOTHING_MATCHER";
         }
     };
+    /**
+     * 参数匹配
+     */
     public static final AnnotationKeyMatcher ARGS_MATCHER = new AnnotationKeyMatcher() {
         @Override
         public boolean matches(int code) {
@@ -66,6 +76,11 @@ public final class AnnotationKeyMatchers {
 
     private AnnotationKeyMatchers() { }
 
+    /**
+     * 精确匹配
+     * @param key annotationKey
+     * @return 
+     */
     public static AnnotationKeyMatcher exact(AnnotationKey key) {
         return new AnnotationKeyMatchers.ExactMatcher(key);
     }

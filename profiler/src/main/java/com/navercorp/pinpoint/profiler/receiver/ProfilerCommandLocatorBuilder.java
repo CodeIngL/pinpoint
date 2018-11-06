@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * builder
  * @author Taejin Koo
  */
 public class ProfilerCommandLocatorBuilder {
@@ -36,6 +37,10 @@ public class ProfilerCommandLocatorBuilder {
         profilerCommandServiceRepository = new HashMap<Class<? extends TBase>, ProfilerCommandService>();
     }
 
+    /**
+     * 将服务组的服务全部加入
+     * @param serviceGroup 服务组
+     */
     public void addService(ProfilerCommandServiceGroup serviceGroup) {
         if (serviceGroup == null) {
             throw new NullPointerException("serviceGroup must not be null");
@@ -46,6 +51,11 @@ public class ProfilerCommandLocatorBuilder {
         }
     }
 
+    /**
+     * 将服务添加
+     * @param service 服务
+     * @return
+     */
     public boolean addService(ProfilerCommandService service) {
         if (service == null) {
             throw new NullPointerException("service must not be null");

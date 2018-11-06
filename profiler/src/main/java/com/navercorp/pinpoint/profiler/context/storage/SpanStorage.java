@@ -26,12 +26,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 代表一个span的存储
  * @author emeroad
  */
 public class SpanStorage implements Storage {
 
+    //相关spanevent
     protected List<TSpanEvent> spanEventList = new ArrayList<TSpanEvent>(10);
     private final TraceRoot traceRoot;
+    //数据发送器
     private final DataSender dataSender;
 
     public SpanStorage(TraceRoot traceRoot, DataSender dataSender) {

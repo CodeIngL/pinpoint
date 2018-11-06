@@ -29,6 +29,8 @@ import com.navercorp.pinpoint.common.util.logger.CommonLoggerFactory;
 import com.navercorp.pinpoint.common.util.logger.StdoutCommonLoggerFactory;
 
 /**
+ *
+ * 追踪元数据加载器，通过spi方式架子TraceMetadataProvide--->TraceMetadata
  * @author Jongho Moon
  *
  */

@@ -19,6 +19,8 @@ package com.navercorp.pinpoint.collector.receiver;
 import org.apache.thrift.TBase;
 
 /**
+ *
+ * 事件分发handler
  * @author emeroad
  * @author koo.taejin
  */

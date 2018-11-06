@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
+ * 服务时间Controller，获得当前的collector此刻的时间
  * @author Taejin Koo
  */
 @Controller

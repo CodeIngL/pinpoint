@@ -22,7 +22,15 @@ package com.navercorp.pinpoint.common.trace;
  */
 public interface ServiceTypeInfo {
 
+    /**
+     * 获得服务类型
+     * @return
+     */
     ServiceType getServiceType();
 
+    /**
+     * 获得首要的Key匹配
+     * @return
+     */
     AnnotationKeyMatcher getPrimaryAnnotationKeyMatcher();
 }

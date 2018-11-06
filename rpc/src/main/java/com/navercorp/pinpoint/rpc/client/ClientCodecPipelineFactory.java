@@ -25,6 +25,7 @@ import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.Channels;
 
 /**
+ * 客户端编解码pipeline
  * @author emeroad
  * @author koo.taejin
  */

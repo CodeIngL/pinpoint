@@ -136,6 +136,12 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
         this.fileExtensionList = getDefaultFileExtensionList();
     }
 
+    /**
+     * 对agent进行简单验证，
+     * 主要是验证agent的boot目录下的jar包是否存在，
+     * 包括必要的和可选的jar包。
+     * @return
+     */
     @Override
     public boolean verify() {
 

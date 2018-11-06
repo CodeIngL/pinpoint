@@ -56,6 +56,11 @@ public final class AnnotationKeyUtils {
         }
     }
 
+    /**
+     * 是否是一个参数标志
+     * @param index 参数序号
+     * @return 在参数中，true 否则 false
+     */
     public static boolean isArgsKey(int index) {
         if (index <= AnnotationKey.ARGS0.getCode() && index >= AnnotationKey.ARGSN.getCode()) {
             return true;

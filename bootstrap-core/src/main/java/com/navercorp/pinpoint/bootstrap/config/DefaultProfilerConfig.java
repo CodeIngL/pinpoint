@@ -481,9 +481,10 @@ public class DefaultProfilerConfig implements ProfilerConfig {
         // TODO : use Properties' default value instead of using a temp variable.
         final ValueResolver placeHolderResolver = new PlaceHolderResolver();
 
-        this.profileEnable = readBoolean("profiler.enable", true);
-        this.profileInstrumentEngine = readString("profiler.instrument.engine", INSTRUMENT_ENGINE_ASM);
-        this.instrumentMatcherEnable = readBoolean("profiler.instrument.matcher.enable", true);
+
+        this.profileEnable = readBoolean("profiler.enable", true); //性能检查是否开启
+        this.profileInstrumentEngine = readString("profiler.instrument.engine", INSTRUMENT_ENGINE_ASM); //引擎
+        this.instrumentMatcherEnable = readBoolean("profiler.instrument.matcher.enable", true); //匹配开关
 
         this.instrumentMatcherCacheConfig.setInterfaceCacheSize(readInt("profiler.instrument.matcher.interface.cache.size", 4));
         this.instrumentMatcherCacheConfig.setInterfaceCacheEntrySize(readInt("profiler.instrument.matcher.interface.cache.entry.size", 16));

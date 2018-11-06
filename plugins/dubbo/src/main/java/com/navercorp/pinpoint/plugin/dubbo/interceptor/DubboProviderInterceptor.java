@@ -39,12 +39,15 @@ public class DubboProviderInterceptor implements AroundInterceptor {
             logger.beforeInterceptor(target, args);
         }
 
+        //获得当前的trace
         Trace trace = traceContext.currentRawTraceObject();
         if (trace == null) {
+            //新建一个trace
             trace = createTrace(target, args);
             if (trace == null) {
                 return;
             }
+            //不需采样直接返回
             if (!trace.canSampled()) {
                 return;
             }
@@ -122,10 +125,17 @@ public class DubboProviderInterceptor implements AroundInterceptor {
         trace.close();
     }
 
+    /**
+     * 创建一个新的Trace
+     * @param target
+     * @param args
+     * @return
+     */
     protected Trace createTrace(Object target, Object[] args) {
         Invoker invoker = (Invoker) target;
 
         // Ignore monitor service.
+        // 忽略监控服务。
         if (DubboConstants.MONITOR_SERVICE_FQCN.equals(invoker.getInterface().getName())) {
             return traceContext.disableSampling();
         }
@@ -133,6 +143,7 @@ public class DubboProviderInterceptor implements AroundInterceptor {
         RpcInvocation invocation = (RpcInvocation) args[0];
 
         // If this transaction is not traceable, mark as disabled.
+        // 如果此事务不可跟踪，请标记为已禁用。
         if (invocation.getAttachment(DubboConstants.META_DO_NOT_TRACE) != null) {
             return traceContext.disableSampling();
         }
@@ -142,6 +153,9 @@ public class DubboProviderInterceptor implements AroundInterceptor {
         // If there's no trasanction id, a new trasaction begins here.
         // FIXME There seems to be cases where the invoke method is called after a span is already created.
         // We'll have to check if a trace object already exists and create a span event instead of a span in that case.
+        // 如果没有交易ID，则从此处开始新交易。
+        // FIXME似乎存在在已创建span之后调用invoke方法的情况。
+        // 在这种情况下，我们必须检查跟踪对象是否已存在并创建跨度事件而不是跨度。
         if (transactionId == null) {
             return traceContext.newTraceObject();
         }

@@ -45,6 +45,9 @@ import com.navercorp.pinpoint.rpc.packet.ControlHandshakePacket;
 import com.navercorp.pinpoint.rpc.packet.ControlHandshakeResponsePacket;
 import com.navercorp.pinpoint.rpc.packet.HandshakeResponseCode;
 
+/**
+ * pinpoint的客户端握手器
+ */
 public class PinpointClientHandshaker {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());

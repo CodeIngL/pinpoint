@@ -59,6 +59,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * collector组件接收器
  * @author Taejin Koo
  */
 public class PinpointServerAcceptor implements PinpointServerConfig {
@@ -116,16 +117,27 @@ public class PinpointServerAcceptor implements PinpointServerConfig {
         this(clusterOption, channelConnectedFilter, new ServerCodecPipelineFactory());
     }
 
+    /**
+     * 构造接收器
+     * @param clusterOption
+     * @param channelConnectedFilter
+     * @param pipelineFactory
+     */
     public PinpointServerAcceptor(ClusterOption clusterOption, ChannelFilter channelConnectedFilter, PipelineFactory pipelineFactory) {
+        //构建nettyBootstrap
         ServerBootstrap bootstrap = createBootStrap(1, WORKER_COUNT);
+        //设置相关选项
         setOptions(bootstrap);
         this.bootstrap = bootstrap;
 
+        //构建健康检查其
         this.healthCheckTimer = TimerFactory.createHashedWheelTimer("PinpointServerSocket-HealthCheckTimer", 50, TimeUnit.MILLISECONDS, 512);
         this.healthCheckManager = new HealthCheckManager(healthCheckTimer, channelGroup);
 
+        //构建请求时间的管理器
         this.requestManagerTimer = TimerFactory.createHashedWheelTimer("PinpointServerSocket-RequestManager", 50, TimeUnit.MILLISECONDS, 512);
 
+        //
         this.clusterOption = clusterOption;
         this.channelConnectedFilter = Assert.requireNonNull(channelConnectedFilter, "channelConnectedFilter must not be null");
 
@@ -133,6 +145,13 @@ public class PinpointServerAcceptor implements PinpointServerConfig {
         addPipeline(bootstrap, pipelineFactory);
     }
 
+    /**
+     *
+     * 创建serverbootstrap
+     * @param bossCount boss线程数
+     * @param workerCount 工作者线程数
+     * @return
+     */
     private ServerBootstrap createBootStrap(int bossCount, int workerCount) {
         // profiler, collector
         ExecutorService boss = Executors.newCachedThreadPool(new PinpointThreadFactory("Pinpoint-Server-Boss", true));
@@ -145,6 +164,10 @@ public class PinpointServerAcceptor implements PinpointServerConfig {
         return new ServerBootstrap(nioClientSocketChannelFactory);
     }
 
+    /**
+     * 设置netty选项
+     * @param bootstrap
+     */
     private void setOptions(ServerBootstrap bootstrap) {
         // is read/write timeout necessary? don't need it because of NIO?
         // write timeout should be set through additional interceptor. write

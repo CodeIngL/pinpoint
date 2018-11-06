@@ -171,7 +171,7 @@ import java.util.List;
 
 
 /**
- * guice工厂
+ * guice工厂，pinpoint agent的默认实现
  * @author Woonduk Kang(emeroad)
  */
 public class ApplicationContextModule extends AbstractModule {

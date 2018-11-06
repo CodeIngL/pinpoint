@@ -23,6 +23,7 @@ import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.Channels;
 
 /**
+ * 服务端解码Pipeline
  * @author Taejin Koo
  */
 public class ServerCodecPipelineFactory implements PipelineFactory {

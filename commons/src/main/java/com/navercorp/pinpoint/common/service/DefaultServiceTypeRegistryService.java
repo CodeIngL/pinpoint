@@ -69,6 +69,7 @@ public class DefaultServiceTypeRegistryService implements ServiceTypeRegistrySer
     private ServiceTypeRegistry buildServiceTypeRegistry() {
         ServiceTypeRegistry.Builder builder = new ServiceTypeRegistry.Builder();
 
+        //默认的ServiceType
         StaticFieldLookUp<ServiceType> staticFieldLookUp = new StaticFieldLookUp<ServiceType>(ServiceType.class, ServiceType.class);
         List<ServiceType> lookup = staticFieldLookUp.lookup();
         for (ServiceType serviceType: lookup) {
@@ -78,6 +79,7 @@ public class DefaultServiceTypeRegistryService implements ServiceTypeRegistrySer
             builder.addServiceType(serviceType);
         }
 
+        //插件的ServiceType
         final List<ServiceTypeInfo> types = loadType();
         for (ServiceTypeInfo type : types) {
             if (logger.isInfoEnabled()) {

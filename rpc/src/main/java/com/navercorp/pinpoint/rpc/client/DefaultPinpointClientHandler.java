@@ -40,6 +40,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * 默认的pinpoint客户端netty处理器，逻辑处理
  * @author emeroad
  * @author netspider
  * @author koo.taejin

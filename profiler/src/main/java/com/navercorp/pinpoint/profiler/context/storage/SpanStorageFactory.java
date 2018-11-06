@@ -20,10 +20,12 @@ import com.navercorp.pinpoint.profiler.context.id.TraceRoot;
 import com.navercorp.pinpoint.profiler.sender.DataSender;
 
 /**
+ * span存储工厂
  * @author emeroad
  */
 public class SpanStorageFactory implements StorageFactory {
 
+    //数据发送器
     protected final DataSender dataSender;
 
     public SpanStorageFactory(DataSender dataSender) {

@@ -38,7 +38,9 @@ public class PinpointBootStrap {
 
     /**
      * java agent
-     * @param agentArgs
+     * 典型的tomcat的启动方式：
+     * xxxxxBootstrap start
+     * @param agentArgs 命令行参数 start就是启动参数
      * @param instrumentation
      */
     public static void premain(String agentArgs, Instrumentation instrumentation) {
@@ -53,17 +55,13 @@ public class PinpointBootStrap {
             logger.warn("pinpoint-bootstrap already started. skipping agent loading.");
             return;
         }
-        //命令行参数转键值对
-        //ex、agentArgs is "name=123,password=456"
-        //the result is {"name":"123","password":"456"}
+        //参数转键值对
+        //"name=123,password=456" ===> {"name":"123","password":"456"}
         Map<String, String> agentArgsMap = argsToMap(agentArgs);
 
-        //使用系统路径构建类路径解析器
+        //agent的路径解析解析器，agent位于一个单独的目录中，但本身符号javaagent规范的pinpoint的agent的jar会被引用在
+        //System.getProperty("java.class.path");中
         final ClassPathResolver classPathResolver = new AgentDirBaseClassPathResolver();
-        //boot-strap-xxx.jar必有
-        // boot路径下
-        //其他pinpoint-commons.jar。bootstrap-core.jar必有
-        // bootstrap-core-optional.jar,annotations.jar可选
         if (!classPathResolver.verify()) {
             logger.warn("Agent Directory Verify fail. skipping agent loading.");
             logPinpointAgentLoadFail();
@@ -77,7 +75,6 @@ public class PinpointBootStrap {
 
 
         //委托给starter起来
-        //all 参数 非空
         PinpointStarter bootStrap = new PinpointStarter(agentArgsMap, bootstrapJarFile, classPathResolver, instrumentation);
         //启动
         if (!bootStrap.start()) {

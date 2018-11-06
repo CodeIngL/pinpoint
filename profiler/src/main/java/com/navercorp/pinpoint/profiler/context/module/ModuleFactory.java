@@ -24,5 +24,11 @@ import com.navercorp.pinpoint.profiler.interceptor.registry.InterceptorRegistryB
  * @author Woonduk Kang(emeroad)
  */
 public interface ModuleFactory {
+    /**
+     * guice容器工厂
+     * @param agentOption agent选项
+     * @param interceptorRegistryBinder 拦截器注册表
+     * @return 模块工厂
+     */
     Module newModule(AgentOption agentOption, InterceptorRegistryBinder interceptorRegistryBinder);
 }

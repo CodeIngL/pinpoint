@@ -63,9 +63,14 @@ public class DefaultCallStack implements CallStack {
         return index;
     }
 
+    /**
+     * 向调用栈中华追加一个spanevent事件
+     * @param spanEvent
+     * @return
+     */
     @Override
     public int push(final SpanEvent spanEvent) {
-        if (isOverflow()) {
+        if (isOverflow()) { //是否溢出
             overflowIndex++;
             return index + overflowIndex;
         }
@@ -77,10 +82,20 @@ public class DefaultCallStack implements CallStack {
         return index;
     }
 
+
+    /**
+     * 标记spanEvent在栈中的深度
+     * @param spanEvent
+     * @param index
+     */
     protected void markDepth(SpanEvent spanEvent, int index) {
         spanEvent.setDepth(index);
     }
 
+    /**
+     * 容量校验，超过时进行翻倍
+     * @param size 追加一个后的大小
+     */
     protected void checkExtend(final int size) {
         final SpanEvent[] originalStack = this.stack;
         if (size >= originalStack.length) {
@@ -91,6 +106,10 @@ public class DefaultCallStack implements CallStack {
         }
     }
 
+    /**
+     * 栈中弹出一个spanevent
+     * @return
+     */
     @Override
     public SpanEvent pop() {
         if (isOverflow() && overflowIndex > 0) {
@@ -117,6 +136,7 @@ public class DefaultCallStack implements CallStack {
             return null;
         }
 
+        //如果溢出了，返回一个假的spanevent事件
         if (isOverflow() && overflowIndex > 0) {
             return newDummySpanEvent();
         }
@@ -129,6 +149,10 @@ public class DefaultCallStack implements CallStack {
         return index == DEFAULT_INDEX;
     }
 
+    /**
+     * 拷贝栈帧
+     * @return
+     */
     @Override
     public SpanEvent[] copyStackFrame() {
         // without synchronization arraycopy, last index is null reference
@@ -143,6 +167,10 @@ public class DefaultCallStack implements CallStack {
         return maxDepth;
     }
 
+    /**
+     * 是否溢出
+     * @return 是否溢出
+     */
     @VisibleForTesting
     boolean isOverflow() {
         return maxDepth != -1 && maxDepth < index;

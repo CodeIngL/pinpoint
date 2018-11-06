@@ -24,10 +24,14 @@ import com.navercorp.pinpoint.common.util.Assert;
  */
 public class DefaultTraceRoot implements TraceRoot {
 
+    //持有的TraceId
     private final TraceId traceId;
+    //当前的jvm程序的标识
     private final String agentId;
+    //本地的事务id
     private final long localTransactionId;
 
+    //追踪开始时间
     private final long traceStartTime;
 
     private final Shared shared = new DefaultShared();

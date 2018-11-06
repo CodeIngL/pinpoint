@@ -102,7 +102,7 @@ public class DefaultTraceContext implements TraceContext {
 
     /**
      * Return trace without sampling check.
-     *
+     * 没有抽样检查的返回跟踪。
      * @return
      */
     @Override

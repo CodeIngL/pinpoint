@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 默认的Pinpoint客户端工厂
  * @author Woonduk Kang(emeroad)
  */
 public class PinpointClientFactoryProvider implements Provider<PinpointClientFactory> {

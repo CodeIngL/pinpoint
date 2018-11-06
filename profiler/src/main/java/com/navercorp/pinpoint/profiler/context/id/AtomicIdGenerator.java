@@ -45,12 +45,16 @@ public class AtomicIdGenerator implements IdGenerator {
     // Unique id for tracing a internal stacktrace and calculating a slow time of activethreadcount
     // moved here in order to make codes simpler for now
     // id generator for sampled new traces
+    // 用于采样新追踪的id生成器
     private final AtomicLong transactionId = new AtomicLong(INITIAL_TRANSACTION_ID);
     // id generator for sampled continued traces
+    // 用于采样继续追踪的id生成器
     private final AtomicLong continuedTransactionId = new AtomicLong(INITIAL_CONTINUED_TRANSACTION_ID);
     // id generator for unsampled new traces
+    // 用于非抽样新追踪的id生成器
     private final AtomicLong disabledId = new AtomicLong(INITIAL_DISABLED_ID);
     // id generator for unsampled continued traces
+    // 用于非抽样继续追踪的id生成器
     private final AtomicLong continuedDisabledId = new AtomicLong(INITIAL_CONTINUED_DISABLED_ID);
 
     @Inject

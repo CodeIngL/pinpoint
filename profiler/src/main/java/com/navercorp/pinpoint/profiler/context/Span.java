@@ -138,6 +138,7 @@ public class Span extends TSpan implements FrameAttachment {
 
     public void finish() {
         // snapshot last image
+        // 快照最后一张图片
         final Shared shared = traceRoot.getShared();
         final int errorCode = shared.getErrorCode();
         this.setErrCode(errorCode);

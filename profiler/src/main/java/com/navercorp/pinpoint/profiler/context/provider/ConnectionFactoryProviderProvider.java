@@ -23,6 +23,7 @@ import com.navercorp.pinpoint.rpc.client.ConnectionFactoryProvider;
 import com.navercorp.pinpoint.rpc.client.DefaultConnectionFactoryProvider;
 
 /**
+ * 连接工厂
  * @author Taejin Koo
  */
 public class ConnectionFactoryProviderProvider implements Provider<ConnectionFactoryProvider>  {
