@@ -39,6 +39,7 @@ class DefaultServiceType implements ServiceType {
 
     DefaultServiceType(int code, String name, String desc, ServiceTypeProperty... properties) {
         // code must be a short value but constructors accept int to make declaring ServiceType values more cleaner by removing casting to short.
+        // 代码必须是一个short值，但构造函数接受int以通过将转换删除为short来声明ServiceType值更清晰。
         if (code > Short.MAX_VALUE || code < Short.MIN_VALUE) {
             throw new IllegalArgumentException("code must be a short value");
         }

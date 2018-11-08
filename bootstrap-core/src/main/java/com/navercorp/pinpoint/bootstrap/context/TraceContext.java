@@ -28,23 +28,44 @@ import com.navercorp.pinpoint.common.annotations.InterfaceStability;
  */
 public interface TraceContext {
 
+    /**
+     * 从当前的上下文中返回一个经校验，需要采样的Trace
+     * @return
+     */
     Trace currentTraceObject();
 
     /**
      * return a trace whose sampling rate should be further verified
-     * 
+     * 返回一个Trace，其是否采样应进一步验证
      * @return
      */
     Trace currentRawTraceObject();
 
+    /**
+     * 根据一个TraceId，继续一个Trace，
+     * 本质上讲这个TraceId中的Trace绑定到当前上下文
+     * @param traceId
+     * @return
+     */
     Trace continueTraceObject(TraceId traceId);
 
+    /**
+     * 根据一个Trace，继续一个Trace，
+     * 本质上讲这个Trace绑定当前上下文
+     * @param trace
+     * @return
+     */
     Trace continueTraceObject(Trace trace);
 
+    /**
+     * 新建一个Trace
+     * @return
+     */
     Trace newTraceObject();
 
     /**
      * internal experimental api
+     * 内部实验性API
      */
     @InterfaceStability.Evolving
     @InterfaceAudience.LimitedPrivate("vert.x")
@@ -52,6 +73,7 @@ public interface TraceContext {
 
     /**
      * internal experimental api
+     * 内部实验性API
      */
     @InterfaceStability.Evolving
     @InterfaceAudience.LimitedPrivate("vert.x")
@@ -64,10 +86,15 @@ public interface TraceContext {
     @Deprecated
     Trace continueAsyncTraceObject(AsyncTraceId traceId, int asyncId, long startTime);
 
+    /**
+     * 移除当前上下文的Trace，返回该Trace
+     * @return
+     */
     Trace removeTraceObject();
 
     /**
      *
+     * 返回一个包装的被当前上下文移除的Trace，返回该Trace或者改包装的Trace，这取决于参数是否为True
      * @param closeDisableTrace true
      * @return
      * @since 1.7.0

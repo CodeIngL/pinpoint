@@ -19,6 +19,7 @@ package com.navercorp.pinpoint.profiler.context;
 import com.navercorp.pinpoint.profiler.context.id.TraceRoot;
 
 /**
+ * 深度压缩的调用栈实现
  * @author Woonduk Kang(emeroad)
  */
 public class DepthCompressCallStack extends DefaultCallStack {

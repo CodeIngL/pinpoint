@@ -20,6 +20,7 @@ import com.navercorp.pinpoint.bootstrap.config.ProfilerConfig;
 import com.navercorp.pinpoint.thrift.dto.TraceConstants;
 
 /**
+ * 追踪版本，V1还是V2
  * @author Woonduk Kang(emeroad)
  */
 public enum TraceDataFormatVersion {

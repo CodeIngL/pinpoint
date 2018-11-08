@@ -7,6 +7,7 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
 /**
+ * 支持类文件dump的类文件转换器
  * @author Woonduk Kang(emeroad)
  */
 public class BytecodeDumpTransformer implements ClassFileTransformer {

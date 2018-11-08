@@ -36,10 +36,14 @@ public class DefaultTransactionIdEncoder implements TransactionIdEncoder {
 
     private static final byte VERSION = TransactionIdUtils.VERSION;
 
+    //应用id
     private final String agentId;
+    //应用启动时间
     private final long agentStartTime;
 
+    //agentId缓存
     private final byte[] agentIdCache;
+    //应用开始时间缓存
     private final byte[] agentIdAndStartTimeCache;
 
     @Inject
@@ -102,22 +106,39 @@ public class DefaultTransactionIdEncoder implements TransactionIdEncoder {
 
     /**
      * skip agentId + agentStartTime
+     * 跳过 agentId + agentStartTime
      */
     private byte[] encode(long transactionSequence) {
         final byte[] encode = encodeTransactionSequence(agentIdAndStartTimeCache, transactionSequence);
         return encode;
     }
 
+    /**
+     * 跳过 agentId
+     * @param agentStartTime
+     * @param transactionSequence
+     * @return
+     */
     private  byte[] encode(long agentStartTime, long transactionSequence) {
         final byte[] encode = encodeAgentIdAndTransactionSequence(agentIdCache, agentStartTime, transactionSequence);
         return encode;
     }
 
+    /**
+     * 是否压缩的，如果TraceId在应用内部，说明则不需要发送agentId这个东西了
+     * @param traceId
+     * @return
+     */
     private boolean isCompressedType(TraceId traceId) {
         // skip agentId
         return agentId.equals(traceId.getAgentId());
     }
 
+    /**
+     * 编码一个TraceId
+     * @param traceId
+     * @return
+     */
     @Override
     public ByteBuffer encodeTransactionId(TraceId traceId) {
         if (traceId == null) {
@@ -129,12 +150,15 @@ public class DefaultTransactionIdEncoder implements TransactionIdEncoder {
 
     private byte[] encodeTransaction0(TraceId traceId) {
         if (isCompressedType(traceId)) {
+            //获得序列
             final long transactionSequence = traceId.getTransactionSequence();
             if (this.agentStartTime == traceId.getAgentStartTime()) {
-                return this.encode(traceId.getTransactionSequence());
+                return this.encode(traceId.getTransactionSequence()); //如果agentTime也是一样的，可以再一次减少发送量
             }
+            //带上时间，因为时间不一样
             return this.encode(traceId.getAgentStartTime(), transactionSequence);
         }
+        //带上agentId，因为不在jvm内部
         return this.encode(traceId.getAgentId(), traceId.getAgentStartTime(), traceId.getTransactionSequence());
     }
 

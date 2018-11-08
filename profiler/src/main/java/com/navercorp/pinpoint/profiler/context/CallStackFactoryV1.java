@@ -19,6 +19,7 @@ package com.navercorp.pinpoint.profiler.context;
 import com.navercorp.pinpoint.profiler.context.id.TraceRoot;
 
 /**
+ * 调用栈V1实现
  * @author Woonduk Kang(emeroad)
  */
 public class CallStackFactoryV1 implements CallStackFactory {

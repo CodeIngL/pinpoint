@@ -98,6 +98,10 @@ public class DefaultTraceFactory implements TraceFactory {
         return trace;
     }
 
+    /**
+     * 校验并获得一个Trace的引用，notice：从需保证当前的引用未持有trace，这意味着这是一个新的开始
+     * @return
+     */
     private Reference<Trace> checkAndGet() {
         final Reference<Trace> reference = this.threadLocalBinder.get();
         final Trace old = reference.get();
@@ -120,6 +124,12 @@ public class DefaultTraceFactory implements TraceFactory {
         return trace;
     }
 
+    /**
+     * 将一个trace绑定到引用上
+     * @see Reference
+     * @param reference
+     * @param trace
+     */
     private void bind(Reference<Trace> reference, Trace trace) {
         reference.set(trace);
 

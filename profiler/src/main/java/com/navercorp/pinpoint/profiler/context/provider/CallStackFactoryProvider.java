@@ -25,6 +25,7 @@ import com.navercorp.pinpoint.profiler.context.CallStackFactoryV2;
 import com.navercorp.pinpoint.profiler.context.TraceDataFormatVersion;
 
 /**
+ * 调用栈工厂提供者
  * @author Woonduk Kang(emeroad)
  */
 public class CallStackFactoryProvider implements Provider<CallStackFactory> {

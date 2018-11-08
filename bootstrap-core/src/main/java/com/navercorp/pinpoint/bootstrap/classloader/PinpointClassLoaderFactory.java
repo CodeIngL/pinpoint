@@ -41,6 +41,12 @@ public final class PinpointClassLoaderFactory {
         throw new IllegalAccessError();
     }
 
+    /**
+     * 构建内部的classloader
+     * java6环境下使用默认的PinpointClassLoader工厂
+     * java7以后使用新的classloader
+     * @return
+     */
     private static InnerPinpointClassLoaderFactory createClassLoaderFactory() {
         final JvmVersion jvmVersion = JvmUtils.getVersion();
         if (jvmVersion == JvmVersion.JAVA_6) {
@@ -49,6 +55,7 @@ public final class PinpointClassLoaderFactory {
             boolean hasRegisterAsParallelCapableMethod = hasRegisterAsParallelCapableMethod();
             if (hasRegisterAsParallelCapableMethod) {
                 try {
+                    //获得当前的classloader
                     ClassLoader classLoader = getClassLoader(PinpointClassLoaderFactory.class.getClassLoader());
                     final Class<? extends InnerPinpointClassLoaderFactory> parallelCapableClassLoaderFactoryClass =
                             (Class<? extends InnerPinpointClassLoaderFactory>) Class.forName(PARALLEL_CAPABLE_CLASS_LOADER_FACTORY, true, classLoader);

@@ -366,8 +366,15 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
         return this.agentDirPath + File.separator + "plugin";
     }
 
+    /**
+     * 解析所依赖的lib
+     * 包括lib目录本身，
+     * 包括boot下面的相关lib
+     * @return 需要的lib
+     */
     @Override
     public List<URL> resolveLib() {
+        //第一步:找出相关的lib下的jar
         String agentLibPath = getAgentLibPath();
         File libDir = new File(agentLibPath);
         if (!libDir.exists()) {
@@ -390,17 +397,23 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
             }
         }
 
+        //第二步lib目录页转换为URL加入
         URL agentDirUri = toURI(new File(agentLibPath));
         if (agentDirUri != null) {
             jarURLList.add(agentDirUri);
         }
 
+        // 第三步加入boot目录下的相关url
+        // 加入pinpoint-commons-XXX
         // hot fix. boot jars not found from classPool ??
         jarURLList.add(toURI(new File(getPinpointCommonsJar())));
+        // 加入pinpoint-bootstrap-core-XXX
         jarURLList.add(toURI(new File(getBootStrapCoreJar())));
         String bootstrapCoreOptionalJar = getBootStrapCoreOptionalJar();
         // bootstrap-core-optional jar is not required and is okay to be null
+        // bootstrap-core-optional jar不是必需的，可以为null
         if (bootstrapCoreOptionalJar != null) {
+            // 加入pinpoint-bootstrap-core-optional-XXX.jar
             jarURLList.add(toURI(new File(bootstrapCoreOptionalJar)));
         }
 

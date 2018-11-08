@@ -128,7 +128,6 @@ public class DefaultApplicationContext implements ApplicationContext {
         this.classFileDispatcher = injector.getInstance(ClassFileTransformerDispatcher.class);
         //动态的Transform注册表
         this.dynamicTransformTrigger = injector.getInstance(DynamicTransformTrigger.class);
-//        ClassFileTransformer classFileTransformer = injector.getInstance(ClassFileTransformer.class);
         //wrap,简单的进行包装，用于某些情况下dump文件
         ClassFileTransformer classFileTransformer = wrap(classFileDispatcher);
         //追加进去

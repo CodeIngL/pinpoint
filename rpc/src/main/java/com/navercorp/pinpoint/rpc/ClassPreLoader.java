@@ -30,6 +30,9 @@ import com.navercorp.pinpoint.rpc.server.PinpointServerAcceptor;
 public final class ClassPreLoader {
 
 
+    /**
+     * 进行预加载，和classloader形成联系
+     */
     public static void preload() {
         try {
             preload(65535);
@@ -38,6 +41,11 @@ public final class ClassPreLoader {
         }
     }
 
+    /**
+     * 进行预加载，使得rpc模块和该calssloader进行联系，
+     * 思路是创建客户端服务端socket进行自连，成功后进行关闭。
+     * @param port
+     */
     public static void preload(int port) {
         PinpointServerAcceptor serverAcceptor = null;
         PinpointClient client = null;

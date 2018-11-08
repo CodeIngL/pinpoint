@@ -175,6 +175,12 @@ class PinpointStarter {
         return BOOT_CLASS;
     }
 
+    /**
+     * 获得pinpoint的agent类型，该类型可以通过命令行参数带入
+     * notice：该参数区别于使用-D带入的参数
+     * 默认是defaultAgent
+     * @return
+     */
     private String getAgentType() {
         String agentType = agentArgs.get(AGENT_TYPE);
         if (agentType == null) {
@@ -266,7 +272,12 @@ class PinpointStarter {
         return null;
     }
 
-
+    /**
+     * 获得lib目录其中的jar的url
+     * 包括boot下面的几个jar
+     * 和lib本身目录
+     * @return
+     */
     private List<URL> resolveLib(ClassPathResolver classPathResolver) {
         // this method may handle only absolute path,  need to handle relative path (./..agentlib/lib)
         String agentJarFullPath = classPathResolver.getAgentJarFullPath();
@@ -275,7 +286,7 @@ class PinpointStarter {
         String agentConfigPath = classPathResolver.getAgentConfigPath();
 
         if (logger.isInfoEnabled()) {
-            logger.info("agent JarPath:" + agentJarFullPath);
+                logger.info("agent JarPath:" + agentJarFullPath);
             logger.info("agent LibDir:" + agentLibPath);
             for (URL url : urlList) {
                 logger.info("agent Lib:" + url);

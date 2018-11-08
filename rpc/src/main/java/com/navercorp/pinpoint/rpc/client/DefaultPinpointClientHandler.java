@@ -125,6 +125,12 @@ public class DefaultPinpointClientHandler extends SimpleChannelHandler implement
         this.channel = channel;
     }
 
+    /**
+     * 客户端连接成功是触发的步骤
+     * @param ctx
+     * @param e
+     * @throws Exception
+     */
     @Override
     public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
         final Channel channel = e.getChannel();
@@ -134,13 +140,16 @@ public class DefaultPinpointClientHandler extends SimpleChannelHandler implement
 
         logger.info("{} channelConnected() started. channel:{}", objectUniqName, channel);
 
+        //获得连接状态，并进行校验
         SocketStateChangeResult stateChangeResult = state.toConnected();
         if (!stateChangeResult.isChange()) {
             throw new IllegalStateException("Invalid state:" + stateChangeResult.getCurrentState());
         }
 
+        //channel准备
         prepareChannel(channel);
 
+        //状态校验
         stateChangeResult = state.toRunWithoutHandshake();
         if (!stateChangeResult.isChange()) {
             throw new IllegalStateException("Failed to execute channelConnected() method. Error:" + stateChangeResult);
@@ -175,6 +184,9 @@ public class DefaultPinpointClientHandler extends SimpleChannelHandler implement
         logger.info("{} initReconnect() completed.", objectUniqName);
     }
 
+    /**
+     * 构造ping任务进行动作
+     */
     private void registerPing() {
         final PingTask pingTask = new PingTask();
         newPingTimeout(pingTask);

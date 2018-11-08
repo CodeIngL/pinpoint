@@ -53,6 +53,8 @@ public interface ClassPathResolver {
 
     /**
      * 获得lib目录其中的jar的url
+     * 包括boot下面的几个jar
+     * 和lib本身目录
      * @return
      */
     List<URL> resolveLib();

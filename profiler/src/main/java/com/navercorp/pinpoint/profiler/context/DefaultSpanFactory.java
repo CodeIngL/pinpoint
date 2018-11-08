@@ -59,17 +59,18 @@ public class DefaultSpanFactory implements SpanFactory {
     public Span newSpan(TraceRoot traceRoot) {
         Assert.requireNonNull(traceRoot, "traceRoot must not be null");
 
+
         final Span span = new Span(traceRoot);
 
         final TraceId traceId = traceRoot.getTraceId();
         final ByteBuffer transactionId = transactionIdEncoder.encodeTransactionId(traceId);
-        span.setTransactionId(transactionId);
+        span.setTransactionId(transactionId); //设置事务Id
 
-        span.setAgentId(agentId);
-        span.setApplicationName(applicationName);
-        span.setAgentStartTime(agentStartTime);
-        span.setApplicationServiceType(applicationServiceType.getCode());
-        span.markBeforeTime();
+        span.setAgentId(agentId); //设置agentId
+        span.setApplicationName(applicationName);//设置应用名
+        span.setAgentStartTime(agentStartTime); //设置开始事件
+        span.setApplicationServiceType(applicationServiceType.getCode()); //设置应用的code
+        span.markBeforeTime(); //设置一下开始时间
         return span;
     }
 

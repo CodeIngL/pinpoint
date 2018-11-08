@@ -29,16 +29,20 @@ import com.navercorp.pinpoint.common.trace.LoggingInfo;
 import com.navercorp.pinpoint.common.trace.ServiceType;
 
 /**
- * 
+ *
+ * 默认的Span记录器
  * @author jaehong.kim
  *
  */
 public class DefaultSpanRecorder extends AbstractRecorder implements SpanRecorder {
     private static final Logger logger = LoggerFactory.getLogger(DefaultTrace.class.getName());
     private static final boolean isDebug = logger.isDebugEnabled();
-    
+
+    //span
     private final Span span;
+    //是否是根
     private final boolean isRoot;
+    //是否采样
     private final boolean sampling;
     
     public DefaultSpanRecorder(final Span span, final boolean isRoot, final boolean sampling, final StringMetaDataService stringMetaDataService, SqlMetaDataService sqlMetaDataService) {

@@ -19,8 +19,14 @@ package com.navercorp.pinpoint.profiler.context;
 import com.navercorp.pinpoint.profiler.context.id.TraceRoot;
 
 /**
+ * span工厂
  * @author Woonduk Kang(emeroad)
  */
 public interface SpanFactory {
+    /**
+     * 根据一个Trace源新建一个span
+     * @param traceRoot
+     * @return
+     */
     Span newSpan(TraceRoot traceRoot);
 }

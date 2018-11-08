@@ -37,5 +37,9 @@ public interface TraceId {
 
     short getFlags();
 
+    /**
+     * 该TraceId是否是根，
+     * @return true 根，否则不是
+     */
     boolean isRoot();
 }

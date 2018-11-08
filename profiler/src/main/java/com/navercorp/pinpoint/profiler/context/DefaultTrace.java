@@ -275,14 +275,20 @@ public final class DefaultTrace implements Trace, TraceRootSupport {
         return spanRecorder;
     }
 
+    /**
+     * 当前的spanevent记录器
+     * @return
+     */
     @Override
     public SpanEventRecorder currentSpanEventRecorder() {
+        //从栈顶peek一个event
         SpanEvent spanEvent = callStack.peek();
         if (spanEvent == null) {
             if (isWarn) {
                 stackDump("call stack is empty");
             }
             // make dummy.
+            // 制作一个假的
             spanEvent = new SpanEvent(getTraceRoot());
         }
 

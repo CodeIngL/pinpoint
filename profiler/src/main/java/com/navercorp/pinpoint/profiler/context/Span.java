@@ -37,6 +37,7 @@ public class Span extends TSpan implements FrameAttachment {
     private boolean timeRecording = true;
     private Object frameObject;
 
+    //Trace源
     private final TraceRoot traceRoot;
 
     /**
@@ -50,12 +51,12 @@ public class Span extends TSpan implements FrameAttachment {
         this.traceRoot = traceRoot;
 
         final TraceId traceId = traceRoot.getTraceId();
-        this.setSpanId(traceId.getSpanId());
+        this.setSpanId(traceId.getSpanId()); //设置spanId
         final long parentSpanId = traceId.getParentSpanId();
         if (parentSpanId != SpanId.NULL) {
-            this.setParentSpanId(parentSpanId);
+            this.setParentSpanId(parentSpanId); //设置spanParentId
         }
-        this.setFlag(traceId.getFlags());
+        this.setFlag(traceId.getFlags()); //设置标记
     }
 
     public TraceRoot getTraceRoot() {

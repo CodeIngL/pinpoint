@@ -22,12 +22,19 @@ import java.util.Set;
  *
  */
 public enum ServiceTypeCategory {
+    //未定义的目录
     UNDEFINED_CATEGORY((short)-1, (short)-1),
+    //pinpoint内部使用的目录
     PINPOINT_INTERNAL((short)0, (short)999),
+    //服务相关的mull
     SERVER((short)1000, (short)1999),
+    //数据库相关的目录
     DATABASE((short)2000, (short)2999),
+    //第三方library相关的目录
     LIBRARY((short)5000, (short)7999),
+    //缓存库相关的目录
     CACHE_LIBRARY((short)8000, (short)8999, BaseHistogramSchema.FAST_SCHEMA),
+    //rpc相关的目录
     RPC((short)9000, (short)9999);
    
     

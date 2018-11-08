@@ -66,6 +66,7 @@ public class DefaultAgent implements Agent {
 
     static {
         // Preload classes related to pinpoint-rpc module.
+        // 预加载该类和rpc模块进行联系
         ClassPreLoader.preload();
     }
 

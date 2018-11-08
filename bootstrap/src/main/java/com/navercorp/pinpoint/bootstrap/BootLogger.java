@@ -30,7 +30,8 @@ public final class BootLogger {
 
 //    private static final int LOG_LEVEL;
 //    private final String loggerName;
-    private final String messagePattern;
+
+    private final String messagePattern; // "{0,date,yyyy-MM-dd HH:mm:ss} [{1}](" + loggerName + ") {2}{3}";格式
     private final PrintStream out;
     private final PrintStream err;
 

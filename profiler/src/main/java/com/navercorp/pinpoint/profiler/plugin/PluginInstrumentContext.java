@@ -47,6 +47,15 @@ public class PluginInstrumentContext implements InstrumentContext {
 
     private final ClassFileTransformerLoader transformerRegistry;
 
+    /**
+     *
+     * 构建一个检测插件上下文，用于插件检测
+     * @param profilerConfig
+     * @param instrumentEngine
+     * @param dynamicTransformTrigger
+     * @param classInjector
+     * @param transformerRegistry
+     */
     public PluginInstrumentContext(ProfilerConfig profilerConfig, InstrumentEngine instrumentEngine, DynamicTransformTrigger dynamicTransformTrigger, ClassInjector classInjector, ClassFileTransformerLoader transformerRegistry) {
         if (profilerConfig == null) {
             throw new NullPointerException("profilerConfig must not be null");
