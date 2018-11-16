@@ -156,6 +156,15 @@ public class PluginInstrumentContext implements InstrumentContext {
     }
 
 
+    /**
+     *
+     * 将类注入到相应的类加载器中，委托给类加载处理器进行处理
+     *
+     * @param targetClassLoader
+     * @param className
+     * @param <T>
+     * @return
+     */
     @Override
     public <T> Class<? extends T> injectClass(ClassLoader targetClassLoader, String className) {
         if (className == null) {

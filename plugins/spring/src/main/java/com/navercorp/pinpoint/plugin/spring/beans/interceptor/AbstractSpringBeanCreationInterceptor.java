@@ -52,6 +52,7 @@ public abstract class AbstractSpringBeanCreationInterceptor {
         }
 
         // If you want to trace inherited methods, you have to retranform super classes, too.
+        // 如果要跟踪继承的方法，则还必须重新标记超类。
         instrumentor.retransform(clazz, transformer);
         filter.addTransformed(clazz.getName());
         if (logger.isInfoEnabled()) {

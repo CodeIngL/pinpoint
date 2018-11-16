@@ -21,6 +21,7 @@ import com.navercorp.pinpoint.bootstrap.instrument.matcher.Matcher;
 import com.navercorp.pinpoint.bootstrap.instrument.matcher.Matchers;
 
 /**
+ * 转换器模板
  * @author emeroad
  */
 public class TransformTemplate implements TransformOperations {

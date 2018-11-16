@@ -42,6 +42,7 @@ public class PluginConfig {
     private final JarFile pluginJarFile;
     private String pluginJarURLExternalForm;
 
+    //插件的中关于名称的过滤器
     private final ClassNameFilter pluginPackageFilter;
 
     public PluginConfig(URL pluginJar, ClassNameFilter pluginPackageFilter) {

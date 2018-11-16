@@ -35,6 +35,7 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
 /**
+ * 可匹配的classFile转换分发器
  * @author jaehong.kim
  */
 public class MatchableClassFileTransformerDispatcher implements ClassFileTransformerDispatcher {
@@ -84,8 +85,20 @@ public class MatchableClassFileTransformerDispatcher implements ClassFileTransfo
         this.supportLambdaExpressions = profilerConfig.isSupportLambdaExpressions();
     }
 
+    /**
+     *
+     * java进行类文件进行转换
+     * @param classLoader 类加载器
+     * @param classInternalName
+     * @param classBeingRedefined
+     * @param protectionDomain
+     * @param classFileBuffer
+     * @return
+     * @throws IllegalClassFormatException
+     */
     @Override
     public byte[] transform(ClassLoader classLoader, String classInternalName, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classFileBuffer) throws IllegalClassFormatException {
+        //校验，并忽略某些类加载器
         if (!classLoaderFilter.accept(classLoader, classInternalName, classBeingRedefined, protectionDomain, classFileBuffer)) {
             return null;
         }
@@ -115,29 +128,36 @@ public class MatchableClassFileTransformerDispatcher implements ClassFileTransfo
             return null;
         }
 
+        //校验，并忽略某些类
         if (!pinpointClassFilter.accept(classLoader, internalName, classBeingRedefined, protectionDomain, classFileBuffer)) {
             return null;
         }
 
+        //为类获得动态的的类文件转换器
         final ClassFileTransformer dynamicTransformer = dynamicTransformerRegistry.getTransformer(classLoader, internalName);
         if (dynamicTransformer != null) {
+            //如果有，使用普通放入类文件转换器进行转转换
             return baseClassFileTransformer.transform(classLoader, internalName, classBeingRedefined, protectionDomain, classFileBuffer, dynamicTransformer);
         }
 
+        //校验，并忽略不可变的通常是java内部使用的
         if (!unmodifiableFilter.accept(classLoader, internalName, classBeingRedefined, protectionDomain, classFileBuffer)) {
             return null;
         }
 
+        //从转换器注册表中发现
         ClassFileTransformer transformer = this.transformerRegistry.findTransformer(classLoader, internalName, classFileBuffer, classMetadata);
         if (transformer == null) {
             // For debug
             // TODO What if a modifier is duplicated?
+            //如果没有，尝试从debug中获取，记住这是为了调试使用的
             transformer = this.debugTransformerRegistry.findTransformer(classLoader, internalName, classFileBuffer);
             if (transformer == null) {
                 return null;
             }
         }
 
+        //使用baseClassFileTransformer进行转换
         return baseClassFileTransformer.transform(classLoader, internalName, classBeingRedefined, protectionDomain, classFileBuffer, transformer);
     }
 

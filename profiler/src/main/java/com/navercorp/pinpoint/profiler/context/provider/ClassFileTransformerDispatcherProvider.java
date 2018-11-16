@@ -28,6 +28,7 @@ import com.navercorp.pinpoint.profiler.DynamicTransformerRegistry;
 import com.navercorp.pinpoint.profiler.plugin.PluginContextLoadResult;
 
 /**
+ * 类文件转换分发器
  * @author Woonduk Kang(emeroad)
  */
 public class ClassFileTransformerDispatcherProvider implements Provider<ClassFileTransformerDispatcher> {

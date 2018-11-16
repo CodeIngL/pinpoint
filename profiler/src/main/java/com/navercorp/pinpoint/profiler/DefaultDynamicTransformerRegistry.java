@@ -27,6 +27,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+/**
+ * 默认的动态转换器注册表
+ */
 public class DefaultDynamicTransformerRegistry implements DynamicTransformerRegistry {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -36,6 +39,12 @@ public class DefaultDynamicTransformerRegistry implements DynamicTransformerRegi
     public DefaultDynamicTransformerRegistry() {
     }
 
+    /**
+     * 请求转换时
+     * @param target
+     * @param transformer
+     * @return
+     */
     @Override
     public RequestHandle onRetransformRequest(Class<?> target, final ClassFileTransformer transformer) {
         if (target == null) {
@@ -45,11 +54,14 @@ public class DefaultDynamicTransformerRegistry implements DynamicTransformerRegi
             throw new NullPointerException("transformer must not be null");
         }
 
+        //为目标类穿件一个转换key
         final TransformerKey key = createTransformKey(target);
+        //添加进注册表中
         add(key, transformer);
         if (logger.isInfoEnabled()) {
             logger.info("added retransformer classLoader: {}, class: {}, registry size: {}", target.getClassLoader(), target.getName(), transformerMap.size());
         }
+        //返回处理器
         return new DefaultRequestHandle(key);
     }
 
@@ -79,11 +91,22 @@ public class DefaultDynamicTransformerRegistry implements DynamicTransformerRegi
         }
     }
 
+    /**
+     * 为目标类创建一个转换类
+     * @param classLoader 目标类的加载器
+     * @param targetClassName 目标类名
+     * @return
+     */
     private TransformerKey createTransformKey(ClassLoader classLoader, String targetClassName) {
         final String classInternName = JavaAssistUtils.javaNameToJvmName(targetClassName);
         return new TransformerKey(classLoader, classInternName);
     }
 
+    /**
+     * 为目标类创建一个转换类
+     * @param targetClass 目标类
+     * @return 转换key
+     */
     private TransformerKey createTransformKey(Class<?> targetClass) {
 
         final ClassLoader classLoader = targetClass.getClassLoader();
@@ -92,6 +115,12 @@ public class DefaultDynamicTransformerRegistry implements DynamicTransformerRegi
         return createTransformKey(classLoader, targetClassName);
     }
 
+    /**
+     * 获得转换器，同时动态进行移除这个转换器
+     * @param classLoader
+     * @param targetClassName
+     * @return
+     */
     @Override
     public ClassFileTransformer getTransformer(ClassLoader classLoader, String targetClassName) {
         // TODO fix classLoader null case
@@ -113,7 +142,10 @@ public class DefaultDynamicTransformerRegistry implements DynamicTransformerRegi
     int size() {
         return transformerMap.size();
     }
-    
+
+    /**
+     * 转换器的的key
+     */
     private static final class TransformerKey {
         // TODO defense classLoader memory leak
         private final ClassLoader classLoader;

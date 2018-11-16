@@ -23,12 +23,15 @@ import java.lang.instrument.ClassFileTransformer;
 import java.util.List;
 
 /**
- * 启动结果
+ * 设置结果
+ * 每一个插件都将对应一个设置结果
  * @author Woonduk Kang(emeroad)
  */
 public class SetupResult {
 
+    //设置上下文，插件
     private final DefaultProfilerPluginSetupContext setupContext;
+    //类文件转换器，插件
     private final ClassFileTransformerLoader transformerRegistry;
 
     public SetupResult(DefaultProfilerPluginSetupContext setupContext, ClassFileTransformerLoader transformerRegistry) {
@@ -37,14 +40,26 @@ public class SetupResult {
     }
 
 
+    /**
+     * 从设置上下文中，或的设置的应用类型
+     * @return 列表
+     */
     public List<ApplicationTypeDetector> getApplicationTypeDetectors() {
         return this.setupContext.getApplicationTypeDetectors();
     }
 
+    /**
+     * 从设置上下文中，获得设置的jdbcURL解析器
+     * @return 列表
+     */
     public List<JdbcUrlParserV2> getJdbcUrlParserList() {
         return this.setupContext.getJdbcUrlParserList();
     }
 
+    /**
+     * 获得该设置需要的相关的类文件转换器
+     * @return 列表
+     */
     public List<ClassFileTransformer> getClassTransformerList() {
         return transformerRegistry.getClassTransformerList();
     }

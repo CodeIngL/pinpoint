@@ -140,10 +140,10 @@ public class ProfilerPluginLoader {
      */
     private ClassNameFilter createPluginFilterChain(List<String> packageList) {
 
-        //包中本身的过滤器
+        //包名过滤器，该过滤器持有了该插件中的包名
         final ClassNameFilter pluginPackageFilter = new PluginPackageFilter(packageList);
 
-        //pinpoint内置的过滤
+        //pinpoint内置的过滤，构建统一的过滤链
         final List<ClassNameFilter> chain = Arrays.asList(profilerPackageFilter, pluginPackageFilter);
 
         final ClassNameFilter filterChain = new ClassNameFilterChain(chain);
@@ -171,6 +171,13 @@ public class ProfilerPluginLoader {
         }
     }
 
+    /**
+     * 获得插件的包名
+     * 从mainfest中获取
+     * 不存在返回默认的包名
+     * @param pluginJarFile
+     * @return
+     */
     public List<String> getPluginPackage(JarFile pluginJarFile) {
 
         final Manifest manifest =  getManifest(pluginJarFile);

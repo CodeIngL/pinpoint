@@ -17,11 +17,17 @@
 package com.navercorp.pinpoint.bootstrap.instrument.transformer;
 
 /**
+ * 转换操作，插件专用
  * @author Woonduk Kang(emeroad)
  */
 @Plugin
 public interface TransformOperations {
 
+    /**
+     * 转换操作
+     * @param className
+     * @param transformCallback
+     */
     void transform(String className, TransformCallback transformCallback);
 
 //    void transform(Matcher className, TransformCallback transformCallback);

@@ -25,5 +25,14 @@ public interface ClassFileFilter {
     boolean SKIP = false;
     boolean CONTINUE = true;
 
+    /**
+     * true 该类需要被进行转换，否则 不需要被转换
+     * @param classLoader
+     * @param className
+     * @param classBeingRedefined
+     * @param protectionDomain
+     * @param classFileBuffer
+     * @return
+     */
     boolean accept(ClassLoader classLoader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classFileBuffer);
 }

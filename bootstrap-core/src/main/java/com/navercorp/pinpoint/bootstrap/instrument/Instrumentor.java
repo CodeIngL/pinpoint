@@ -19,6 +19,7 @@ import com.navercorp.pinpoint.bootstrap.instrument.transformer.TransformCallback
 import com.navercorp.pinpoint.bootstrap.interceptor.scope.InterceptorScope;
 
 /**
+ *
  * @author Jongho Moon
  *
  */
@@ -35,6 +36,11 @@ public interface Instrumentor {
     <T> Class<? extends T> injectClass(ClassLoader targetClassLoader, String className);
     
     void transform(ClassLoader classLoader, String targetClassName, TransformCallback transformCallback);
-    
+
+    /**
+     * 重新转换
+     * @param target
+     * @param transformCallback
+     */
     void retransform(Class<?> target, TransformCallback transformCallback);
 }

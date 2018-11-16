@@ -53,6 +53,13 @@ public class JarProfilerPluginClassInjector implements PluginClassInjector {
         return pluginConfig;
     }
 
+    /**
+     * 将类注入到相应的类加载器中，委托给类加载处理器进行处理
+     * @param classLoader
+     * @param className
+     * @param <T>
+     * @return
+     */
     @Override
     @SuppressWarnings("unchecked")
     public <T> Class<? extends T> injectClass(ClassLoader classLoader, String className) {

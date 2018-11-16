@@ -24,6 +24,7 @@ import java.lang.instrument.ClassFileTransformer;
 import java.security.ProtectionDomain;
 
 /**
+ * 基本的classFile转换
  * @author emeroad
  * @author jaehong.kim
  */

@@ -30,7 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 默认的插件加载
+ * 默认的插件上下文结果加载器
+ * notice:这是一个整体插件，而不仅仅是单个插件
  * @author Woonduk Kang(emeroad)
  */
 public class DefaultPluginContextLoadResult implements PluginContextLoadResult {
@@ -46,7 +47,7 @@ public class DefaultPluginContextLoadResult implements PluginContextLoadResult {
     private final List<SetupResult> setupResultList;
 
     /**
-     * 默认的插件环境上下文加载
+     * 默认的插件上下文结果加载器
      * @param profilerConfig
      * @param dynamicTransformTrigger
      * @param instrumentEngine
@@ -71,7 +72,7 @@ public class DefaultPluginContextLoadResult implements PluginContextLoadResult {
 
         this.pluginJars = pluginJars;
         this.instrumentEngine = instrumentEngine;
-        //加载结果列表
+
         this.setupResultList = load();
     }
 
@@ -82,7 +83,7 @@ public class DefaultPluginContextLoadResult implements PluginContextLoadResult {
      */
     private List<SetupResult> load() {
         logger.info("load plugin");
-        //构建插件启动器
+        //构建插件设置器
         PluginSetup pluginSetup = new DefaultPluginSetup(profilerConfig, instrumentEngine, dynamicTransformTrigger);
         //构建插件加载器
         final ProfilerPluginLoader loader = new ProfilerPluginLoader(profilerConfig, pluginSetup, instrumentEngine);
@@ -91,9 +92,14 @@ public class DefaultPluginContextLoadResult implements PluginContextLoadResult {
         return load;
     }
 
+    /**
+     * 获得所用插件的所有类文件转换器
+     * 简单的遍历每个插件的设置结果，将每个插件得类文件转换器全部追加进
+     * @return
+     */
     @Override
     public List<ClassFileTransformer> getClassFileTransformer() {
-        // TODO Need plugin context level grouping
+        // TODO Need plugin context level grouping // TODO需要插件上下文级别分组
         final List<ClassFileTransformer> transformerList = new ArrayList<ClassFileTransformer>();
         for (SetupResult pluginContext : setupResultList) {
             List<ClassFileTransformer> classTransformerList = pluginContext.getClassTransformerList();
@@ -103,29 +109,33 @@ public class DefaultPluginContextLoadResult implements PluginContextLoadResult {
     }
 
 
-
+    /**
+     * 获得所有插件的代表的应用类型
+     * 简单的遍历每个插件的设置结果，将每个插件的的应用类型全部加入
+     * @return
+     */
     @Override
     public List<ApplicationTypeDetector> getApplicationTypeDetectorList() {
-
         final List<ApplicationTypeDetector> registeredDetectors = new ArrayList<ApplicationTypeDetector>();
-
         for (SetupResult context : setupResultList) {
             List<ApplicationTypeDetector> applicationTypeDetectors = context.getApplicationTypeDetectors();
             registeredDetectors.addAll(applicationTypeDetectors);
         }
-
         return registeredDetectors;
     }
 
+    /**
+     * 获得所用插件的对jdbcurl的解析
+     * 简单的变量每个插件的设置结果，将每个插件的jdbc解析方式全部加入
+     * @return
+     */
     @Override
     public List<JdbcUrlParserV2> getJdbcUrlParserList() {
         final List<JdbcUrlParserV2> result = new ArrayList<JdbcUrlParserV2>();
-
         for (SetupResult context : setupResultList) {
             List<JdbcUrlParserV2> jdbcUrlParserList = context.getJdbcUrlParserList();
             result.addAll(jdbcUrlParserList);
         }
-
         return result;
     }
 
