@@ -54,7 +54,7 @@ public class DefaultPluginContextLoadResult implements PluginContextLoadResult {
      * @param pluginJars
      */
     public DefaultPluginContextLoadResult(ProfilerConfig profilerConfig, DynamicTransformTrigger dynamicTransformTrigger, InstrumentEngine instrumentEngine,
-                                          URL[] pluginJars) {
+                                               URL[] pluginJars) {
         if (profilerConfig == null) {
             throw new NullPointerException("profilerConfig must not be null");
         }

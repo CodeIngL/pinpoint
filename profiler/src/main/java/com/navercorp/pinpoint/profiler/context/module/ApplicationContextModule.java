@@ -194,9 +194,9 @@ public class ApplicationContextModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        binder().requireExplicitBindings();
-        binder().requireAtInjectOnConstructors();
-        binder().disableCircularProxies();
+        binder().requireExplicitBindings(); // 需要显式绑定
+        binder().requireAtInjectOnConstructors(); //要求使用构造函数绑定
+        binder().disableCircularProxies(); //禁止使用循环代理
 
         //注入以产生的的相关实例
         bind(ProfilerConfig.class).toInstance(profilerConfig);
@@ -251,7 +251,7 @@ public class ApplicationContextModule extends AbstractModule {
         //构建追踪组件
         bindTraceComponent();
 
-        //构建收集齐
+        //构建收集器
         bind(ResponseTimeCollector.class).to(ReuseResponseTimeCollector.class).in(Scopes.SINGLETON);
         bind(ActiveTraceRepository.class).toProvider(ActiveTraceRepositoryProvider.class).in(Scopes.SINGLETON);
 
@@ -341,7 +341,7 @@ public class ApplicationContextModule extends AbstractModule {
         bind(String.class).annotatedWith(AgentId.class).toInstance(agentId);
         bind(String.class).annotatedWith(ApplicationName.class).toInstance(applicationName);
         bind(Long.class).annotatedWith(AgentStartTime.class).toProvider(AgentStartTimeProvider.class).in(Scopes.SINGLETON);
-        bind(ServiceType.class).annotatedWith(ApplicationServerType.class).toProvider(ApplicationServerTypeProvider.class).in(Scopes.SINGLETON);
+            bind(ServiceType.class).annotatedWith(ApplicationServerType.class).toProvider(ApplicationServerTypeProvider.class).in(Scopes.SINGLETON);
     }
 
     /**
