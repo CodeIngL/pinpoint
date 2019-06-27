@@ -21,12 +21,12 @@
 
 3. 打开version control tab
 
-	![版本控制选项](https://github.com/CodeIngL/pinpoint/blob/master/imgs/showVc.png)
+	![版本控制选项](https://github.com/CodeIngL/pinpoint/blob/codeL/imgs/showVc.png)
 
     
 4. 选中相关代码记录，查看相关你刚兴趣的文件注释
 
-	![相关注释解析源码文件](https://github.com/CodeIngL/pinpoint/blob/master/imgs/showDetails.png)
+	![相关注释解析源码文件](https://github.com/CodeIngL/pinpoint/blob/codeL/imgs/showDetails.png)
 	
 	
 ### other
