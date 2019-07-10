@@ -35,6 +35,11 @@ public class TransformTemplate implements TransformOperations {
         this.instrumentContext = instrumentContext;
     }
 
+    /**
+     * 为插件库的目标类进行，绑定相关的装换类，以便在真正加载的时候进行转换
+     * @param className
+     * @param transformCallback
+     */
     @Override
     public void transform(String className, TransformCallback transformCallback) {
         if (className == null) {

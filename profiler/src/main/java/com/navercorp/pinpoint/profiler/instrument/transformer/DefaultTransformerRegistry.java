@@ -28,6 +28,9 @@ import com.navercorp.pinpoint.profiler.instrument.classreading.InternalClassMeta
 import com.navercorp.pinpoint.profiler.util.JavaAssistUtils;
 
 /**
+ *
+ * 最普通的注册器，痛处的类处理将会从这里进行获得相应的匹配器，
+ * 目前为止这是基于匹配器的。
  * @author emeroad
  * @author netspider
  * @author hyungil.jeong
@@ -38,6 +41,8 @@ public class DefaultTransformerRegistry implements TransformerRegistry {
 
     // No concurrent issue because only one thread put entries to the map and get operations are started AFTER the map is completely build.
     // Set the map size big intentionally to keep hash collision low.
+    // 没有并发问题，因为只有一个线程将entry放入map,并且在完全构建map后开始获取操作。
+    // 有意设置map大小以保持哈希冲突低。
     private final Map<String, ClassFileTransformer> registry = new HashMap<String, ClassFileTransformer>(512);
 
     @Override

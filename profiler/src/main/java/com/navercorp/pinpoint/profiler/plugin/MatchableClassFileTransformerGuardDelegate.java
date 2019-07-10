@@ -28,6 +28,7 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
 /**
+ * 可匹配的类文件转换，将插件进行转换
  * @author emeroad
  */
 public class MatchableClassFileTransformerGuardDelegate implements MatchableClassFileTransformer {

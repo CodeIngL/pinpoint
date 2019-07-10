@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import com.navercorp.pinpoint.exception.PinpointException;
 
 /**
+ * ProfilerPluginJar的类注入器
  * @author Jongho Moon
  * @author jaehong.kim
  */

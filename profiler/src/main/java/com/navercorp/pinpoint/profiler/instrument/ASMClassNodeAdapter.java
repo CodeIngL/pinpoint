@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 适配器，对asm中classnode的适配
  * @author jaehong.kim
  */
 public class ASMClassNodeAdapter {
@@ -99,30 +100,58 @@ public class ASMClassNodeAdapter {
         this.skipCode = skipCode;
     }
 
+    /**
+     * 获得jvm中的类名
+     * @return
+     */
     public String getInternalName() {
         return this.classNode.name;
     }
 
+    /**
+     * 获得java中的类名
+     * @return
+     */
     public String getName() {
         return this.classNode.name == null ? null : JavaAssistUtils.jvmNameToJavaName(this.classNode.name);
     }
 
+    /**
+     * 获得父类内部名
+     * @return
+     */
     public String getSuperClassInternalName() {
         return this.classNode.superName;
     }
 
+    /**
+     * 获得java中父类名
+     * @return
+     */
     public String getSuperClassName() {
         return this.classNode.superName == null ? null : JavaAssistUtils.jvmNameToJavaName(this.classNode.superName);
     }
 
+    /**
+     * 是否是接口
+     * @return
+     */
     public boolean isInterface() {
         return (classNode.access & Opcodes.ACC_INTERFACE) != 0;
     }
 
+    /**
+     * 是否是注解
+     * @return
+     */
     public boolean isAnnotation() {
         return (classNode.access & Opcodes.ACC_ANNOTATION) != 0;
     }
 
+    /**
+     * 获得实现的接口名，java形式的
+     * @return
+     */
     public String[] getInterfaceNames() {
         final List<String> interfaces = this.classNode.interfaces;
         if (CollectionUtils.isEmpty(interfaces)) {
